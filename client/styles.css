@@ -60,4 +60,12 @@ body {
   margin: 0;
   height: 8.75vh;
   width: 9.375vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chess-piece {
+  height: 70%;
+  width: 70%;
 }
