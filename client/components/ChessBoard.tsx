@@ -1,8 +1,18 @@
 import * as React from 'react';
 import { Row } from './Row';
 
+// Structure of color palette objects in colorPalette
+export interface Palette {
+  dark: string;
+  light: string;
+}
 
-export const ChessBoard: React.FC = () => {
+interface Props {
+  currentPalette: Palette;
+}
+
+
+export const ChessBoard: React.FC<Props> = ({ currentPalette }) => {
   // Array to hold 8 chess rows with 8 squares each
   const chessRows = [];
   // Insert 8 rows into chessRows
@@ -10,10 +20,10 @@ export const ChessBoard: React.FC = () => {
     // Determine starting color of current row
     let startColor: string;
     if (i % 2 === 0) {
-      startColor = 'white';
-    } else startColor = 'black';
+      startColor = currentPalette.light;
+    } else startColor = currentPalette.dark;
     // Push the current row to array of rows
-    chessRows.push(<Row startColor={startColor} />);
+    chessRows.push(<Row startColor={startColor} currentPalette={currentPalette} />);
   }
 
   return (

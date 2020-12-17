@@ -35,6 +35,11 @@ body {
   align-items: center;
 }
 
+.button-container {
+  display: flex;
+  justify-content: space-between;
+}
+
 .chess-board {
   /* border: 1px solid black;
   height: 70vh;
