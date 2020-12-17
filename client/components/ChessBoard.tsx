@@ -10,8 +10,8 @@ export const ChessBoard: React.FC = () => {
     // Determine starting color of current row
     let startColor: string;
     if (i % 2 === 0) {
-      startColor = 'black';
-    } else startColor = 'white';
+      startColor = 'white';
+    } else startColor = 'black';
     // Push the current row to array of rows
     chessRows.push(<Row startColor={startColor} />);
   }
