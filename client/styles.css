@@ -6,6 +6,7 @@ html, body {
 body {
   height: 100%;
   top: 0;
+  font-family: 'Lora', serif;
 }
 
 .main-nav {
@@ -22,4 +23,21 @@ body {
 
 .page-title {
   color: rgb(248, 248, 248);
+}
+
+.main-container {
+  height: 100%;
+  width: 100%;
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.chess-board {
+  border: 1px solid black;
+  height: 70vh;
+  width: 75vh;
+  margin: 3vh 5vw 0 5vw;
 }
