@@ -15,3 +15,21 @@ export const WhiteRook = 'https://upload.wikimedia.org/wikipedia/commons/7/72/Ch
 export const WhiteBishop = 'https://upload.wikimedia.org/wikipedia/commons/b/b1/Chess_blt45.svg';
 export const WhiteKnight = 'https://upload.wikimedia.org/wikipedia/commons/7/70/Chess_nlt45.svg';
 export const WhitePawn = 'https://upload.wikimedia.org/wikipedia/commons/4/45/Chess_plt45.svg';
+
+// Object with all black, then white pieces
+export const BlackPieces = {
+  BlackKing,
+  BlackQueen,
+  BlackRook,
+  BlackBishop,
+  BlackKnight,
+  BlackPawn
+}
+export const WhitePieces = {
+  WhiteKing,
+  WhiteQueen,
+  WhiteRook,
+  WhiteBishop,
+  WhiteKnight,
+  WhitePawn
+}

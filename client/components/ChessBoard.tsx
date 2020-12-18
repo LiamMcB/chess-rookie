@@ -13,6 +13,8 @@ interface Props {
 
 
 export const ChessBoard: React.FC<Props> = ({ currentPalette }) => {
+  // State to hold location of all chess pieces
+  const [ boardLayout, setBoardLayout ] = React.useState([]);
   // Array to hold 8 chess rows with 8 squares each
   const chessRows = [];
   // Insert 8 rows into chessRows
