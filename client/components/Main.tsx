@@ -6,7 +6,7 @@ import { defaultBlackBoard, defaultWhiteBoard, PieceMapping } from '../defaultBo
 
 export const Main: React.FC = () => {
   // State to manage whether white or black starts
-  const [ whiteStarts, setWhiteStarts ] = React.useState(true);
+  const [ whiteStarts, setWhiteStarts ] = React.useState(false);
   // State to hold location of all chess pieces
   const [ boardLayout, setBoardLayout ] = React.useState(defaultWhiteBoard);
   // State to represent which color combo were currently on (by index)

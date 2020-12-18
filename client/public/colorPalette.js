@@ -1,5 +1,9 @@
 export const colorPalette = [
   {
+    dark: '#00BD9D',
+    light: '#FFFBFA'
+  },
+  {
     dark: '#507DBC',
     light: '#DAE3E5'
   },
@@ -10,10 +14,6 @@ export const colorPalette = [
   {
     dark: '#291528',
     light: '#F0EFF4'
-  },
-  {
-    dark: '#00BD9D',
-    light: '#FFFBFA'
   },
   {
     dark: '#592941',
