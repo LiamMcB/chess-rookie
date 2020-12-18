@@ -36,8 +36,22 @@ body {
 }
 
 .button-container {
+  width: 25%;
   display: flex;
   justify-content: space-between;
+}
+
+button {
+  font-family: 'Lora', serif;
+  border-radius: 2px;
+  border: none;
+  padding: 0.5rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+  box-shadow: 0 8px 16px 0 rgba(77, 77, 77, 0.2);
+  font-size: small;
 }
 
 .chess-board {

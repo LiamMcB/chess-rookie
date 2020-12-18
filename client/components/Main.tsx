@@ -1,14 +1,15 @@
 import * as React from 'react';
 import { ChessBoard } from './ChessBoard';
 import { colorPalette } from '../public/colorPalette';
-import { defaultBlackBoard, defaultWhiteBoard, PieceMapping } from '../defaultBoard';
+import { defaultBlackBoard, defaultWhiteBoard } from '../defaultBoard';
+import { BoardContext } from '../BoardContext';
 
 
 export const Main: React.FC = () => {
   // State to manage whether white or black starts
   const [ whiteStarts, setWhiteStarts ] = React.useState(false);
   // State to hold location of all chess pieces
-  const [ boardLayout, setBoardLayout ] = React.useState(defaultWhiteBoard);
+  const [ boardLayout, setBoardLayout ] = React.useContext(BoardContext);
   // State to represent which color combo were currently on (by index)
   const [ paletteIndex, setPaletteIndex ] = React.useState(0);
   // Function to toggle between color combos in the color palette
@@ -27,15 +28,17 @@ export const Main: React.FC = () => {
     // Depending on what white starts is, change the default board layout
     whiteStarts ? setBoardLayout(defaultWhiteBoard) : setBoardLayout(defaultBlackBoard);
   }
+  // Styling color for buttons
+  const buttonStyle = {backgroundColor: colorPalette[paletteIndex].dark, color: colorPalette[paletteIndex].light};
 
   return (
     <div className='main-container'>
       <div className='button-container'>
-        <button>Play</button>
-        <button onClick={changeBoardColor}>Change Board Color</button>
-        <button onClick={changeStartingSide}>Choose Side</button>
+        <button onClick={changeBoardColor} style={buttonStyle}>Change Theme</button>
+        <button style={buttonStyle}>Play</button>
+        <button onClick={changeStartingSide} style={buttonStyle}>Choose Side</button>
       </div>
-      <ChessBoard currentPalette={colorPalette[paletteIndex]} boardLayout={boardLayout} />
+      <ChessBoard currentPalette={colorPalette[paletteIndex]} />
     </div>
   )
 }
