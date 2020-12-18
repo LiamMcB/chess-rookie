@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Row } from './Row';
-import { PieceMapping } from '../defaultBoard';
 
 // Structure of color palette objects in colorPalette
 export interface Palette {
@@ -15,7 +14,6 @@ interface Props {
 
 
 export const ChessBoard: React.FC<Props> = ({ currentPalette, boardLayout }) => {
-  console.log(boardLayout);
   // Array to hold 8 chess rows with 8 squares each
   const chessRows = [];
   // Insert 8 rows into chessRows
@@ -26,7 +24,7 @@ export const ChessBoard: React.FC<Props> = ({ currentPalette, boardLayout }) => 
       startColor = currentPalette.light;
     } else startColor = currentPalette.dark;
     // Push the current row to array of rows
-    chessRows.push(<Row startColor={startColor} currentPalette={currentPalette} />);
+    chessRows.push(<Row startColor={startColor} currentPalette={currentPalette} rowLayout={boardLayout[i]} />);
   }
 
   return (
