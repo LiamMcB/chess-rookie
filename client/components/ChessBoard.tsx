@@ -12,10 +12,9 @@ interface Props {
   currentPalette: Palette;
 }
 
-
 export const ChessBoard: React.FC<Props> = ({ currentPalette }) => {
   // State to hold location of all chess pieces
-  const [ boardLayout, setBoardLayout ] = React.useContext(BoardContext);
+  const [boardLayout, setBoardLayout] = React.useContext(BoardContext);
   // Array to hold 8 chess rows with 8 squares each
   const chessRows = [];
   // Insert 8 rows into chessRows
@@ -26,12 +25,15 @@ export const ChessBoard: React.FC<Props> = ({ currentPalette }) => {
       startColor = currentPalette.light;
     } else startColor = currentPalette.dark;
     // Push the current row to array of rows
-    chessRows.push(<Row startColor={startColor} currentPalette={currentPalette} rowNumber={i} />);
+    chessRows.push(
+      <Row
+        startColor={startColor}
+        currentPalette={currentPalette}
+        rowNumber={i}
+        key={`row-${i}`}
+      />
+    );
   }
 
-  return (
-    <div className='chess-board'>
-      {chessRows}
-    </div>
-  )
-}
+  return <div className='chess-board'>{chessRows}</div>;
+};

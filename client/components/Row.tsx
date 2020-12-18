@@ -20,7 +20,7 @@ export const Row: React.FC<Props> = ({ startColor, currentPalette, rowNumber }) 
   const chessSquares = [];
   // Populate rows with 8 chess squares each
   for (let i = 0; i < 8; i += 1) {
-    chessSquares.push(<ChessSquare squareColor={currentColor} piece={[rowNumber, i]} />);
+    chessSquares.push(<ChessSquare squareColor={currentColor} piece={[rowNumber, i]} key={`square-${rowNumber}-${i}`} />);
     currentColor = currentColor === currentPalette.dark ? currentPalette.light : currentPalette.dark; 
   }
 
