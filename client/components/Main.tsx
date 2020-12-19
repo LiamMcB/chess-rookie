@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { ChessBoard } from './ChessBoard';
 import { colorPalette } from '../public/colorPalette';
-import { defaultBlackBoard, defaultWhiteBoard } from '../defaultBoard';
+import { defaultBlackBoard, defaultWhiteBoard } from '../helper/defaultBoard';
 import { BoardContext } from '../BoardContext';
 
 
@@ -12,6 +12,11 @@ export const Main: React.FC = () => {
   const [ boardLayout, setBoardLayout ] = React.useContext(BoardContext);
   // State to represent which color combo were currently on (by index)
   const [ paletteIndex, setPaletteIndex ] = React.useState(0);
+  // Function reset board for new game
+  const resetBoard = function() {
+    setWhiteStarts(false);
+    setBoardLayout(defaultWhiteBoard);
+  }
   // Function to toggle between color combos in the color palette
   const changeBoardColor = function() {
     // Get length of color palette
@@ -35,7 +40,7 @@ export const Main: React.FC = () => {
     <div className='main-container'>
       <div className='button-container'>
         <button onClick={changeBoardColor} style={buttonStyle}>Change Theme</button>
-        <button style={buttonStyle}>Play</button>
+        <button style={buttonStyle} onClick={resetBoard}>Play</button>
         <button onClick={changeStartingSide} style={buttonStyle}>Choose Side</button>
       </div>
       <ChessBoard currentPalette={colorPalette[paletteIndex]} />

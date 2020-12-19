@@ -9,5 +9,5 @@ export const App: React.FC = () => {
       <Nav />
       <Main />
     </BoardContextProvider>
-  )
-}
+  );
+};

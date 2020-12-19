@@ -1,4 +1,4 @@
-/* Layout of default chess board with MAPPING of symbols to their svg url
+/* Layout of default chess board 
 KEY:
 - WK = 'White King'
 - BN = 'Black Knight'
@@ -6,7 +6,6 @@ KEY:
 etc...
 From a bird's eye perspective as either white or black player
 */
-import { BlackPieces, WhitePieces } from './public/chessPieces';
 
 export const defaultBlackBoard: string[][] = [
   ['WR', 'WN', 'WB', 'WK', 'WQ', 'WB', 'WN', 'WR'],
@@ -30,20 +29,3 @@ export const defaultWhiteBoard: string[][] = [
   ['WR', 'WN', 'WB', 'WQ', 'WK', 'WB', 'WN', 'WR']
 ];
 
-// Mapping of pieces
-export const PieceMapping = {
-  // White Pieces
-  'WK': WhitePieces.WhiteKing,
-  'WQ': WhitePieces.WhiteQueen,
-  'WR': WhitePieces.WhiteRook,
-  'WB': WhitePieces.WhiteBishop,
-  'WN': WhitePieces.WhiteKnight,
-  'WP': WhitePieces.WhitePawn,
-  // Black Pieces
-  'BK': BlackPieces.BlackKing,
-  'BQ': BlackPieces.BlackQueen,
-  'BR': BlackPieces.BlackRook,
-  'BB': BlackPieces.BlackBishop,
-  'BN': BlackPieces.BlackKnight,
-  'BP': BlackPieces.BlackPawn
-};

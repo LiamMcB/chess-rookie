@@ -16,7 +16,7 @@ export const ChessSquare: React.FC<Props> = ({ squareColor, piece }) => {
   return (
     <div className='chess-square' style={{backgroundColor: squareColor}}>
       {/* Only put a piece in position if the piece in position isn't null */}
-      {currentPiece && <ChessPiece piece={currentPiece} setBoardLayout={setBoardLayout} />}
+      {currentPiece && <ChessPiece piece={currentPiece} position={[...piece]} />}
     </div>
   )
 }
