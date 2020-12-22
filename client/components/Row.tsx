@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Palette } from './ChessBoard';
 import { ChessSquare } from './ChessSquare';
-import { BoardContext } from '../BoardContext';
 
 interface Props {
   startColor: string;
@@ -10,10 +9,6 @@ interface Props {
 }
 
 export const Row: React.FC<Props> = ({ startColor, currentPalette, rowNumber }) => {
-  // State to hold location of all chess pieces
-  const [ boardLayout, setBoardLayout ] = React.useContext(BoardContext);
-  // Variable to hold current row of board
-  const rowLayout = boardLayout[rowNumber]; 
   // Variable to hold color of square
   let currentColor: string = startColor;
   // Array to hold 8 chess rows

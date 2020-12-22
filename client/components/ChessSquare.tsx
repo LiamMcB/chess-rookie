@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ChessPiece } from './ChessPiece';
-import { BoardContext } from '../BoardContext';
+import { useLayout } from '../BoardContext';
 
 interface Props {
   squareColor: string;
@@ -10,7 +10,7 @@ interface Props {
 
 export const ChessSquare: React.FC<Props> = ({ squareColor, piece }) => {
   // State to hold location of all chess pieces
-  const [ boardLayout, setBoardLayout ] = React.useContext(BoardContext);
+  const { boardLayout, setBoardLayout } = useLayout();
   // Variable to hold string representation of piece in square position
   const currentPiece: string = boardLayout[piece[0]][piece[1]];
   return (

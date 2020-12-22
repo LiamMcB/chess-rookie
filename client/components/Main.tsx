@@ -2,20 +2,21 @@ import * as React from 'react';
 import { ChessBoard } from './ChessBoard';
 import { colorPalette } from '../public/colorPalette';
 import { defaultBlackBoard, defaultWhiteBoard } from '../helper/defaultBoard';
-import { BoardContext } from '../BoardContext';
+import { useLayout } from '../BoardContext';
 
 
 export const Main: React.FC = () => {
   // State to manage whether white or black starts
   const [ whiteStarts, setWhiteStarts ] = React.useState(false);
   // State to hold location of all chess pieces
-  const [ boardLayout, setBoardLayout ] = React.useContext(BoardContext);
+  const { boardLayout, setBoardLayout } = useLayout();
   // State to represent which color combo were currently on (by index)
   const [ paletteIndex, setPaletteIndex ] = React.useState(0);
+  console.log(defaultWhiteBoard);
   // Function reset board for new game
   const resetBoard = function() {
     setWhiteStarts(false);
-    setBoardLayout(defaultWhiteBoard);
+    setBoardLayout([...defaultWhiteBoard]);
   }
   // Function to toggle between color combos in the color palette
   const changeBoardColor = function() {

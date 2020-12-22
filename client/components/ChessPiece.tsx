@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { PieceMapping } from '../helper/pieceMapping';
-import { BoardContext } from '../BoardContext';
+import { useLayout } from '../BoardContext';
 
 interface Props {
   // Piece is string like 'WR' to represent the current piece ie white rook
@@ -11,7 +11,7 @@ interface Props {
 
 export const ChessPiece: React.FC<Props> = ({ piece, position }) => {
   // State to hold location of all chess pieces
-  const [ boardLayout, setBoardLayout ] = React.useContext(BoardContext);
+  const { boardLayout, setBoardLayout } = useLayout();
   // Function to handle drag events
   const dragHandler = function(e) {
     e.preventDefault();
@@ -19,8 +19,8 @@ export const ChessPiece: React.FC<Props> = ({ piece, position }) => {
     const col: number = position[1];
     // Place piece in new position for new layout
     const oldLayout: string[][] = [...boardLayout];
-    oldLayout[row - 1][col] = oldLayout[row][col];
-    oldLayout[row][col] = null;
+    [oldLayout[row - 1][col], oldLayout[row][col]] = [oldLayout[row][col], oldLayout[row - 1][col]];
+    // oldLayout[row][col] = null;
     setBoardLayout(oldLayout);
   }
   return (

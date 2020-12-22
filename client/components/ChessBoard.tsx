@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Row } from './Row';
-import { BoardContext } from '../BoardContext';
 
 // Structure of color palette objects in colorPalette
 export interface Palette {
@@ -13,8 +12,6 @@ interface Props {
 }
 
 export const ChessBoard: React.FC<Props> = ({ currentPalette }) => {
-  // State to hold location of all chess pieces
-  const [boardLayout, setBoardLayout] = React.useContext(BoardContext);
   // Array to hold 8 chess rows with 8 squares each
   const chessRows = [];
   // Insert 8 rows into chessRows
