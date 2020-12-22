@@ -1,22 +1,20 @@
 import * as React from 'react';
 import { ChessBoard } from './ChessBoard';
 import { colorPalette } from '../public/colorPalette';
-import { defaultBlackBoard, defaultWhiteBoard } from '../helper/defaultBoard';
-import { useLayout } from '../BoardContext';
+import { BoardContext } from '../BoardContext';
 
 
 export const Main: React.FC = () => {
   // State to manage whether white or black starts
   const [ whiteStarts, setWhiteStarts ] = React.useState(false);
   // State to hold location of all chess pieces
-  const { boardLayout, setBoardLayout } = useLayout();
+  const { state, dispatch } = React.useContext(BoardContext);
   // State to represent which color combo were currently on (by index)
   const [ paletteIndex, setPaletteIndex ] = React.useState(0);
-  console.log(defaultWhiteBoard);
   // Function reset board for new game
   const resetBoard = function() {
     setWhiteStarts(false);
-    setBoardLayout([...defaultWhiteBoard]);
+    dispatch({type: 'RESET_BOARD_WHITE'});
   }
   // Function to toggle between color combos in the color palette
   const changeBoardColor = function() {
@@ -32,7 +30,7 @@ export const Main: React.FC = () => {
     // Change whiteStart to the opposite of what it currently is
     setWhiteStarts(!whiteStarts);
     // Depending on what white starts is, change the default board layout
-    whiteStarts ? setBoardLayout(defaultWhiteBoard) : setBoardLayout(defaultBlackBoard);
+    whiteStarts ? dispatch({type: 'RESET_BOARD_WHITE'}) : dispatch({type: 'RESET_BOARD_BLACK'});
   }
   // Styling color for buttons
   const buttonStyle = {backgroundColor: colorPalette[paletteIndex].dark, color: colorPalette[paletteIndex].light};

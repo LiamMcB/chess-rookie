@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { PieceMapping } from '../helper/pieceMapping';
-import { useLayout } from '../BoardContext';
+import { BoardContext } from '../BoardContext';
 
 interface Props {
   // Piece is string like 'WR' to represent the current piece ie white rook
@@ -10,18 +10,12 @@ interface Props {
 }
 
 export const ChessPiece: React.FC<Props> = ({ piece, position }) => {
-  // State to hold location of all chess pieces
-  const { boardLayout, setBoardLayout } = useLayout();
+  // State to handle dispatching actions to reducer in context
+  const { state, dispatch } = React.useContext(BoardContext);
   // Function to handle drag events
   const dragHandler = function(e) {
     e.preventDefault();
-    const row: number = position[0];
-    const col: number = position[1];
-    // Place piece in new position for new layout
-    const oldLayout: string[][] = [...boardLayout];
-    [oldLayout[row - 1][col], oldLayout[row][col]] = [oldLayout[row][col], oldLayout[row - 1][col]];
-    // oldLayout[row][col] = null;
-    setBoardLayout(oldLayout);
+    dispatch({ type: 'MOVE_PIECE', payload: {piece, to: [position[0] + 1, position[1] + 1], from: [...position]} });
   }
   return (
     <img
@@ -29,7 +23,7 @@ export const ChessPiece: React.FC<Props> = ({ piece, position }) => {
       alt={`${piece}`}
       className='chess-piece'
       draggable='true'
-      onDrag={(e) => dragHandler(e)}
+      onDragEnd={(e) => dragHandler(e)}
     ></img>
   );
 };
