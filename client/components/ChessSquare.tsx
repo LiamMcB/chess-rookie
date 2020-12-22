@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { ChessPiece } from './ChessPiece';
 import { BoardContext } from '../BoardContext';
-import { StateType } from '../App';
 
 interface Props {
   squareColor: string;

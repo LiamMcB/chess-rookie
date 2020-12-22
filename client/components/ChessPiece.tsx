@@ -11,11 +11,11 @@ interface Props {
 
 export const ChessPiece: React.FC<Props> = ({ piece, position }) => {
   // State to handle dispatching actions to reducer in context
-  const { state, dispatch } = React.useContext(BoardContext);
+  const { dispatch } = React.useContext(BoardContext);
   // Function to handle drag events
   const dragHandler = function(e) {
     e.preventDefault();
-    dispatch({ type: 'MOVE_PIECE', payload: {piece, to: [position[0] + 1, position[1] + 1], from: [...position]} });
+    dispatch({ type: 'MOVE_PIECE', payload: {piece, to: [position[0] - 1, position[1]], from: [...position]} });
   }
   return (
     <img

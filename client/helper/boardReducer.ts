@@ -26,22 +26,44 @@ export const boardReducer = (state: StateType, action: ActionType) => {
     case 'RESET_BOARD_WHITE':
       const defaultWhiteState: StateType = {
         ...state,
-        boardLayout: [...defaultWhiteBoard]
+        boardLayout: [
+          ['BR', 'BN', 'BB', 'BQ', 'BK', 'BB', 'BN', 'BR'],
+          ['BP', 'BP', 'BP', 'BP', 'BP', 'BP', 'BP', 'BP'],
+          Array(8).fill(null),
+          Array(8).fill(null),
+          Array(8).fill(null),
+          Array(8).fill(null),
+          ['WP', 'WP', 'WP', 'WP', 'WP', 'WP', 'WP', 'WP'],
+          ['WR', 'WN', 'WB', 'WQ', 'WK', 'WB', 'WN', 'WR']
+        ]
       }
       return defaultWhiteState;
     case 'RESET_BOARD_BLACK':
       const defaultBlackState: StateType = {
         ...state,
-        boardLayout: [...defaultBlackBoard]
+        boardLayout: [
+          ['WR', 'WN', 'WB', 'WK', 'WQ', 'WB', 'WN', 'WR'],
+          ['WP', 'WP', 'WP', 'WP', 'WP', 'WP', 'WP', 'WP'],
+          Array(8).fill(null),
+          Array(8).fill(null),
+          Array(8).fill(null),
+          Array(8).fill(null),
+          ['BP', 'BP', 'BP', 'BP', 'BP', 'BP', 'BP', 'BP'],
+          ['BR', 'BN', 'BB', 'BK', 'BQ', 'BB', 'BN', 'BR']
+        ]
       }
       return defaultBlackState;
     case 'MOVE_PIECE':
+      // Log the current move to the console
+      console.log(`Moving ${action.payload.piece} from ${action.payload.from} to ${action.payload.to}`)
       // Get position of to and from payload
-      const row = action.payload.from[0];
-      const col = action.payload.from[1];
+      const rowFrom = action.payload.from[0];
+      const colFrom = action.payload.from[1];
+      const rowTo = action.payload.to[0];
+      const colTo = action.payload.to[1];
       // Place piece in new position for new layout
-      const newLayout = [...state.boardLayout];
-      [newLayout[row - 1][col], newLayout[row][col]] = [newLayout[row][col], newLayout[row - 1][col]];
+      const newLayout = state.boardLayout.slice();
+      [newLayout[rowFrom][colFrom], newLayout[rowTo][colTo]] = [newLayout[rowTo][colTo], newLayout[rowFrom][colFrom]];
       // Return new state object with new layout as value
       return {
         ...state,
@@ -50,7 +72,16 @@ export const boardReducer = (state: StateType, action: ActionType) => {
     default:
       return {
         ...state,
-        boardLayout: [...defaultWhiteBoard]
+        boardLayout: [
+          ['BR', 'BN', 'BB', 'BQ', 'BK', 'BB', 'BN', 'BR'],
+          ['BP', 'BP', 'BP', 'BP', 'BP', 'BP', 'BP', 'BP'],
+          Array(8).fill(null),
+          Array(8).fill(null),
+          Array(8).fill(null),
+          Array(8).fill(null),
+          ['WP', 'WP', 'WP', 'WP', 'WP', 'WP', 'WP', 'WP'],
+          ['WR', 'WN', 'WB', 'WQ', 'WK', 'WB', 'WN', 'WR']
+        ]
       }
   }
 }

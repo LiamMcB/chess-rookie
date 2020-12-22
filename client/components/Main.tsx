@@ -39,7 +39,7 @@ export const Main: React.FC = () => {
     <div className='main-container'>
       <div className='button-container'>
         <button onClick={changeBoardColor} style={buttonStyle}>Change Theme</button>
-        <button style={buttonStyle} onClick={resetBoard}>Play</button>
+        <button onClick={resetBoard} style={buttonStyle}>Play</button>
         <button onClick={changeStartingSide} style={buttonStyle}>Choose Side</button>
       </div>
       <ChessBoard currentPalette={colorPalette[paletteIndex]} />
