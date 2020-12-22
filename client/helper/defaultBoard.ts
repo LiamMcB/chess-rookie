@@ -7,7 +7,9 @@ etc...
 From a bird's eye perspective as either white or black player
 */
 
-export const defaultBlackBoard: readonly (string|null)[][] = [
+export type LayoutType = readonly (string|null)[][];
+
+export const defaultBlackBoard: LayoutType = [
   ['WR', 'WN', 'WB', 'WK', 'WQ', 'WB', 'WN', 'WR'],
   ['WP', 'WP', 'WP', 'WP', 'WP', 'WP', 'WP', 'WP'],
   Array(8).fill(null),
@@ -18,7 +20,7 @@ export const defaultBlackBoard: readonly (string|null)[][] = [
   ['BR', 'BN', 'BB', 'BK', 'BQ', 'BB', 'BN', 'BR']
 ];
 
-export const defaultWhiteBoard: readonly (string|null)[][] = [
+export const defaultWhiteBoard: LayoutType = [
   ['BR', 'BN', 'BB', 'BQ', 'BK', 'BB', 'BN', 'BR'],
   ['BP', 'BP', 'BP', 'BP', 'BP', 'BP', 'BP', 'BP'],
   Array(8).fill(null),

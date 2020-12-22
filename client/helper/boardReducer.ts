@@ -1,5 +1,6 @@
 /* File which handles all stateful functionality on the board layout. */
 import { defaultWhiteBoard, defaultBlackBoard } from './defaultBoard';
+import { StateType } from '../App';
 
 // Structure of actions
 export interface ActionType {
@@ -20,19 +21,36 @@ export interface MovePayload {
   from: number[]; // array ie [2, 3] representing piece moving from row 2, column 3 on the board
 }
 
-export const boardReducer = (state: string[][], action: ActionType) => {
+export const boardReducer = (state: StateType, action: ActionType) => {
   switch(action.type) {
     case 'RESET_BOARD_WHITE':
-      return defaultWhiteBoard;
+      const defaultWhiteState: StateType = {
+        ...state,
+        boardLayout: [...defaultWhiteBoard]
+      }
+      return defaultWhiteState;
     case 'RESET_BOARD_BLACK':
-      return defaultBlackBoard;
+      const defaultBlackState: StateType = {
+        ...state,
+        boardLayout: [...defaultBlackBoard]
+      }
+      return defaultBlackState;
     case 'MOVE_PIECE':
       // Get position of to and from payload
       const row = action.payload.from[0];
       const col = action.payload.from[1];
       // Place piece in new position for new layout
-      const oldLayout = [...state];
-      [oldLayout[row - 1][col], oldLayout[row][col]] = [oldLayout[row][col], oldLayout[row - 1][col]];
-      return oldLayout;
+      const newLayout = [...state.boardLayout];
+      [newLayout[row - 1][col], newLayout[row][col]] = [newLayout[row][col], newLayout[row - 1][col]];
+      // Return new state object with new layout as value
+      return {
+        ...state,
+        boardLayout: newLayout
+      };
+    default:
+      return {
+        ...state,
+        boardLayout: [...defaultWhiteBoard]
+      }
   }
 }
