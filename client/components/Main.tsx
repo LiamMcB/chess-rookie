@@ -46,7 +46,7 @@ export const Main: React.FC = () => {
         <button onClick={resetBoard} style={buttonStyle}>Play</button>
         <button onClick={changeStartingSide} style={buttonStyle}>Choose Side</button>
       </div>
-      <ChessBoard currentPalette={ColorPalette[paletteIndex]} />
+      <ChessBoard paletteIndex={paletteIndex} />
     </div>
   )
 }

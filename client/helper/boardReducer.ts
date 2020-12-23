@@ -17,6 +17,8 @@ export enum ActionTypeOptions {
   CHANGE_COLOR_PALETTE='CHANGE_COLOR_PALETTE',
   RESET_BOARD_WHITE='RESET_BOARD_WHITE',
   RESET_BOARD_BLACK='RESET_BOARD_BLACK',
+  HIGHLIGHT_MOVES='HIGHLIGHT_MOVES',
+  UN_HIGHLIGHT_MOVES='UN_HIGHLIGHT_MOVES',
   MOVE_PIECE='MOVE_PIECE',
   MOVE_PAWN='MOVE_PAWN'
 }
@@ -32,7 +34,6 @@ export const boardReducer = (state: StateType, action: ActionType) => {
   switch(action.type) {
     case 'CHANGE_COLOR_PALETTE':
       const index = action.payload.paletteIndex;
-      console.log(index);
       const lightColor = ColorPalette[index].light;
       const darkColor = ColorPalette[index].dark;
       const newColorLayout: ColorLayoutType = [
@@ -49,6 +50,7 @@ export const boardReducer = (state: StateType, action: ActionType) => {
         ...state,
         colorLayout: newColorLayout
       }
+    // Cases for resetting board
     case 'RESET_BOARD_WHITE':
       const defaultWhiteState: StateType = {
         ...state,
@@ -79,6 +81,28 @@ export const boardReducer = (state: StateType, action: ActionType) => {
         ]
       }
       return defaultBlackState;
+    // Cases to highlight and unhighlight legal moves
+    case 'HIGHLIGHT_MOVES':
+      const positionFrom = action.payload.from;
+      const currentPiece = action.payload.piece;
+      // Highlighted moves for pawn
+      const colorState = [...state.colorLayout];
+      colorState[positionFrom[0] - 1][positionFrom[1]] = 'red';
+      return {
+        ...state,
+        colorLayout: colorState
+      }
+    case 'UN_HIGHLIGHT_MOVES':
+      const positionClickedFrom = action.payload.from;
+      const currentPieceClickedFrom = action.payload.piece;
+      // Highlighted moves for pawn
+      const colorStateUnhighlight = [...state.colorLayout];
+      colorStateUnhighlight[positionClickedFrom[0] - 1][positionClickedFrom[1]] = 'blue';
+      return {
+        ...state,
+        colorLayout: colorStateUnhighlight
+      }
+    // Cases for moving specific pieces
     case 'MOVE_PIECE':
       // Log the current move to the console
       console.log(`Moving ${action.payload.piece} from ${action.payload.from} to ${action.payload.to}`)
