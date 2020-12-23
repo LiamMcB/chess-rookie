@@ -20,7 +20,8 @@ export const App: React.FC = () => {
       ['WP', 'WP', 'WP', 'WP', 'WP', 'WP', 'WP', 'WP'],
       ['WR', 'WN', 'WB', 'WQ', 'WK', 'WB', 'WN', 'WR']
     ],
-    colorLayout: defaultColorLayout
+    colorLayout: defaultColorLayout,
+    paletteIndex: 0
   } 
   // Reducer hook which bundles state-changing functionality
   const [ state, dispatch ] = React.useReducer(boardReducer, defaultState);

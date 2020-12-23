@@ -6,6 +6,7 @@ import { ColorPalette } from '../public/colorPalette';
 export interface StateType {
   boardLayout: LayoutType;
   colorLayout: ColorLayoutType;
+  paletteIndex: number;
 }
 // Structure of actions
 export interface ActionType {
@@ -48,7 +49,8 @@ export const boardReducer = (state: StateType, action: ActionType) => {
       ];
       return {
         ...state,
-        colorLayout: newColorLayout
+        colorLayout: newColorLayout,
+        paletteIndex: index
       }
     // Cases for resetting board
     case 'RESET_BOARD_WHITE':
@@ -87,7 +89,7 @@ export const boardReducer = (state: StateType, action: ActionType) => {
       const currentPiece = action.payload.piece;
       // Highlighted moves for pawn
       const colorState = [...state.colorLayout];
-      colorState[positionFrom[0] - 1][positionFrom[1]] = 'red';
+      colorState[positionFrom[0] - 1][positionFrom[1]] = 'rgb(87, 253, 143)';
       return {
         ...state,
         colorLayout: colorState
@@ -97,7 +99,10 @@ export const boardReducer = (state: StateType, action: ActionType) => {
       const currentPieceClickedFrom = action.payload.piece;
       // Highlighted moves for pawn
       const colorStateUnhighlight = [...state.colorLayout];
-      colorStateUnhighlight[positionClickedFrom[0] - 1][positionClickedFrom[1]] = 'blue';
+      // If position row and column add to positive, change it to light, else dark
+      (positionClickedFrom[0] + positionClickedFrom[1]) % 2 === 0 ? 
+        colorStateUnhighlight[positionClickedFrom[0] - 1][positionClickedFrom[1]] = ColorPalette[state.paletteIndex].dark:
+        colorStateUnhighlight[positionClickedFrom[0] - 1][positionClickedFrom[1]] = ColorPalette[state.paletteIndex].light;
       return {
         ...state,
         colorLayout: colorStateUnhighlight
