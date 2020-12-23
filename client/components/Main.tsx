@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ChessBoard } from './ChessBoard';
-import { colorPalette } from '../public/colorPalette';
+import { ColorPalette } from '../public/colorPalette';
 import { BoardContext } from '../BoardContext';
 
 
@@ -11,6 +11,10 @@ export const Main: React.FC = () => {
   const { state, dispatch } = React.useContext(BoardContext);
   // State to represent which color combo were currently on (by index)
   const [ paletteIndex, setPaletteIndex ] = React.useState(0);
+  // Use effect hook to listen for changes on palette index and dispatch action if needed
+  React.useEffect(() => {
+    dispatch({type: 'CHANGE_COLOR_PALETTE', payload: {paletteIndex}})
+  }, [paletteIndex]);
   // Function reset board for new game
   const resetBoard = function() {
     setWhiteStarts(false);
@@ -19,7 +23,7 @@ export const Main: React.FC = () => {
   // Function to toggle between color combos in the color palette
   const changeBoardColor = function() {
     // Get length of color palette
-    const paletteLength = colorPalette.length;
+    const paletteLength = ColorPalette.length;
     // Increment paletteIndex to reset back to zero if index is equal to palette length
     let newPaletteIndex = paletteIndex + 1 >= paletteLength ? 0 : paletteIndex + 1;
     // Set the palette index to the new one
@@ -33,7 +37,7 @@ export const Main: React.FC = () => {
     whiteStarts ? dispatch({type: 'RESET_BOARD_WHITE'}) : dispatch({type: 'RESET_BOARD_BLACK'});
   }
   // Styling color for buttons
-  const buttonStyle = {backgroundColor: colorPalette[paletteIndex].dark, color: colorPalette[paletteIndex].light};
+  const buttonStyle = {backgroundColor: ColorPalette[paletteIndex].dark, color: ColorPalette[paletteIndex].light};
 
   return (
     <div className='main-container'>
@@ -42,7 +46,7 @@ export const Main: React.FC = () => {
         <button onClick={resetBoard} style={buttonStyle}>Play</button>
         <button onClick={changeStartingSide} style={buttonStyle}>Choose Side</button>
       </div>
-      <ChessBoard currentPalette={colorPalette[paletteIndex]} />
+      <ChessBoard currentPalette={ColorPalette[paletteIndex]} />
     </div>
   )
 }

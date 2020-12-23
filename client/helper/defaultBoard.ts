@@ -6,8 +6,10 @@ KEY:
 etc...
 From a bird's eye perspective as either white or black player
 */
+import { ColorPalette } from '../public/colorPalette.js'
 
 export type LayoutType = readonly (string|null)[][];
+export type ColorLayoutType = string[][];
 
 export const defaultBlackBoard: LayoutType = [
   ['WR', 'WN', 'WB', 'WK', 'WQ', 'WB', 'WN', 'WR'],
@@ -31,3 +33,15 @@ export const defaultWhiteBoard: LayoutType = [
   ['WR', 'WN', 'WB', 'WQ', 'WK', 'WB', 'WN', 'WR']
 ];
 
+const lightColor = ColorPalette[0].light;
+const darkColor = ColorPalette[0].dark;
+export const defaultColorLayout: ColorLayoutType = [
+  [lightColor, darkColor, lightColor, darkColor, lightColor, darkColor, lightColor, darkColor],
+  [darkColor, lightColor, darkColor, lightColor, darkColor, lightColor, darkColor, lightColor],
+  [lightColor, darkColor, lightColor, darkColor, lightColor, darkColor, lightColor, darkColor],
+  [darkColor, lightColor, darkColor, lightColor, darkColor, lightColor, darkColor, lightColor],
+  [lightColor, darkColor, lightColor, darkColor, lightColor, darkColor, lightColor, darkColor],
+  [darkColor, lightColor, darkColor, lightColor, darkColor, lightColor, darkColor, lightColor],
+  [lightColor, darkColor, lightColor, darkColor, lightColor, darkColor, lightColor, darkColor],
+  [darkColor, lightColor, darkColor, lightColor, darkColor, lightColor, darkColor, lightColor],
+];

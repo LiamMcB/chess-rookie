@@ -1,7 +1,12 @@
 /* File which handles all stateful functionality on the board layout. */
-import { defaultWhiteBoard, defaultBlackBoard } from './defaultBoard';
-import { StateType } from '../App';
+import { defaultWhiteBoard, defaultBlackBoard, LayoutType, ColorLayoutType } from './defaultBoard';
+import { ColorPalette } from '../public/colorPalette';
 
+// Defines structure of state object
+export interface StateType {
+  boardLayout: LayoutType;
+  colorLayout: ColorLayoutType;
+}
 // Structure of actions
 export interface ActionType {
   type: ActionTypeOptions;
@@ -9,6 +14,7 @@ export interface ActionType {
 }
 // Types of actions allowed
 export enum ActionTypeOptions {
+  CHANGE_COLOR_PALETTE='CHANGE_COLOR_PALETTE',
   RESET_BOARD_WHITE='RESET_BOARD_WHITE',
   RESET_BOARD_BLACK='RESET_BOARD_BLACK',
   MOVE_PIECE='MOVE_PIECE',
@@ -16,13 +22,33 @@ export enum ActionTypeOptions {
 }
 // Interface to define payload of a piece move
 export interface MovePayload {
-  piece: string;
-  to: number[]; // array with 2 ints to represent position piece is moving to
-  from: number[]; // array ie [2, 3] representing piece moving from row 2, column 3 on the board
+  piece?: string;
+  to?: number[]; // array with 2 ints to represent position piece is moving to
+  from?: number[]; // array ie [2, 3] representing piece moving from row 2, column 3 on the board
+  paletteIndex?: number; // number to represent which palette index were on
 }
 
 export const boardReducer = (state: StateType, action: ActionType) => {
   switch(action.type) {
+    case 'CHANGE_COLOR_PALETTE':
+      const index = action.payload.paletteIndex;
+      console.log(index);
+      const lightColor = ColorPalette[index].light;
+      const darkColor = ColorPalette[index].dark;
+      const newColorLayout: ColorLayoutType = [
+        [lightColor, darkColor, lightColor, darkColor, lightColor, darkColor, lightColor, darkColor],
+        [darkColor, lightColor, darkColor, lightColor, darkColor, lightColor, darkColor, lightColor],
+        [lightColor, darkColor, lightColor, darkColor, lightColor, darkColor, lightColor, darkColor],
+        [darkColor, lightColor, darkColor, lightColor, darkColor, lightColor, darkColor, lightColor],
+        [lightColor, darkColor, lightColor, darkColor, lightColor, darkColor, lightColor, darkColor],
+        [darkColor, lightColor, darkColor, lightColor, darkColor, lightColor, darkColor, lightColor],
+        [lightColor, darkColor, lightColor, darkColor, lightColor, darkColor, lightColor, darkColor],
+        [darkColor, lightColor, darkColor, lightColor, darkColor, lightColor, darkColor, lightColor],
+      ];
+      return {
+        ...state,
+        colorLayout: newColorLayout
+      }
     case 'RESET_BOARD_WHITE':
       const defaultWhiteState: StateType = {
         ...state,
