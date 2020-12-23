@@ -1,5 +1,6 @@
 /* File which handles all stateful functionality on the board layout. */
-import { defaultWhiteBoard, defaultBlackBoard, LayoutType, ColorLayoutType } from './defaultBoard';
+import { defaultWhiteBoard, defaultBlackBoard } from './defaultBoard';
+import { LayoutType, ColorLayoutType } from './types';
 import { ColorPalette } from '../public/colorPalette';
 
 // Defines structure of state object

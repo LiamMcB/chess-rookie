@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Row } from './Row';
 import { BoardContext } from '../BoardContext';
-import { ColorLayoutType } from '../helper/defaultBoard';
+import { ColorLayoutType } from '../helper/types';
 
 // Structure of color palette objects in colorPalette
 export interface Palette {

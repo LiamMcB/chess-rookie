@@ -7,9 +7,7 @@ etc...
 From a bird's eye perspective as either white or black player
 */
 import { ColorPalette } from '../public/colorPalette.js'
-
-export type LayoutType = readonly (string|null)[][];
-export type ColorLayoutType = string[][];
+import { LayoutType, ColorLayoutType } from './types';
 
 export const defaultBlackBoard: LayoutType = [
   ['WR', 'WN', 'WB', 'WK', 'WQ', 'WB', 'WN', 'WR'],

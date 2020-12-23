@@ -2,7 +2,8 @@ import * as React from 'react';
 import { Nav } from './components/Nav';
 import { Main } from './components/Main';
 import { BoardContext } from './BoardContext';
-import { defaultWhiteBoard, ColorLayoutType, defaultColorLayout } from './helper/defaultBoard';
+import { defaultWhiteBoard, defaultColorLayout } from './helper/defaultBoard';
+import { ColorLayoutType } from './helper/types';
 import { boardReducer } from './helper/boardReducer';
 import { StateType } from './helper/boardReducer';
 
