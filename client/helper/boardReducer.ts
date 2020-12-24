@@ -2,6 +2,7 @@
 import { defaultWhiteBoard, defaultBlackBoard } from './defaultBoard';
 import { LayoutType, ColorLayoutType } from './types';
 import { ColorPalette } from '../public/colorPalette';
+import { highlight } from '../helper/highlightHelpers';
 
 // Defines structure of state object
 export interface StateType {
@@ -90,7 +91,19 @@ export const boardReducer = (state: StateType, action: ActionType) => {
       const currentPiece = action.payload.piece;
       // Highlighted moves for pawn
       const colorState = [...state.colorLayout];
-      colorState[positionFrom[0] - 1][positionFrom[1]] = 'rgb(87, 253, 143)';
+      // colorState[positionFrom[0] - 1][positionFrom[1]] = 'rgb(87, 253, 143)';
+      console.log(`Clicked ${positionFrom}`);
+      // Get indices in array to highlight
+      const highlightedIndices: number[][] = highlight(currentPiece, positionFrom, state.boardLayout);
+      console.log(highlightedIndices);
+      // If the highlighted indices come back with possible moves, change color state to reflect that
+      if (highlightedIndices[0]) {
+        for (let i = 0; i < highlightedIndices.length; i += 1) {
+          const currentRow = highlightedIndices[i][0];
+          const currentColumn = highlightedIndices[i][1];
+          colorState[currentRow][currentColumn] = 'rgb(87, 253, 143)';
+        }
+      }
       return {
         ...state,
         colorLayout: colorState
