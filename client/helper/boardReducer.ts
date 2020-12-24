@@ -1,14 +1,15 @@
 /* File which handles all stateful functionality on the board layout. */
 import { defaultWhiteBoard, defaultBlackBoard } from './defaultBoard';
 import { LayoutType, ColorLayoutType } from './types';
-import { ColorPalette } from '../public/colorPalette';
-import { highlight } from '../helper/highlightHelpers';
+import { ColorPalette, HighlightedColor } from '../constants/colorPalette';
+import { highlight, unhighlightBoard } from '../helper/highlightHelpers';
 
 // Defines structure of state object
 export interface StateType {
   boardLayout: LayoutType;
   colorLayout: ColorLayoutType;
   paletteIndex: number;
+  movingPiece: MovePayload | null; // Represents information about which piece were moving and where from
 }
 // Structure of actions
 export interface ActionType {
@@ -91,34 +92,32 @@ export const boardReducer = (state: StateType, action: ActionType) => {
       const currentPiece = action.payload.piece;
       // Highlighted moves for pawn
       const colorState = [...state.colorLayout];
-      // colorState[positionFrom[0] - 1][positionFrom[1]] = 'rgb(87, 253, 143)';
-      console.log(`Clicked ${positionFrom}`);
       // Get indices in array to highlight
       const highlightedIndices: number[][] = highlight(currentPiece, positionFrom, state.boardLayout);
-      console.log(highlightedIndices);
       // If the highlighted indices come back with possible moves, change color state to reflect that
       if (highlightedIndices[0]) {
         for (let i = 0; i < highlightedIndices.length; i += 1) {
           const currentRow = highlightedIndices[i][0];
           const currentColumn = highlightedIndices[i][1];
-          colorState[currentRow][currentColumn] = 'rgb(87, 253, 143)';
+          colorState[currentRow][currentColumn] = HighlightedColor;
         }
       }
       return {
         ...state,
+        movingPiece: {
+          piece: currentPiece,
+          from: positionFrom
+        },
         colorLayout: colorState
       }
     case 'UN_HIGHLIGHT_MOVES':
       const positionClickedFrom = action.payload.from;
       const currentPieceClickedFrom = action.payload.piece;
-      // Highlighted moves for pawn
-      const colorStateUnhighlight = [...state.colorLayout];
-      // If position row and column add to positive, change it to light, else dark
-      (positionClickedFrom[0] + positionClickedFrom[1]) % 2 === 0 ? 
-        colorStateUnhighlight[positionClickedFrom[0] - 1][positionClickedFrom[1]] = ColorPalette[state.paletteIndex].dark:
-        colorStateUnhighlight[positionClickedFrom[0] - 1][positionClickedFrom[1]] = ColorPalette[state.paletteIndex].light;
+      // Unhighlight the whole board
+      const colorStateUnhighlight = unhighlightBoard(state.paletteIndex);
       return {
         ...state,
+        movingPiece: null,
         colorLayout: colorStateUnhighlight
       }
     // Cases for moving specific pieces
@@ -133,9 +132,13 @@ export const boardReducer = (state: StateType, action: ActionType) => {
       // Place piece in new position for new layout
       const newLayout = state.boardLayout.slice();
       [newLayout[rowFrom][colFrom], newLayout[rowTo][colTo]] = [newLayout[rowTo][colTo], newLayout[rowFrom][colFrom]];
+      // Change color layout so square is not still highlighted
+      const unhighlightedState = unhighlightBoard(state.paletteIndex);
       // Return new state object with new layout as value
       return {
         ...state,
+        colorLayout: unhighlightedState,
+        movingPiece: null,
         boardLayout: newLayout
       };
     default:

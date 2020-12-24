@@ -6,7 +6,7 @@ KEY:
 etc...
 From a bird's eye perspective as either white or black player
 */
-import { ColorPalette } from '../public/colorPalette.js'
+import { ColorPalette } from '../constants/colorPalette.js'
 import { LayoutType, ColorLayoutType } from './types';
 
 export const defaultBlackBoard: LayoutType = [

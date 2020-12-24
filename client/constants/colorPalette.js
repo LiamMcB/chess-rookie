@@ -40,3 +40,6 @@ export const ColorPalette = [
     light: '#DAD4EF'
   }
 ];
+
+// Color used to mark whether a piece can move to a particular square
+export const HighlightedColor = 'rgb(87, 253, 143)';

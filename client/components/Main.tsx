@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ChessBoard } from './ChessBoard';
-import { ColorPalette } from '../public/colorPalette';
+import { ColorPalette } from '../constants/colorPalette';
 import { BoardContext } from '../BoardContext';
 
 

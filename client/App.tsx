@@ -22,7 +22,8 @@ export const App: React.FC = () => {
       ['WR', 'WN', 'WB', 'WQ', 'WK', 'WB', 'WN', 'WR']
     ],
     colorLayout: defaultColorLayout,
-    paletteIndex: 0
+    paletteIndex: 0,
+    movingPiece: null
   } 
   // Reducer hook which bundles state-changing functionality
   const [ state, dispatch ] = React.useReducer(boardReducer, defaultState);

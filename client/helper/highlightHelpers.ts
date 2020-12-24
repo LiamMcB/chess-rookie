@@ -1,5 +1,6 @@
 /* File with helper functions that return array of indices for reducer to highlight */
-import { LayoutType } from './types';
+import { LayoutType, ColorLayoutType } from './types';
+import { ColorPalette } from '../constants/colorPalette';
 
 // Function that checks what kind of piece is passed in and highlights accordingly (checking if same side's pieces there)
 export const highlight = (
@@ -93,3 +94,19 @@ const canMove = function (
   }
   return pieceCanMove;
 };
+
+// Helper that unhighlights whole board and returns it
+export const unhighlightBoard = function(paletteIndex: number) : ColorLayoutType {
+  const lightColor = ColorPalette[paletteIndex].light;
+  const darkColor = ColorPalette[paletteIndex].dark;
+  return [
+    [lightColor, darkColor, lightColor, darkColor, lightColor, darkColor, lightColor, darkColor],
+    [darkColor, lightColor, darkColor, lightColor, darkColor, lightColor, darkColor, lightColor],
+    [lightColor, darkColor, lightColor, darkColor, lightColor, darkColor, lightColor, darkColor],
+    [darkColor, lightColor, darkColor, lightColor, darkColor, lightColor, darkColor, lightColor],
+    [lightColor, darkColor, lightColor, darkColor, lightColor, darkColor, lightColor, darkColor],
+    [darkColor, lightColor, darkColor, lightColor, darkColor, lightColor, darkColor, lightColor],
+    [lightColor, darkColor, lightColor, darkColor, lightColor, darkColor, lightColor, darkColor],
+    [darkColor, lightColor, darkColor, lightColor, darkColor, lightColor, darkColor, lightColor],
+  ];
+}
