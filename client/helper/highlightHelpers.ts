@@ -13,6 +13,7 @@ export const highlight = (
   const col: number = position[1];
   // Initialize piece variable and array to hold highlight indices in form [row, column]
   const highlightIndices: number[][] = [];
+  // String to represent the allcaps version of our current chess piece
   let chessPiece: string;
   // Not on board is undefined, an empty square is null
   const emptySquare: null = null;
@@ -68,7 +69,41 @@ export const highlight = (
       highlightIndices.push([row - 1, col]);
     }
   }
-
+  // Knights move in an L-shape, 2 squares one direction and 1 square in the perpendicular direction
+  else if (chessPiece === 'KNIGHT') {
+    // TR Up 2 Right 1
+    if (canMove(piece, [row - 2, col + 1], boardLayout, side)) {
+      highlightIndices.push([row - 2, col + 1]);
+    }
+    // TRR Up 1 Right 2
+    if (canMove(piece, [row - 1, col + 2], boardLayout, side)) {
+      highlightIndices.push([row - 1, col + 2]);
+    }
+    // BRR Down 1 Right 2 
+    if (canMove(piece, [row + 1, col + 2], boardLayout, side)) {
+      highlightIndices.push([row + 1, col + 2]);
+    }
+    // BR Down 2 Right 1
+    if (canMove(piece, [row + 2, col + 1], boardLayout, side)) {
+      highlightIndices.push([row + 2, col + 1]);
+    }
+    // BL Down 2 Left 1
+    if (canMove(piece, [row + 2, col - 1], boardLayout, side)) {
+      highlightIndices.push([row + 2, col - 1]);
+    }
+    // BLL Down 1 Left 2
+    if (canMove(piece, [row + 1, col - 2], boardLayout, side)) {
+      highlightIndices.push([row + 1, col - 2]);
+    }
+    // TLL Up 1 Left 2
+    if (canMove(piece, [row - 1, col - 2], boardLayout, side)) {
+      highlightIndices.push([row - 1, col - 2]);
+    }
+    // TL Up 2 Left 1
+    if (canMove(piece, [row - 2, col - 1], boardLayout, side)) {
+      highlightIndices.push([row - 2, col - 1]);
+    }
+  }
   return highlightIndices;
 };
 
