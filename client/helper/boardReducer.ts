@@ -1,5 +1,5 @@
 /* File which handles all stateful functionality on the board layout. */
-import { defaultWhiteBoard, defaultBlackBoard } from './defaultBoard';
+import { getDefaultWhiteBoard, getDefaultBlackBoard } from './defaultBoard';
 import { LayoutType, ColorLayoutType } from './types';
 import { ColorPalette, HighlightedColor } from '../constants/colorPalette';
 import { highlight, unhighlightBoard } from '../helper/highlightHelpers';
@@ -59,31 +59,13 @@ export const boardReducer = (state: StateType, action: ActionType) => {
     case 'RESET_BOARD_WHITE':
       const defaultWhiteState: StateType = {
         ...state,
-        boardLayout: [
-          ['BR', 'BN', 'BB', 'BQ', 'BK', 'BB', 'BN', 'BR'],
-          ['BP', 'BP', 'BP', 'BP', 'BP', 'BP', 'BP', 'BP'],
-          Array(8).fill(null),
-          Array(8).fill(null),
-          Array(8).fill(null),
-          Array(8).fill(null),
-          ['WP', 'WP', 'WP', 'WP', 'WP', 'WP', 'WP', 'WP'],
-          ['WR', 'WN', 'WB', 'WQ', 'WK', 'WB', 'WN', 'WR']
-        ]
+        boardLayout: getDefaultWhiteBoard()
       }
       return defaultWhiteState;
     case 'RESET_BOARD_BLACK':
       const defaultBlackState: StateType = {
         ...state,
-        boardLayout: [
-          ['WR', 'WN', 'WB', 'WK', 'WQ', 'WB', 'WN', 'WR'],
-          ['WP', 'WP', 'WP', 'WP', 'WP', 'WP', 'WP', 'WP'],
-          Array(8).fill(null),
-          Array(8).fill(null),
-          Array(8).fill(null),
-          Array(8).fill(null),
-          ['BP', 'BP', 'BP', 'BP', 'BP', 'BP', 'BP', 'BP'],
-          ['BR', 'BN', 'BB', 'BK', 'BQ', 'BB', 'BN', 'BR']
-        ]
+        boardLayout: getDefaultBlackBoard()
       }
       return defaultBlackState;
     // Cases to highlight and unhighlight legal moves

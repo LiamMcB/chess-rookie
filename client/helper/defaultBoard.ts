@@ -19,6 +19,19 @@ export const defaultBlackBoard: LayoutType = [
   ['BP', 'BP', 'BP', 'BP', 'BP', 'BP', 'BP', 'BP'],
   ['BR', 'BN', 'BB', 'BK', 'BQ', 'BB', 'BN', 'BR']
 ];
+// Function to return defaultBlackBoard
+export function getDefaultBlackBoard(): LayoutType {
+  return [
+    ['WR', 'WN', 'WB', 'WK', 'WQ', 'WB', 'WN', 'WR'],
+    ['WP', 'WP', 'WP', 'WP', 'WP', 'WP', 'WP', 'WP'],
+    Array(8).fill(null),
+    Array(8).fill(null),
+    Array(8).fill(null),
+    Array(8).fill(null),
+    ['BP', 'BP', 'BP', 'BP', 'BP', 'BP', 'BP', 'BP'],
+    ['BR', 'BN', 'BB', 'BK', 'BQ', 'BB', 'BN', 'BR']
+  ];
+}
 
 export const defaultWhiteBoard: LayoutType = [
   ['BR', 'BN', 'BB', 'BQ', 'BK', 'BB', 'BN', 'BR'],
@@ -30,6 +43,19 @@ export const defaultWhiteBoard: LayoutType = [
   ['WP', 'WP', 'WP', 'WP', 'WP', 'WP', 'WP', 'WP'],
   ['WR', 'WN', 'WB', 'WQ', 'WK', 'WB', 'WN', 'WR']
 ];
+// Function to return defaultWhiteBoard
+export function getDefaultWhiteBoard(): LayoutType {
+  return [
+    ['BR', 'BN', 'BB', 'BQ', 'BK', 'BB', 'BN', 'BR'],
+    ['BP', 'BP', 'BP', 'BP', 'BP', 'BP', 'BP', 'BP'],
+    Array(8).fill(null),
+    Array(8).fill(null),
+    Array(8).fill(null),
+    Array(8).fill(null),
+    ['WP', 'WP', 'WP', 'WP', 'WP', 'WP', 'WP', 'WP'],
+    ['WR', 'WN', 'WB', 'WQ', 'WK', 'WB', 'WN', 'WR']
+  ];
+}
 
 const lightColor = ColorPalette[0].light;
 const darkColor = ColorPalette[0].dark;
