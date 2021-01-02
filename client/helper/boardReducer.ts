@@ -93,8 +93,6 @@ export const boardReducer = (state: StateType, action: ActionType) => {
         colorLayout: colorState
       }
     case 'UN_HIGHLIGHT_MOVES':
-      const positionClickedFrom = action.payload.from;
-      const currentPieceClickedFrom = action.payload.piece;
       // Unhighlight the whole board
       const colorStateUnhighlight = unhighlightBoard(state.paletteIndex);
       return {

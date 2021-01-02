@@ -32,7 +32,7 @@ export const highlight = (
       highlightIndices.push([row - 1, col]);
     }
     // TR
-    if (canMove(piece, [row - 1, col], boardLayout, side)) {
+    if (canMove(piece, [row - 1, col + 1], boardLayout, side)) {
       highlightIndices.push([row - 1, col + 1]);
     }
     // Right
@@ -121,11 +121,15 @@ export const highlight = (
       highlightIndices.push([row - 2, col - 1]);
     }
   }
-  // Pawns move one square forward
+  // Pawns move one square forward except for on their first move, where they can move two squares
   else if (chessPiece === 'PAWN') {
     // Top
     if (canMove(piece, [row - 1, col], boardLayout, side)) {
       highlightIndices.push([row - 1, col]);
+    }
+    // If pawn's first move, highlight one additional square
+    if (canMove(piece, [row - 2, col], boardLayout, side) && row === 6) {
+      highlightIndices.push([row - 2, col]);
     }
   }
   return highlightIndices;

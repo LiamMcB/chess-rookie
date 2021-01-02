@@ -23,10 +23,10 @@ export const ChessPiece: React.FC<Props> = ({ piece, position }) => {
   // Function to show available squares for current piece to move or unhighlight
   const highlightLegalMoves = function(e) {
     e.preventDefault();
+    // Unhighlight previously highlighted moves
+    dispatch({ type: 'UN_HIGHLIGHT_MOVES', payload: {piece, from: [...position]} });
     // If no squares highlighted, highlight them
     if (!highlighted) dispatch({ type: 'HIGHLIGHT_MOVES', payload: {piece, from: [...position]} });
-    // Else unhighlight them
-    else dispatch({ type: 'UN_HIGHLIGHT_MOVES', payload: {piece, from: [...position]} })
     // Toggle highlighted so it unhighlights 
     setHighlighted(!highlighted);
   }
