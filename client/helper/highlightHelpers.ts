@@ -1,7 +1,6 @@
 /* File with helper functions that return array of indices for reducer to highlight */
 import { LayoutType, ColorLayoutType } from './types';
 import { ColorPalette } from '../constants/colorPalette';
-import { pid } from 'process';
 
 // Function that checks what kind of piece is passed in and highlights accordingly (checking if same side's pieces there)
 export const highlight = (

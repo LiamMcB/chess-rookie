@@ -2,7 +2,8 @@
 import { getDefaultWhiteBoard, getDefaultBlackBoard } from './defaultBoard';
 import { LayoutType, ColorLayoutType } from './types';
 import { ColorPalette, HighlightedColor } from '../constants/colorPalette';
-import { highlight, unhighlightBoard } from '../helper/highlightHelpers';
+import { highlight, unhighlightBoard } from './highlightHelpers';
+import { movePiece } from './moveHelpers';
 
 // Defines structure of state object
 export interface StateType {
@@ -110,8 +111,7 @@ export const boardReducer = (state: StateType, action: ActionType) => {
       const rowTo = action.payload.to[0];
       const colTo = action.payload.to[1];
       // Place piece in new position for new layout
-      const newLayout = state.boardLayout.slice();
-      [newLayout[rowFrom][colFrom], newLayout[rowTo][colTo]] = [newLayout[rowTo][colTo], newLayout[rowFrom][colFrom]];
+      const newLayout = movePiece(action.payload.piece, [rowFrom, colFrom], [rowTo, colTo], state.boardLayout);
       // Change color layout so square is not still highlighted
       const unhighlightedState = unhighlightBoard(state.paletteIndex);
       // Return new state object with new layout as value
