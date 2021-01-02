@@ -60,12 +60,31 @@ export const highlight = (
       highlightIndices.push([row - 1, col - 1]);
     }
   }
-  // Pawns move one square forward
-  else if (chessPiece === 'PAWN') {
+  // Queens move as many squares in any directions as the user wants
+  else if (chessPiece === 'QUEEN') {
+    // Highlight top, right, bottom, left
+    highlightTop(piece, position, boardLayout, side, highlightIndices);
+    highlightRight(piece, position, boardLayout, side, highlightIndices);
+    highlightBottom(piece, position, boardLayout, side, highlightIndices);
+    highlightLeft(piece, position, boardLayout, side, highlightIndices);
+    // Highlight Diagonally
+    highlightDiagonal(piece, position, boardLayout, side, highlightIndices); 
+  }
+  // Rooks move as many squares vertically or horizontally as the user wants
+  else if (chessPiece === 'ROOK') {
     // Top
-    if (canMove(piece, [row - 1, col], boardLayout, side)) {
-      highlightIndices.push([row - 1, col]);
-    }
+    highlightTop(piece, position, boardLayout, side, highlightIndices);
+    // Right
+    highlightRight(piece, position, boardLayout, side, highlightIndices);
+    // Bottom
+    highlightBottom(piece, position, boardLayout, side, highlightIndices);
+    // Left
+    highlightLeft(piece, position, boardLayout, side, highlightIndices);
+  }
+  // Bishops move as many squares diagonally as the user wants
+  else if (chessPiece === 'BISHOP') {
+    // Highlight diagonally
+    highlightDiagonal(piece, position, boardLayout, side, highlightIndices);
   }
   // Knights move in an L-shape, 2 squares one direction and 1 square in the perpendicular direction
   else if (chessPiece === 'KNIGHT') {
@@ -102,32 +121,13 @@ export const highlight = (
       highlightIndices.push([row - 2, col - 1]);
     }
   }
-  // Rooks move as many squares vertically or horizontally as the user wants
-  else if (chessPiece === 'ROOK') {
+  // Pawns move one square forward
+  else if (chessPiece === 'PAWN') {
     // Top
-    highlightTop(piece, position, boardLayout, side, highlightIndices);
-    // Right
-    highlightRight(piece, position, boardLayout, side, highlightIndices);
-    // Bottom
-    highlightBottom(piece, position, boardLayout, side, highlightIndices);
-    // Left
-    highlightLeft(piece, position, boardLayout, side, highlightIndices);
+    if (canMove(piece, [row - 1, col], boardLayout, side)) {
+      highlightIndices.push([row - 1, col]);
+    }
   }
-  // Bishops move as many squares diagonally as the user wants
-  else if (chessPiece === 'BISHOP') {
-    // Highlight diagonally
-    highlightDiagonal(piece, position, boardLayout, side, highlightIndices);
-  }
-  // Queens move as many squares in any directions as the user wants
-  else if (chessPiece === 'QUEEN') {
-    // Highlight top, right, bottom, left
-    highlightTop(piece, position, boardLayout, side, highlightIndices);
-    highlightRight(piece, position, boardLayout, side, highlightIndices);
-    highlightBottom(piece, position, boardLayout, side, highlightIndices);
-    highlightLeft(piece, position, boardLayout, side, highlightIndices);
-    // Highlight Diagonally
-    highlightDiagonal(piece, position, boardLayout, side, highlightIndices); 
-  };
   return highlightIndices;
 };
 
