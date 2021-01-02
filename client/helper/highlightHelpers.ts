@@ -15,8 +15,6 @@ export const highlight = (
   const highlightIndices: number[][] = [];
   // String to represent the allcaps version of our current chess piece
   let chessPiece: string;
-  // Not on board is undefined, an empty square is null
-  const emptySquare: null = null;
   // Color for players side is either 'W' or 'B'
   const side: string = piece[0];
   // Define the kind of piece being used
@@ -27,7 +25,6 @@ export const highlight = (
   else if (piece[1] === 'N') chessPiece = 'KNIGHT';
   else if (piece[1] === 'P') chessPiece = 'PAWN';
   // Kings can move one space in any direction so long as there isn't a piece of the same color
-  // UNDEFINED IS FOR SQUARE NOT ON BOARD AND NULL IS FOR EMPTY SQUARE
   if (chessPiece === 'KING') {
     // Top
     if (canMove(piece, [row - 1, col], boardLayout, side)) {
@@ -109,9 +106,11 @@ export const highlight = (
     // Top
     highlightTop(piece, position, boardLayout, side, highlightIndices);
     // Right
+    highlightRight(piece, position, boardLayout, side, highlightIndices);
     // Bottom
     highlightBottom(piece, position, boardLayout, side, highlightIndices);
     // Left
+    highlightLeft(piece, position, boardLayout, side, highlightIndices);
   }
   return highlightIndices;
 };
@@ -168,6 +167,62 @@ const highlightBottom = function (
       else {
         highlightIndices.push([bottom, col]);
         bottom += 1;
+      }
+    } else break;
+  }
+};
+// Helper that highlights squares to the right of the current piece
+const highlightRight = function (
+  piece: string,
+  position: number[],
+  boardLayout: LayoutType,
+  side: string,
+  highlightIndices: number[][]
+): void {
+  // Get row and column from position
+  const row: number = position[0];
+  const col: number = position[1];
+  // Start bottom at the square right of our current square
+  let right = col + 1;
+  while (right <= 8) {
+    if (canMove(piece, [row, right], boardLayout, side)) {
+      // If there is a piece of opposite side, highlight that square and no further squares
+      if (boardLayout[row][right] && boardLayout[row][right][0] !== side) {
+        highlightIndices.push([row, right]);
+        break;
+      }
+      // Highlight and increment right
+      else {
+        highlightIndices.push([row, right]);
+        right += 1;
+      }
+    } else break;
+  }
+};
+// Helper that highlights squares to the left of the current piece
+const highlightLeft = function (
+  piece: string,
+  position: number[],
+  boardLayout: LayoutType,
+  side: string,
+  highlightIndices: number[][]
+): void {
+  // Get row and column from position
+  const row: number = position[0];
+  const col: number = position[1];
+  // Start left at the square right to the left of our current square
+  let left = col - 1;
+  while (left >= 0) {
+    if (canMove(piece, [row, left], boardLayout, side)) {
+      // If there is a piece of opposite side, highlight that square and no further squares
+      if (boardLayout[row][left] && boardLayout[row][left][0] !== side) {
+        highlightIndices.push([row, left]);
+        break;
+      }
+      // Highlight and increment right
+      else {
+        highlightIndices.push([row, left]);
+        left -= 1;
       }
     } else break;
   }
