@@ -79,7 +79,7 @@ export const highlight = (
     if (canMove(piece, [row - 1, col + 2], boardLayout, side)) {
       highlightIndices.push([row - 1, col + 2]);
     }
-    // BRR Down 1 Right 2 
+    // BRR Down 1 Right 2
     if (canMove(piece, [row + 1, col + 2], boardLayout, side)) {
       highlightIndices.push([row + 1, col + 2]);
     }
@@ -104,7 +104,73 @@ export const highlight = (
       highlightIndices.push([row - 2, col - 1]);
     }
   }
+  // Rooks move as many squares vertically or horizontally as the user wants
+  else if (chessPiece === 'ROOK') {
+    // Top
+    highlightTop(piece, position, boardLayout, side, highlightIndices);
+    // Right
+    // Bottom
+    highlightBottom(piece, position, boardLayout, side, highlightIndices);
+    // Left
+  }
   return highlightIndices;
+};
+
+// Helper that highlights squares forward from current piece
+const highlightTop = function (
+  piece: string,
+  position: number[],
+  boardLayout: LayoutType,
+  side: string,
+  highlightIndices: number[][]
+): void {
+  // Get row and column from position
+  const row: number = position[0];
+  const col: number = position[1];
+  // Start top at the square right above our current square
+  let top = row - 1;
+  while (top >= 0) {
+    if (canMove(piece, [top, col], boardLayout, side)) {
+      // If there is a piece of opposite side, highlight that square and no further squares
+      if (boardLayout[top][col] && boardLayout[top][col][0] !== side) {
+        highlightIndices.push([top, col]);
+        break;
+      }
+      // Highlight and decrement top
+      else {
+        highlightIndices.push([top, col]);
+        top -= 1;
+      }
+    } else break;
+  }
+};
+// Helper that highlights squares before/below the current piece
+const highlightBottom = function (
+  piece: string,
+  position: number[],
+  boardLayout: LayoutType,
+  side: string,
+  highlightIndices: number[][]
+): void {
+  // Get row and column from position
+  const row: number = position[0];
+  const col: number = position[1];
+  // Start bottom at the square right below our current square
+  let bottom = row + 1;
+  while (bottom <= 8) {
+    if (canMove(piece, [bottom, col], boardLayout, side)) {
+      // If there is a piece of opposite side, highlight that square and no further squares
+      if (boardLayout[bottom][col] && boardLayout[bottom][col][0] !== side) {
+        highlightIndices.push([bottom, col]);
+        break;
+      }
+      // Highlight and increment bottom
+      else {
+        highlightIndices.push([bottom, col]);
+        bottom += 1;
+      }
+    } else break;
+  }
 };
 
 // Helper function that checks if the piece can move to an index
@@ -131,17 +197,91 @@ const canMove = function (
 };
 
 // Helper that unhighlights whole board and returns it
-export const unhighlightBoard = function(paletteIndex: number) : ColorLayoutType {
+export const unhighlightBoard = function (
+  paletteIndex: number
+): ColorLayoutType {
   const lightColor = ColorPalette[paletteIndex].light;
   const darkColor = ColorPalette[paletteIndex].dark;
   return [
-    [lightColor, darkColor, lightColor, darkColor, lightColor, darkColor, lightColor, darkColor],
-    [darkColor, lightColor, darkColor, lightColor, darkColor, lightColor, darkColor, lightColor],
-    [lightColor, darkColor, lightColor, darkColor, lightColor, darkColor, lightColor, darkColor],
-    [darkColor, lightColor, darkColor, lightColor, darkColor, lightColor, darkColor, lightColor],
-    [lightColor, darkColor, lightColor, darkColor, lightColor, darkColor, lightColor, darkColor],
-    [darkColor, lightColor, darkColor, lightColor, darkColor, lightColor, darkColor, lightColor],
-    [lightColor, darkColor, lightColor, darkColor, lightColor, darkColor, lightColor, darkColor],
-    [darkColor, lightColor, darkColor, lightColor, darkColor, lightColor, darkColor, lightColor],
+    [
+      lightColor,
+      darkColor,
+      lightColor,
+      darkColor,
+      lightColor,
+      darkColor,
+      lightColor,
+      darkColor,
+    ],
+    [
+      darkColor,
+      lightColor,
+      darkColor,
+      lightColor,
+      darkColor,
+      lightColor,
+      darkColor,
+      lightColor,
+    ],
+    [
+      lightColor,
+      darkColor,
+      lightColor,
+      darkColor,
+      lightColor,
+      darkColor,
+      lightColor,
+      darkColor,
+    ],
+    [
+      darkColor,
+      lightColor,
+      darkColor,
+      lightColor,
+      darkColor,
+      lightColor,
+      darkColor,
+      lightColor,
+    ],
+    [
+      lightColor,
+      darkColor,
+      lightColor,
+      darkColor,
+      lightColor,
+      darkColor,
+      lightColor,
+      darkColor,
+    ],
+    [
+      darkColor,
+      lightColor,
+      darkColor,
+      lightColor,
+      darkColor,
+      lightColor,
+      darkColor,
+      lightColor,
+    ],
+    [
+      lightColor,
+      darkColor,
+      lightColor,
+      darkColor,
+      lightColor,
+      darkColor,
+      lightColor,
+      darkColor,
+    ],
+    [
+      darkColor,
+      lightColor,
+      darkColor,
+      lightColor,
+      darkColor,
+      lightColor,
+      darkColor,
+      lightColor,
+    ],
   ];
-}
+};
