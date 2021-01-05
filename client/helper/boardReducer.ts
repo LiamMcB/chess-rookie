@@ -4,6 +4,7 @@ import { LayoutType, ColorLayoutType, SideType } from './types';
 import { ColorPalette, HighlightedColor } from '../constants/colorPalette';
 import { highlight, unhighlightBoard } from './highlightHelpers';
 import { movePiece } from './moveHelpers';
+import { botMoves } from './botHelpers';
 
 // Defines structure of state object
 export interface StateType {
@@ -143,7 +144,7 @@ export const boardReducer = (state: StateType, action: ActionType) => {
       };
     // Case for moving opponent's (the bot) piece
     case 'MOVE_OPPONENT':
-      console.log('Im moving!');
+      botMoves(state.boardLayout);
     // Case for changing moving side
     case 'CHANGE_SIDE':
       let newSide: SideType;

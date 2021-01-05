@@ -8,7 +8,7 @@ import { SideType } from '../helper/types';
 export const Main: React.FC = () => {
   // State to manage whether the user is white or black
   const [ isWhite, setIsWhite ] = React.useState(true);
-  // State to hold location of all chess pieces
+  // State to hold location of all chess pieces, type info in boardReducer.ts
   const { state, dispatch } = React.useContext(BoardContext);
   // State to represent which color combo were currently on (by index)
   const [ paletteIndex, setPaletteIndex ] = React.useState(0);

@@ -28,10 +28,9 @@ export const ChessSquare: React.FC<Props> = ({ piece }) => {
       dispatch({ type: 'MOVE_PIECE', payload: {piece: state.movingPiece.piece, to: [...piece], from: [...state.movingPiece.from]} })
       // Set highlighted to false once it's moved
       setHighlighted(false);
-    // If it's not legal, console log
-    } else {
-      console.log(`Can't move the current piece to ${piece}.`)
-    }
+      // Change the current side to the opponent's color
+      dispatch({ type: 'MOVE_OPPONENT' });
+    } 
   }
   // State to hold the current color of the square
   const [currentColor, setCurrentColor] = React.useState(state.colorLayout[piece[0]][piece[1]]);
