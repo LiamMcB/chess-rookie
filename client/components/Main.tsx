@@ -18,6 +18,7 @@ export const Main: React.FC = () => {
   // Function reset board for new game
   const resetBoard = function() {
     setWhiteStarts(false);
+    dispatch({type: 'UN_HIGHLIGHT_MOVES'});
     dispatch({type: 'RESET_BOARD_WHITE'});
   }
   // Function to toggle between color combos in the color palette
@@ -33,6 +34,8 @@ export const Main: React.FC = () => {
   const changeStartingSide = function() {
     // Change whiteStart to the opposite of what it currently is
     setWhiteStarts(!whiteStarts);
+    // Unhighlight if any squares still highlighted
+    dispatch({type: 'UN_HIGHLIGHT_MOVES'});
     // Depending on what white starts is, change the default board layout
     whiteStarts ? dispatch({type: 'RESET_BOARD_WHITE'}) : dispatch({type: 'RESET_BOARD_BLACK'});
   }

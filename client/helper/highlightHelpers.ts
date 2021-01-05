@@ -1,6 +1,7 @@
 /* File with helper functions that return array of indices for reducer to highlight */
 import { LayoutType, ColorLayoutType } from './types';
 import { ColorPalette } from '../constants/colorPalette';
+import { canCastle } from './moveHelpers';
 
 // Function that checks what kind of piece is passed in and highlights accordingly (checking if same side's pieces there)
 export const highlight = (
@@ -79,6 +80,12 @@ export const highlight = (
     highlightBottom(piece, position, boardLayout, side, highlightIndices);
     // Left
     highlightLeft(piece, position, boardLayout, side, highlightIndices);
+    // CASTLING: Where king and rook swap places, more info in movehelpers
+    if (canCastle(boardLayout, position, side)) {
+      // Depending on side, highlight king's position
+      if (side === 'W') highlightIndices.push([7, 4]);
+      else if (side === 'B') highlightIndices.push([7, 3]);
+    }
   }
   // Bishops move as many squares diagonally as the user wants
   else if (chessPiece === 'BISHOP') {
