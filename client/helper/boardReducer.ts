@@ -110,6 +110,19 @@ export const boardReducer = (state: StateType, action: ActionType) => {
       const colFrom = action.payload.from[1];
       const rowTo = action.payload.to[0];
       const colTo = action.payload.to[1];
+      // If the position moving to has the king of the opposite side, user checkmates/WINS
+      if (state.boardLayout[rowTo][colTo] && state.boardLayout[rowTo][colTo][1] === 'K') {
+        alert('Checkmate. You win!');
+        // Change color layout so square is not still highlighted
+        const unhighlightedState = unhighlightBoard(state.paletteIndex);
+        // Return the default board
+        return {
+          ...state,
+          colorLayout: unhighlightedState,
+          movingPiece: null,
+          boardLayout: getDefaultWhiteBoard()
+        }
+      };
       // Place piece in new position for new layout
       const newLayout = movePiece(action.payload.piece, [rowFrom, colFrom], [rowTo, colTo], state.boardLayout);
       // Change color layout so square is not still highlighted
