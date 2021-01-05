@@ -1,6 +1,6 @@
 /* File which handles all stateful functionality on the board layout. */
 import { getDefaultWhiteBoard, getDefaultBlackBoard } from './defaultBoard';
-import { LayoutType, ColorLayoutType } from './types';
+import { LayoutType, ColorLayoutType, SideType } from './types';
 import { ColorPalette, HighlightedColor } from '../constants/colorPalette';
 import { highlight, unhighlightBoard } from './highlightHelpers';
 import { movePiece } from './moveHelpers';
@@ -11,6 +11,7 @@ export interface StateType {
   colorLayout: ColorLayoutType;
   paletteIndex: number;
   movingPiece: MovePayload | null; // Represents information about which piece were moving and where from
+  currentSide: SideType; // Represents the current side moving, which isn't necessarily the same as the user's side
 }
 // Structure of actions
 export interface ActionType {
@@ -25,7 +26,8 @@ export enum ActionTypeOptions {
   HIGHLIGHT_MOVES='HIGHLIGHT_MOVES',
   UN_HIGHLIGHT_MOVES='UN_HIGHLIGHT_MOVES',
   MOVE_PIECE='MOVE_PIECE',
-  MOVE_PAWN='MOVE_PAWN'
+  MOVE_OPPONENT='MOVE_OPPONENT',
+  CHANGE_SIDE='CHANGE_SIDE',
 }
 // Interface to define payload of a piece move
 export interface MovePayload {
@@ -60,13 +62,15 @@ export const boardReducer = (state: StateType, action: ActionType) => {
     case 'RESET_BOARD_WHITE':
       const defaultWhiteState: StateType = {
         ...state,
-        boardLayout: getDefaultWhiteBoard()
+        boardLayout: getDefaultWhiteBoard(),
+        currentSide: SideType.White
       }
       return defaultWhiteState;
     case 'RESET_BOARD_BLACK':
       const defaultBlackState: StateType = {
         ...state,
-        boardLayout: getDefaultBlackBoard()
+        boardLayout: getDefaultBlackBoard(),
+        currentSide: SideType.White
       }
       return defaultBlackState;
     // Cases to highlight and unhighlight legal moves
@@ -127,13 +131,32 @@ export const boardReducer = (state: StateType, action: ActionType) => {
       const newLayout = movePiece(action.payload.piece, [rowFrom, colFrom], [rowTo, colTo], state.boardLayout);
       // Change color layout so square is not still highlighted
       const unhighlightedState = unhighlightBoard(state.paletteIndex);
+      // Change current side to opposite of current side
+      const oppositeSide: SideType = state.currentSide === SideType.White ? SideType.Black : SideType.White;
       // Return new state object with new layout as value
       return {
         ...state,
         colorLayout: unhighlightedState,
         movingPiece: null,
-        boardLayout: newLayout
+        boardLayout: newLayout,
+        currentSide: oppositeSide
       };
+    // Case for moving opponent's (the bot) piece
+    case 'MOVE_OPPONENT':
+      console.log('Im moving!');
+    // Case for changing moving side
+    case 'CHANGE_SIDE':
+      let newSide: SideType;
+      // If the current side is white, change it to black
+      if (state.currentSide === SideType.White) newSide = SideType.Black;
+      // If its black, change it to white
+      else if (state.currentSide === SideType.Black) newSide = SideType.White;
+      // Return the state
+      return {
+        ...state,
+        currentSide: newSide
+      }
+    // Default
     default:
       return {
         ...state,

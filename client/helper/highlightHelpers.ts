@@ -1,5 +1,5 @@
 /* File with helper functions that return array of indices for reducer to highlight */
-import { LayoutType, ColorLayoutType } from './types';
+import { LayoutType, ColorLayoutType, SideType } from './types';
 import { ColorPalette } from '../constants/colorPalette';
 import { canCastle } from './moveHelpers';
 

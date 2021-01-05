@@ -3,7 +3,7 @@ import { Nav } from './components/Nav';
 import { Main } from './components/Main';
 import { BoardContext } from './BoardContext';
 import { defaultWhiteBoard, defaultColorLayout } from './helper/defaultBoard';
-import { ColorLayoutType } from './helper/types';
+import { ColorLayoutType, SideType } from './helper/types';
 import { boardReducer } from './helper/boardReducer';
 import { StateType } from './helper/boardReducer';
 
@@ -23,7 +23,8 @@ export const App: React.FC = () => {
     ],
     colorLayout: defaultColorLayout,
     paletteIndex: 0,
-    movingPiece: null
+    movingPiece: null,
+    currentSide: SideType.White
   } 
   // Reducer hook which bundles state-changing functionality
   const [ state, dispatch ] = React.useReducer(boardReducer, defaultState);

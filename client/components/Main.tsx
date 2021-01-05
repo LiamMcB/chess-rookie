@@ -2,11 +2,12 @@ import * as React from 'react';
 import { ChessBoard } from './ChessBoard';
 import { ColorPalette } from '../constants/colorPalette';
 import { BoardContext } from '../BoardContext';
+import { SideType } from '../helper/types';
 
 
 export const Main: React.FC = () => {
-  // State to manage whether white or black starts
-  const [ whiteStarts, setWhiteStarts ] = React.useState(false);
+  // State to manage whether the user is white or black
+  const [ isWhite, setIsWhite ] = React.useState(true);
   // State to hold location of all chess pieces
   const { state, dispatch } = React.useContext(BoardContext);
   // State to represent which color combo were currently on (by index)
@@ -17,7 +18,7 @@ export const Main: React.FC = () => {
   }, [paletteIndex]);
   // Function reset board for new game
   const resetBoard = function() {
-    setWhiteStarts(false);
+    setIsWhite(true);
     dispatch({type: 'UN_HIGHLIGHT_MOVES'});
     dispatch({type: 'RESET_BOARD_WHITE'});
   }
@@ -30,14 +31,14 @@ export const Main: React.FC = () => {
     // Set the palette index to the new one
     setPaletteIndex(newPaletteIndex);
   }
-  // Function to toggle which side starts and change default board layout
-  const changeStartingSide = function() {
-    // Change whiteStart to the opposite of what it currently is
-    setWhiteStarts(!whiteStarts);
+  // Function to toggle which side the user plays as and change default board layout
+  const changeSide = function() {
+    // Change the users side to the opposite of what it is now
+    setIsWhite(!isWhite);
     // Unhighlight if any squares still highlighted
     dispatch({type: 'UN_HIGHLIGHT_MOVES'});
-    // Depending on what white starts is, change the default board layout
-    whiteStarts ? dispatch({type: 'RESET_BOARD_WHITE'}) : dispatch({type: 'RESET_BOARD_BLACK'});
+    // Depending on what side the user is on, change the default board layout
+    !isWhite ? dispatch({type: 'RESET_BOARD_WHITE'}) : dispatch({type: 'RESET_BOARD_BLACK'});
   }
   // Styling color for buttons
   const buttonStyle = {backgroundColor: ColorPalette[paletteIndex].dark, color: ColorPalette[paletteIndex].light};
@@ -46,8 +47,8 @@ export const Main: React.FC = () => {
     <div className='main-container'>
       <div className='button-container'>
         <button onClick={changeBoardColor} style={buttonStyle}>Change Theme</button>
-        <button onClick={resetBoard} style={buttonStyle}>Reset</button>
-        <button onClick={changeStartingSide} style={buttonStyle}>Choose Side</button>
+        <button onClick={resetBoard} style={buttonStyle}>New Game</button>
+        <button onClick={changeSide} style={buttonStyle}>Choose Side</button>
       </div>
       <ChessBoard paletteIndex={paletteIndex} />
     </div>

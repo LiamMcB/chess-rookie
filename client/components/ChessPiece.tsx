@@ -15,11 +15,6 @@ export const ChessPiece: React.FC<Props> = ({ piece, position }) => {
   const { dispatch } = React.useContext(BoardContext);
   // State to manage whether squares get highlighted or unhighlighted
   const [ highlighted, setHighlighted ] = React.useState(false);
-  // Function to handle drag events
-  const dragHandler = function(e) {
-    e.preventDefault();
-    dispatch({ type: 'MOVE_PIECE', payload: {piece, to: [position[0] - 1, position[1]], from: [...position]} });
-  }
   // Function to show available squares for current piece to move or unhighlight
   const highlightLegalMoves = function(e) {
     e.preventDefault();
