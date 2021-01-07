@@ -24,12 +24,17 @@ export const ChessSquare: React.FC<Props> = ({ piece }) => {
     e.preventDefault();
     // Check if its a legal move
     if (highlighted) {
-      // Dispatch move piece
+      // Dispatch move piece, which also changes side
       dispatch({ type: 'MOVE_PIECE', payload: {piece: state.movingPiece.piece, to: [...piece], from: [...state.movingPiece.from]} })
       // Set highlighted to false once it's moved
       setHighlighted(false);
-      // Change the current side to the opponent's color
-      dispatch({ type: 'MOVE_OPPONENT' });
+      // Wait 1 second, then move the bot's piece
+      setTimeout(() => {
+        // Dispatch action for bot to move
+        dispatch({ type: 'MOVE_OPPONENT' });
+        // Set the current side back to the users side
+        dispatch({ type: 'CHANGE_SIDE' });
+      }, 1000);
     } 
   }
   // State to hold the current color of the square
