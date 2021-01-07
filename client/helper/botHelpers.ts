@@ -1,7 +1,7 @@
 /* Functions to power the logic behind the chess bot */
 import { LayoutType, SideType } from './types';
 import { movePiece, movePieceBot } from './moveHelpers';
-
+// Overall function to encapsulate the bot
 export const botMoves = function(boardLayout: LayoutType, currentSide: SideType): LayoutType {
   let newLayout: LayoutType = [...boardLayout];
   // Mapping of side for console logging
@@ -20,7 +20,7 @@ export const botMoves = function(boardLayout: LayoutType, currentSide: SideType)
     }
   }
   // Move pawn to test this out
-  newLayout = movePiece(currentSide + 'P', [rowFrom, colFrom], [rowFrom + 1, colFrom], newLayout);
+  newLayout = movePieceBot(currentSide + 'P', [rowFrom, colFrom], [rowFrom + 1, colFrom], newLayout);
 
   return newLayout
 }

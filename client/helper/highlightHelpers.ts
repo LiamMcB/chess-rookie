@@ -127,11 +127,19 @@ export const highlight = (
       highlightIndices.push([row - 2, col - 1]);
     }
   }
-  // Pawns move one square forward except for on their first move, where they can move two squares
+  // Pawns move one square forward except for on their first move, where they can move two squares and capture diagonally forward
   else if (chessPiece === 'PAWN') {
     // Top
     if (canMove(piece, [row - 1, col], boardLayout, side)) {
       highlightIndices.push([row - 1, col]);
+    }
+    // TR Capture
+    if (canMove(piece, [row - 1, col + 1], boardLayout, side) && pawnMoveDiagonal(boardLayout, [row - 1, col + 1], side)) {
+      highlightIndices.push([row - 1, col + 1]);
+    }
+    // TL Capture
+    if (canMove(piece, [row - 1, col - 1], boardLayout, side) && pawnMoveDiagonal(boardLayout, [row - 1, col - 1], side)) {
+      highlightIndices.push([row - 1, col - 1]);
     }
     // If pawn's first move, highlight one additional square
     if (canMove(piece, [row - 2, col], boardLayout, side) && row === 6) {
@@ -353,6 +361,21 @@ const canMove = function (
   }
   return pieceCanMove;
 };
+
+// Helper function that determines if a pawn can move diagonally to capture
+const pawnMoveDiagonal = function(boardLayout: LayoutType, positionTo: number[], side: string) {
+  let canMove = false;
+  // Row and coulmn moving to
+  const rowTo = positionTo[0];
+  const colTo = positionTo[1];
+  // See if positon diagonal is not null
+  if (boardLayout[rowTo][colTo]) {
+    if (boardLayout[rowTo][colTo][0] !== side) {
+      canMove = true;
+    }
+  }
+  return canMove;
+}
 
 // Helper that unhighlights whole board and returns it
 export const unhighlightBoard = function (
