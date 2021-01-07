@@ -213,3 +213,17 @@ export const canCastleBot = function (
     else return true;
   }
 };
+
+// Function to see if a piece was captured during a move, if not, return null
+export const captured = function(piece: string, positionTo: number[], boardLayout: LayoutType): string | null {
+  const rowTo = positionTo[0];
+  const colTo = positionTo[1];
+  let pieceCaptured: string | null = null;
+  // Determine enemy's side based on user's side
+  const enemySide: string = piece[0] === 'W' ? 'B' : 'W';
+  // Determine if current move will capture an enemy's piece
+  if (boardLayout[rowTo][colTo] && boardLayout[rowTo][colTo][0] === enemySide) {
+    pieceCaptured = boardLayout[rowTo][colTo];
+  }
+  return pieceCaptured;
+}

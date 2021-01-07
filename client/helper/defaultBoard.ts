@@ -7,7 +7,7 @@ etc...
 From a bird's eye perspective as either white or black player
 */
 import { ColorPalette } from '../constants/colorPalette.js'
-import { LayoutType, ColorLayoutType } from './types';
+import { LayoutType, ColorLayoutType, AvailablePiecesType } from './types';
 
 export const defaultBlackBoard: LayoutType = [
   ['WR', 'WN', 'WB', 'WK', 'WQ', 'WB', 'WN', 'WR'],
@@ -69,3 +69,17 @@ export const defaultColorLayout: ColorLayoutType = [
   [lightColor, darkColor, lightColor, darkColor, lightColor, darkColor, lightColor, darkColor],
   [darkColor, lightColor, darkColor, lightColor, darkColor, lightColor, darkColor, lightColor],
 ];
+
+// Default piece choices for each side
+export const getDefaultWhitePieces = function(): AvailablePiecesType {
+  return [
+    'WK', 'WQ', 'WR', 'WR', 'WB', 'WB', 'WN', 'WN', 
+    'WP', 'WP', 'WP', 'WP', 'WP', 'WP', 'WP', 'WP'
+  ];
+} 
+export const getDefaultBlackPieces = function(): AvailablePiecesType {
+  return [
+    'BK', 'BQ', 'BR', 'BR', 'BB', 'BB', 'BN', 'BN', 
+    'BP', 'BP', 'BP', 'BP', 'BP', 'BP', 'BP', 'BP'
+  ];
+}

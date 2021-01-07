@@ -1,5 +1,5 @@
 /* Functions to power the logic behind the chess bot */
-import { LayoutType, SideType } from './types';
+import { LayoutType, SideType, AvailablePiecesType } from './types';
 import { movePiece, movePieceBot } from './moveHelpers';
 import { MovePayload } from './boardReducer';
 
@@ -55,4 +55,17 @@ const findBestMove = function(boardLayout: LayoutType, currentSide: SideType): M
     to,
     from: [rowFrom, colFrom] 
   }
+}
+
+// Function to remove a captured piece from bot's pieces
+export const removeBotPieces = function(capturedPiece: string, botPieces: AvailablePiecesType): AvailablePiecesType {
+  const botPiecesCopy: AvailablePiecesType = [...botPieces];
+  let capturedIndex: number;
+  // Find index of captured piece
+  botPieces.forEach((piece, index) => {
+    if (piece === capturedPiece) capturedIndex = index;
+  });
+  // Splice captured index out of botPieces and return it
+  botPiecesCopy.splice(capturedIndex, 1);
+  return botPiecesCopy;
 }
