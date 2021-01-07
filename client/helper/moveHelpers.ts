@@ -121,6 +121,8 @@ export const movePieceBot = function (
   // Get row and column piece is moving to
   const rowTo: number = positionTo[0];
   const colTo: number = positionTo[1];
+  // If the bot tries to move off the board, stop it
+  if (rowTo > 7 || colTo > 7) return layout;
   // Color for players side is either 'W' for white or 'B' for black
   const side: string = piece[0];
   // Define the kind of piece being used
