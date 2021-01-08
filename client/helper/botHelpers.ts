@@ -4,7 +4,7 @@ import { movePiece, movePieceBot } from './moveHelpers';
 import { MovePayload } from './boardReducer';
 
 // Overall function to encapsulate the bot
-export const botMoves = function(boardLayout: LayoutType, currentSide: SideType): LayoutType {
+export const botMoves = function(boardLayout: LayoutType, currentSide: SideType, availablePieces: AvailablePiecesType): LayoutType {
   let newLayout: LayoutType = [...boardLayout];
   // Mapping of side for console logging
   const sideMapping = {
@@ -13,7 +13,7 @@ export const botMoves = function(boardLayout: LayoutType, currentSide: SideType)
   }
   console.log(`${sideMapping[currentSide]} is moving!`);
   // Function that will calculate which move to make 
-  const { piece, to, from } = findBestMove(boardLayout, currentSide);
+  const { piece, to, from } = findBestMove(boardLayout, currentSide, availablePieces);
   // Move pawn to test this out
   newLayout = movePieceBot(piece, from, to, newLayout);
 
@@ -21,7 +21,7 @@ export const botMoves = function(boardLayout: LayoutType, currentSide: SideType)
 }
 
 // Function that calculates the best possible move for the bot
-const findBestMove = function(boardLayout: LayoutType, currentSide: SideType): MovePayload {
+const findBestMove = function(boardLayout: LayoutType, currentSide: SideType, availablePieces: AvailablePiecesType): MovePayload {
   const piece: string = currentSide + 'P';
   const oppositeSide: SideType = currentSide === SideType.White ? SideType.Black : SideType.White;
   // Target [1, 4] pawn to move
@@ -50,6 +50,7 @@ const findBestMove = function(boardLayout: LayoutType, currentSide: SideType): M
   pieceEvaluation.set(oppositeSide + 'B', -30);
   pieceEvaluation.set(oppositeSide + 'N', -30);
   pieceEvaluation.set(oppositeSide + 'P', -10);
+  // Return move payload back to botMoves function
   return {
     piece,
     to,
