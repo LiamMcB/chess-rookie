@@ -28,58 +28,58 @@ export const highlight = (
   // Kings can move one space in any direction so long as there isn't a piece of the same color
   if (chessPiece === 'KING') {
     // Top
-    if (canMove(piece, [row - 1, col], boardLayout, side)) {
+    if (canMove([row - 1, col], boardLayout, side)) {
       highlightIndices.push([row - 1, col]);
     }
     // TR
-    if (canMove(piece, [row - 1, col + 1], boardLayout, side)) {
+    if (canMove([row - 1, col + 1], boardLayout, side)) {
       highlightIndices.push([row - 1, col + 1]);
     }
     // Right
-    if (canMove(piece, [row, col + 1], boardLayout, side)) {
+    if (canMove([row, col + 1], boardLayout, side)) {
       highlightIndices.push([row, col + 1]);
     }
     // BR
-    if (canMove(piece, [row + 1, col + 1], boardLayout, side)) {
+    if (canMove([row + 1, col + 1], boardLayout, side)) {
       highlightIndices.push([row + 1, col + 1]);
     }
     // Bottom
-    if (canMove(piece, [row + 1, col], boardLayout, side)) {
+    if (canMove([row + 1, col], boardLayout, side)) {
       highlightIndices.push([row + 1, col]);
     }
     // BL
-    if (canMove(piece, [row + 1, col - 1], boardLayout, side)) {
+    if (canMove([row + 1, col - 1], boardLayout, side)) {
       highlightIndices.push([row + 1, col - 1]);
     }
     // Left
-    if (canMove(piece, [row, col - 1], boardLayout, side)) {
+    if (canMove([row, col - 1], boardLayout, side)) {
       highlightIndices.push([row, col - 1]);
     }
     // TL
-    if (canMove(piece, [row - 1, col - 1], boardLayout, side)) {
+    if (canMove([row - 1, col - 1], boardLayout, side)) {
       highlightIndices.push([row - 1, col - 1]);
     }
   }
   // Queens move as many squares in any directions as the user wants
   else if (chessPiece === 'QUEEN') {
     // Highlight top, right, bottom, left
-    highlightTop(piece, position, boardLayout, side, highlightIndices);
-    highlightRight(piece, position, boardLayout, side, highlightIndices);
-    highlightBottom(piece, position, boardLayout, side, highlightIndices);
-    highlightLeft(piece, position, boardLayout, side, highlightIndices);
+    highlightTop(position, boardLayout, side, highlightIndices);
+    highlightRight(position, boardLayout, side, highlightIndices);
+    highlightBottom(position, boardLayout, side, highlightIndices);
+    highlightLeft(position, boardLayout, side, highlightIndices);
     // Highlight Diagonally
-    highlightDiagonal(piece, position, boardLayout, side, highlightIndices); 
+    highlightDiagonal(position, boardLayout, side, highlightIndices); 
   }
   // Rooks move as many squares vertically or horizontally as the user wants
   else if (chessPiece === 'ROOK') {
     // Top
-    highlightTop(piece, position, boardLayout, side, highlightIndices);
+    highlightTop(position, boardLayout, side, highlightIndices);
     // Right
-    highlightRight(piece, position, boardLayout, side, highlightIndices);
+    highlightRight(position, boardLayout, side, highlightIndices);
     // Bottom
-    highlightBottom(piece, position, boardLayout, side, highlightIndices);
+    highlightBottom(position, boardLayout, side, highlightIndices);
     // Left
-    highlightLeft(piece, position, boardLayout, side, highlightIndices);
+    highlightLeft(position, boardLayout, side, highlightIndices);
     // CASTLING: Where king and rook swap places, more info in movehelpers
     if (canCastle(boardLayout, position, side)) {
       // Depending on side, highlight king's position
@@ -90,59 +90,59 @@ export const highlight = (
   // Bishops move as many squares diagonally as the user wants
   else if (chessPiece === 'BISHOP') {
     // Highlight diagonally
-    highlightDiagonal(piece, position, boardLayout, side, highlightIndices);
+    highlightDiagonal(position, boardLayout, side, highlightIndices);
   }
   // Knights move in an L-shape, 2 squares one direction and 1 square in the perpendicular direction
   else if (chessPiece === 'KNIGHT') {
     // TR Up 2 Right 1
-    if (canMove(piece, [row - 2, col + 1], boardLayout, side)) {
+    if (canMove([row - 2, col + 1], boardLayout, side)) {
       highlightIndices.push([row - 2, col + 1]);
     }
     // TRR Up 1 Right 2
-    if (canMove(piece, [row - 1, col + 2], boardLayout, side)) {
+    if (canMove([row - 1, col + 2], boardLayout, side)) {
       highlightIndices.push([row - 1, col + 2]);
     }
     // BRR Down 1 Right 2
-    if (canMove(piece, [row + 1, col + 2], boardLayout, side)) {
+    if (canMove([row + 1, col + 2], boardLayout, side)) {
       highlightIndices.push([row + 1, col + 2]);
     }
     // BR Down 2 Right 1
-    if (canMove(piece, [row + 2, col + 1], boardLayout, side)) {
+    if (canMove([row + 2, col + 1], boardLayout, side)) {
       highlightIndices.push([row + 2, col + 1]);
     }
     // BL Down 2 Left 1
-    if (canMove(piece, [row + 2, col - 1], boardLayout, side)) {
+    if (canMove([row + 2, col - 1], boardLayout, side)) {
       highlightIndices.push([row + 2, col - 1]);
     }
     // BLL Down 1 Left 2
-    if (canMove(piece, [row + 1, col - 2], boardLayout, side)) {
+    if (canMove([row + 1, col - 2], boardLayout, side)) {
       highlightIndices.push([row + 1, col - 2]);
     }
     // TLL Up 1 Left 2
-    if (canMove(piece, [row - 1, col - 2], boardLayout, side)) {
+    if (canMove([row - 1, col - 2], boardLayout, side)) {
       highlightIndices.push([row - 1, col - 2]);
     }
     // TL Up 2 Left 1
-    if (canMove(piece, [row - 2, col - 1], boardLayout, side)) {
+    if (canMove([row - 2, col - 1], boardLayout, side)) {
       highlightIndices.push([row - 2, col - 1]);
     }
   }
   // Pawns move one square forward except for on their first move, where they can move two squares and capture diagonally forward
   else if (chessPiece === 'PAWN') {
     // Top
-    if (canMove(piece, [row - 1, col], boardLayout, side)) {
+    if (canMove([row - 1, col], boardLayout, side)) {
       highlightIndices.push([row - 1, col]);
     }
     // TR Capture
-    if (canMove(piece, [row - 1, col + 1], boardLayout, side) && pawnMoveDiagonal(boardLayout, [row - 1, col + 1], side)) {
+    if (canMove([row - 1, col + 1], boardLayout, side) && pawnMoveDiagonal(boardLayout, [row - 1, col + 1], side)) {
       highlightIndices.push([row - 1, col + 1]);
     }
     // TL Capture
-    if (canMove(piece, [row - 1, col - 1], boardLayout, side) && pawnMoveDiagonal(boardLayout, [row - 1, col - 1], side)) {
+    if (canMove([row - 1, col - 1], boardLayout, side) && pawnMoveDiagonal(boardLayout, [row - 1, col - 1], side)) {
       highlightIndices.push([row - 1, col - 1]);
     }
     // If pawn's first move, highlight one additional square
-    if (canMove(piece, [row - 2, col], boardLayout, side) && row === 6) {
+    if (canMove([row - 2, col], boardLayout, side) && row === 6) {
       highlightIndices.push([row - 2, col]);
     }
   }
@@ -151,8 +151,7 @@ export const highlight = (
 
 // HELPERS THAT HIGHLIGHT A NUMBER OF SQUARES IN EACH DIRECTION
 // Helper that highlights squares forward from current piece
-const highlightTop = function (
-  piece: string,
+export const highlightTop = function (
   position: number[],
   boardLayout: LayoutType,
   side: string,
@@ -164,7 +163,7 @@ const highlightTop = function (
   // Start top at the square right above our current square
   let top = row - 1;
   while (top >= 0) {
-    if (canMove(piece, [top, col], boardLayout, side)) {
+    if (canMove([top, col], boardLayout, side)) {
       // If there is a piece of opposite side, highlight that square and no further squares
       if (boardLayout[top][col] && boardLayout[top][col][0] !== side) {
         highlightIndices.push([top, col]);
@@ -179,8 +178,7 @@ const highlightTop = function (
   }
 };
 // Helper that highlights squares before/below the current piece
-const highlightBottom = function (
-  piece: string,
+export const highlightBottom = function (
   position: number[],
   boardLayout: LayoutType,
   side: string,
@@ -192,7 +190,7 @@ const highlightBottom = function (
   // Start bottom at the square right below our current square
   let bottom = row + 1;
   while (bottom <= 8) {
-    if (canMove(piece, [bottom, col], boardLayout, side)) {
+    if (canMove([bottom, col], boardLayout, side)) {
       // If there is a piece of opposite side, highlight that square and no further squares
       if (boardLayout[bottom][col] && boardLayout[bottom][col][0] !== side) {
         highlightIndices.push([bottom, col]);
@@ -207,8 +205,7 @@ const highlightBottom = function (
   }
 };
 // Helper that highlights squares to the right of the current piece
-const highlightRight = function (
-  piece: string,
+export const highlightRight = function (
   position: number[],
   boardLayout: LayoutType,
   side: string,
@@ -220,7 +217,7 @@ const highlightRight = function (
   // Start bottom at the square right of our current square
   let right = col + 1;
   while (right <= 8) {
-    if (canMove(piece, [row, right], boardLayout, side)) {
+    if (canMove([row, right], boardLayout, side)) {
       // If there is a piece of opposite side, highlight that square and no further squares
       if (boardLayout[row][right] && boardLayout[row][right][0] !== side) {
         highlightIndices.push([row, right]);
@@ -235,8 +232,7 @@ const highlightRight = function (
   }
 };
 // Helper that highlights squares to the left of the current piece
-const highlightLeft = function (
-  piece: string,
+export const highlightLeft = function (
   position: number[],
   boardLayout: LayoutType,
   side: string,
@@ -248,7 +244,7 @@ const highlightLeft = function (
   // Start left at the square right to the left of our current square
   let left = col - 1;
   while (left >= 0) {
-    if (canMove(piece, [row, left], boardLayout, side)) {
+    if (canMove([row, left], boardLayout, side)) {
       // If there is a piece of opposite side, highlight that square and no further squares
       if (boardLayout[row][left] && boardLayout[row][left][0] !== side) {
         highlightIndices.push([row, left]);
@@ -263,8 +259,7 @@ const highlightLeft = function (
   }
 };
 // Helper that highlights squares diagonal of the current piece
-const highlightDiagonal = function (
-  piece: string,
+export const highlightDiagonal = function (
   position: number[],
   boardLayout: LayoutType,
   side: string,
@@ -276,7 +271,7 @@ const highlightDiagonal = function (
   // Highlight top right diagonal
   let topRight = [row - 1, col + 1];
   while (topRight[0] >= 0 && topRight[1] <= 8) {
-    if (canMove(piece, topRight, boardLayout, side)) {
+    if (canMove(topRight, boardLayout, side)) {
       // If there is a piece of opposite side, highlight that square and no further squares
       if (boardLayout[topRight[0]][topRight[1]] && boardLayout[topRight[0]][topRight[1]][0] !== side) {
         highlightIndices.push(topRight);
@@ -292,7 +287,7 @@ const highlightDiagonal = function (
   // Highlight bottom right diagonal
   let bottomRight = [row + 1, col + 1];
   while (bottomRight[0] <= 8 && bottomRight[1] <= 8) {
-    if (canMove(piece, bottomRight, boardLayout, side)) {
+    if (canMove(bottomRight, boardLayout, side)) {
       // If there is a piece of opposite side, highlight that square and no further squares
       if (boardLayout[bottomRight[0]][bottomRight[1]] && boardLayout[bottomRight[0]][bottomRight[1]][0] !== side) {
         highlightIndices.push(bottomRight);
@@ -308,7 +303,7 @@ const highlightDiagonal = function (
   // Highlight bottom left diagonal
   let bottomLeft = [row + 1, col - 1];
   while (bottomLeft[0] <= 8 && bottomLeft[1] >= 0) {
-    if (canMove(piece, bottomLeft, boardLayout, side)) {
+    if (canMove(bottomLeft, boardLayout, side)) {
       // If there is a piece of opposite side, highlight that square and no further squares
       if (boardLayout[bottomLeft[0]][bottomLeft[1]] && boardLayout[bottomLeft[0]][bottomLeft[1]][0] !== side) {
         highlightIndices.push(bottomLeft);
@@ -324,7 +319,7 @@ const highlightDiagonal = function (
   // Highlight top left diagonal
   let topLeft = [row - 1, col - 1];
   while (topLeft[0] >= 0 && topLeft[1] >= 0) {
-    if (canMove(piece, topLeft, boardLayout, side)) {
+    if (canMove(topLeft, boardLayout, side)) {
       // If there is a piece of opposite side, highlight that square and no further squares
       if (boardLayout[topLeft[0]][topLeft[1]] && boardLayout[topLeft[0]][topLeft[1]][0] !== side) {
         highlightIndices.push(topLeft);
@@ -340,8 +335,7 @@ const highlightDiagonal = function (
 }
 
 // Helper function that checks if the piece can move to an index
-const canMove = function (
-  piece: string,
+export const canMove = function (
   position: number[],
   boardLayout: LayoutType,
   side: string
@@ -363,7 +357,7 @@ const canMove = function (
 };
 
 // Helper function that determines if a pawn can move diagonally to capture
-const pawnMoveDiagonal = function(boardLayout: LayoutType, positionTo: number[], side: string) {
+export const pawnMoveDiagonal = function(boardLayout: LayoutType, positionTo: number[], side: string) {
   let canMove = false;
   // Row and coulmn moving to
   const rowTo = positionTo[0];

@@ -1,6 +1,7 @@
 /* Functions to power the logic behind the chess bot */
 import { LayoutType, SideType, AvailablePiecesType } from './types';
 import { movePiece, movePieceBot } from './moveHelpers';
+import { getPossibleMoves } from './possibleMoves';
 import { MovePayload } from './boardReducer';
 
 // Overall function to encapsulate the bot
@@ -50,6 +51,24 @@ const findBestMove = function(boardLayout: LayoutType, currentSide: SideType, av
   pieceEvaluation.set(oppositeSide + 'B', -30);
   pieceEvaluation.set(oppositeSide + 'N', -30);
   pieceEvaluation.set(oppositeSide + 'P', -10);
+  // Variable to keep track of move with highest positive value
+  let bestMove = {
+    piece: '',
+    to: [],
+    from: [],
+    value: -Infinity
+  } 
+  // Iterate over all available pieces
+  const boardCopy: LayoutType = [...boardLayout]; // Need copy since ill null out pieces once i get their moves
+  for (let i = 0; i < availablePieces.length; i += 1) {
+    const currentPiece: string = availablePieces[i];
+    // Find position of current piece
+    const currentPosition: number[] = findIndex(currentPiece, boardCopy);
+    // Find all possible moves, returns an array of [row, col]
+    const possibleMoves = getPossibleMoves(currentPiece, currentPosition, boardLayout);
+    // Iterate over possible moves and reset bestMove for larger values
+    
+  }
   // Return move payload back to botMoves function
   return {
     piece,
@@ -69,4 +88,21 @@ export const removeBotPieces = function(capturedPiece: string, botPieces: Availa
   // Splice captured index out of botPieces and return it
   botPiecesCopy.splice(capturedIndex, 1);
   return botPiecesCopy;
+}
+
+// Function to find position of current piece
+const findIndex = function(currentPiece: string, boardLayout: LayoutType): number[] {
+  const index: number[] = [];
+  for (let i = 0; i < boardLayout.length; i += 1) {
+    for (let j = 0; j < boardLayout[i].length; j += 1) {
+      if (boardLayout[i][j] === currentPiece) {
+        index.push(i);
+        index.push(j);
+        // Set the piece at this index to null, since its just a copy of the layout
+        boardLayout[i][j] = null;
+        return index; 
+      }
+    }
+  }
+  return index;
 }
