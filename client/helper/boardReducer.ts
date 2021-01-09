@@ -13,6 +13,7 @@ export interface StateType {
   paletteIndex: number;
   movingPiece: MovePayload | null; // Represents information about which piece were moving and where from
   currentSide: SideType; // Represents the current side moving, which isn't necessarily the same as the user's side
+  userPieces: AvailablePiecesType; // Represents the choices for the bot to move, array of strings ('WP' or 'BK')
   botPieces: AvailablePiecesType; // Represents the choices for the bot to move, array of strings ('WP' or 'BK')
 }
 // Structure of actions
@@ -67,6 +68,7 @@ export const boardReducer = (state: StateType, action: ActionType) => {
         boardLayout: getDefaultWhiteBoard(),
         movingPiece: null,
         currentSide: SideType.White,
+        userPieces: getDefaultWhitePieces(),
         botPieces: getDefaultBlackPieces()
       }
       return defaultWhiteState;
@@ -76,6 +78,7 @@ export const boardReducer = (state: StateType, action: ActionType) => {
         boardLayout: getDefaultBlackBoard(),
         movingPiece: null,
         currentSide: SideType.White,
+        userPieces: getDefaultBlackPieces(),
         botPieces: getDefaultWhitePieces()
       }
       return defaultBlackState;
@@ -133,6 +136,7 @@ export const boardReducer = (state: StateType, action: ActionType) => {
           movingPiece: null,
           boardLayout: getDefaultWhiteBoard(),
           currentSide: SideType.White,
+          userPieces: getDefaultWhitePieces(),
           botPieces: getDefaultBlackPieces()
         }
       };
@@ -158,7 +162,8 @@ export const boardReducer = (state: StateType, action: ActionType) => {
       };
     // Case for moving opponent's (the bot) piece, gets invoked 1 second after user moves
     case 'MOVE_OPPONENT':
-      const changedBoard = botMoves(state.boardLayout, state.currentSide, state.botPieces);
+      const changedBoard = botMoves(state.boardLayout, state.currentSide, state.userPieces, state.botPieces);
+      // TODO: ADD CAPTURED CONDITION WHERE IF BOT CAPTURES USERS PIECE, REMOVE IT FROM USERS PIECES
       return {
         ...state,
         boardLayout: changedBoard
