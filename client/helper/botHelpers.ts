@@ -62,7 +62,7 @@ const findBestMove = function (
     // console.log(`Possible Moves for ${currentPiece}:\n`, possibleMoves);
     // Iterate over possible moves (if there are any) and reset bestMove for larger values
     possibleMoves.forEach((move, index) => {
-      const moveValue: number = evaluateMove(currentPiece, currentSide, currentPosition, userPieces, boardLayout);
+      const moveValue: number = evaluateMove(currentPiece, currentSide, move, userPieces, boardLayout);
       // If the current move has a greater value, ie performs better, reset best move
       if (moveValue > bestMove.value) {
         bestMove = {
@@ -77,7 +77,7 @@ const findBestMove = function (
   const piece = bestMove.piece;
   const to = bestMove.to;
   const from = bestMove.from;
-  console.log('Best Piece to Move:', piece, 'Value:', bestMove.value);
+  // console.log('Best Piece to Move:', piece, 'Value:', bestMove.value);
   // Return move payload back to botMoves function
   return {
     piece,
@@ -132,6 +132,7 @@ const evaluateMove = function (
     const userMoves: number[][] = highlight(userPiece, userIndex, boardLayout);
     userMoves.forEach(move => {
       if (move[0] === rowTo && move[1] === colTo) {
+        console.log('Risk of capture by:', currentPiece);
         value -= pieceEvaluation.get(currentPiece);
         return;
       }

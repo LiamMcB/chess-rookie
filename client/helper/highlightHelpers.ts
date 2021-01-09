@@ -129,8 +129,8 @@ export const highlight = (
   }
   // Pawns move one square forward except for on their first move, where they can move two squares and capture diagonally forward
   else if (chessPiece === 'PAWN') {
-    // Top
-    if (canMove([row - 1, col], boardLayout, side)) {
+    // Top - cant move this way if there is an enemy piece there
+    if (canMove([row - 1, col], boardLayout, side) && !boardLayout[row - 1][col]) {
       highlightIndices.push([row - 1, col]);
     }
     // TR Capture
@@ -142,7 +142,7 @@ export const highlight = (
       highlightIndices.push([row - 1, col - 1]);
     }
     // If pawn's first move, highlight one additional square
-    if (canMove([row - 2, col], boardLayout, side) && row === 6) {
+    if (canMove([row - 2, col], boardLayout, side) && row === 6 && !boardLayout[row - 2][col]) {
       highlightIndices.push([row - 2, col]);
     }
   }
