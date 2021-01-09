@@ -1,4 +1,5 @@
 /* File with helper functions to move pieces, promote pieces, determine if game was lost etc. */
+import { deepCopyArray } from './deepCopy';
 import { LayoutType } from './types';
 // Function to move the user's pieces
 export const movePiece = function (
@@ -8,7 +9,7 @@ export const movePiece = function (
   boardLayout: LayoutType
 ): LayoutType {
   // Get copy of board layout to return
-  const layout = [...boardLayout];
+  const layout = deepCopyArray(boardLayout);
   // Get row and column from position
   const rowFrom: number = positionFrom[0];
   const colFrom: number = positionFrom[1];
@@ -115,7 +116,7 @@ export const movePieceBot = function (
   boardLayout: LayoutType
 ): LayoutType {
   // Get copy of board layout to return
-  const layout = [...boardLayout];
+  const layout = deepCopyArray(boardLayout);
   // Get row and column from position
   const rowFrom: number = positionFrom[0];
   const colFrom: number = positionFrom[1];
