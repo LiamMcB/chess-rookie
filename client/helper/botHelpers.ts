@@ -108,12 +108,12 @@ const evaluateMove = function (
   pieceEvaluation.set(currentSide + 'N', -30);
   pieceEvaluation.set(currentSide + 'P', -10);
   // Opposite side is positive (want to gain value)
-  pieceEvaluation.set(oppositeSide + 'K', -900);
-  pieceEvaluation.set(oppositeSide + 'Q', -90);
-  pieceEvaluation.set(oppositeSide + 'R', -50);
-  pieceEvaluation.set(oppositeSide + 'B', -30);
-  pieceEvaluation.set(oppositeSide + 'N', -30);
-  pieceEvaluation.set(oppositeSide + 'P', -10);
+  pieceEvaluation.set(oppositeSide + 'K', 900);
+  pieceEvaluation.set(oppositeSide + 'Q', 90);
+  pieceEvaluation.set(oppositeSide + 'R', 50);
+  pieceEvaluation.set(oppositeSide + 'B', 30);
+  pieceEvaluation.set(oppositeSide + 'N', 30);
+  pieceEvaluation.set(oppositeSide + 'P', 10);
   // Variable to hold current move's value based on piece evalutaion
   let value: number = 0;
   // If there is a piece of the opposite team in the position moving to, add its value
