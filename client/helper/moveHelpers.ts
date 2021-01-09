@@ -77,7 +77,6 @@ export const movePiece = function (
   if (chessPiece === 'PAWN' && rowTo === 0) {
     layout[rowTo][colTo] = side + 'Q';
   }
-  console.log('User Layout:\n', layout);
   // Return modified layout
   return layout;
 };

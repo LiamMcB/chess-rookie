@@ -40,17 +40,6 @@ const findBestMove = function (
   userPieces: AvailablePiecesType,
   availablePieces: AvailablePiecesType
 ): MovePayload {
-  let piece: string = currentSide + 'P';
-  // Target [1, 4] pawn to move
-  let colFrom: number = 4;
-  let rowFrom: number;
-  for (let i = 1; i <= 7; i += 1) {
-    if (boardLayout[i][colFrom] === currentSide + 'P') {
-      rowFrom = i;
-      break;
-    }
-  }
-  let to = [rowFrom + 1, colFrom];
   // Variable to keep track of move with highest positive value
   let bestMove = {
     piece: '',
@@ -85,9 +74,10 @@ const findBestMove = function (
       }
     });
   }
-  piece = bestMove.piece;
-  to = bestMove.to;
-  let from = bestMove.from;
+  const piece = bestMove.piece;
+  const to = bestMove.to;
+  const from = bestMove.from;
+  console.log('Best Piece to Move:', piece, 'Value:', bestMove.value);
   // Return move payload back to botMoves function
   return {
     piece,
