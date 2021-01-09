@@ -3,6 +3,7 @@ import { LayoutType, SideType, AvailablePiecesType } from './types';
 import { movePiece, movePieceBot } from './moveHelpers';
 import { getPossibleMoves } from './possibleMoves';
 import { MovePayload } from './boardReducer';
+import { deepCopyArray } from './deepCopy';
 
 // Overall function to encapsulate the bot
 export const botMoves = function(boardLayout: LayoutType, currentSide: SideType, availablePieces: AvailablePiecesType): LayoutType {
@@ -12,12 +13,12 @@ export const botMoves = function(boardLayout: LayoutType, currentSide: SideType,
     'B': 'Black',
     'W': 'White'
   }
-  console.log(`${sideMapping[currentSide]} is moving!`);
   // Function that will calculate which move to make 
   const { piece, to, from } = findBestMove(boardLayout, currentSide, availablePieces);
+  // const { piece, to, from } = { piece: 'BP', to: [2, 4], from: [1, 4]}
+  console.log(`${sideMapping[currentSide]} is moving from ${from} to ${to}!`);
   // Move pawn to test this out
-  newLayout = movePieceBot(piece, from, to, newLayout);
-
+  newLayout = movePieceBot(piece, from, to, boardLayout);
   return newLayout
 }
 
@@ -59,14 +60,15 @@ const findBestMove = function(boardLayout: LayoutType, currentSide: SideType, av
     value: -Infinity
   } 
   // Iterate over all available pieces
-  const boardCopy: LayoutType = [...boardLayout]; // Need copy since ill null out pieces once i get their moves
+  const boardCopy: LayoutType = deepCopyArray(boardLayout); // Need copy since ill null out pieces once i get their moves
   for (let i = 0; i < availablePieces.length; i += 1) {
     const currentPiece: string = availablePieces[i];
     // Find position of current piece
     const currentPosition: number[] = findIndex(currentPiece, boardCopy);
     // Find all possible moves, returns an array of [row, col]
     const possibleMoves = getPossibleMoves(currentPiece, currentPosition, boardLayout);
-    // Iterate over possible moves and reset bestMove for larger values
+    // console.log(`Possible Moves for ${currentPiece}:\n`, possibleMoves);
+    // Iterate over possible moves (if there are any) and reset bestMove for larger values
     
   }
   // Return move payload back to botMoves function
@@ -91,15 +93,15 @@ export const removeBotPieces = function(capturedPiece: string, botPieces: Availa
 }
 
 // Function to find position of current piece
-const findIndex = function(currentPiece: string, boardLayout: LayoutType): number[] {
+const findIndex = function(currentPiece: string, boardCopy: LayoutType): number[] {
   const index: number[] = [];
-  for (let i = 0; i < boardLayout.length; i += 1) {
-    for (let j = 0; j < boardLayout[i].length; j += 1) {
-      if (boardLayout[i][j] === currentPiece) {
+  for (let i = 0; i < boardCopy.length; i += 1) {
+    for (let j = 0; j < boardCopy[i].length; j += 1) {
+      if (boardCopy[i][j] === currentPiece) {
         index.push(i);
         index.push(j);
         // Set the piece at this index to null, since its just a copy of the layout
-        boardLayout[i][j] = null;
+        boardCopy[i][j] = null;
         return index; 
       }
     }

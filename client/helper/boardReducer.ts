@@ -85,6 +85,7 @@ export const boardReducer = (state: StateType, action: ActionType) => {
       const currentPiece = action.payload.piece;
       // Highlighted moves for pawn
       const colorState = [...state.colorLayout];
+      console.log('Board Layout Before:\n', state.boardLayout);
       // Get indices in array to highlight
       const highlightedIndices: number[][] = highlight(currentPiece, positionFrom, state.boardLayout);
       // If the highlighted indices come back with possible moves, change color state to reflect that
@@ -160,7 +161,7 @@ export const boardReducer = (state: StateType, action: ActionType) => {
       const changedBoard = botMoves(state.boardLayout, state.currentSide, state.botPieces);
       return {
         ...state,
-        boardLayout: changedBoard,
+        boardLayout: changedBoard
       }
     // Case for changing moving side
     case 'CHANGE_SIDE':
