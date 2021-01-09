@@ -67,9 +67,9 @@ const findBestMove = function(boardLayout: LayoutType, currentSide: SideType, av
     const currentPosition: number[] = findIndex(currentPiece, boardCopy);
     // Find all possible moves, returns an array of [row, col]
     const possibleMoves = getPossibleMoves(currentPiece, currentPosition, boardLayout);
-    // console.log(`Possible Moves for ${currentPiece}:\n`, possibleMoves);
+    console.log(`Possible Moves for ${currentPiece}:\n`, possibleMoves);
     // Iterate over possible moves (if there are any) and reset bestMove for larger values
-    
+
   }
   // Return move payload back to botMoves function
   return {

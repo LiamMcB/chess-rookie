@@ -137,16 +137,16 @@ const getPossibleMovesKnight = function(row: number, col: number, boardLayout: L
 }
 const getPossibleMovesPawn = function(row: number, col: number, boardLayout: LayoutType, side: string, possibleMoves: number[][]): void {
   // Top
-  if (canMove([row - 1, col], boardLayout, side)) {
-    possibleMoves.push([row - 1, col]);
+  if (canMove([row + 1, col], boardLayout, side)) {
+    possibleMoves.push([row + 1, col]);
   }
   // TR Capture
-  if (canMove([row - 1, col + 1], boardLayout, side) && pawnMoveDiagonal(boardLayout, [row + 1, col + 1], side)) {
-    possibleMoves.push([row - 1, col + 1]);
+  if (canMove([row + 1, col + 1], boardLayout, side) && pawnMoveDiagonal(boardLayout, [row + 1, col + 1], side)) {
+    possibleMoves.push([row + 1, col + 1]);
   }
   // TL Capture
-  if (canMove([row - 1, col - 1], boardLayout, side) && pawnMoveDiagonal(boardLayout, [row + 1, col - 1], side)) {
-    possibleMoves.push([row - 1, col - 1]);
+  if (canMove([row + 1, col - 1], boardLayout, side) && pawnMoveDiagonal(boardLayout, [row + 1, col - 1], side)) {
+    possibleMoves.push([row + 1, col - 1]);
   }
   // If pawn's first move, highlight one additional square
   if (canMove([row + 2, col], boardLayout, side) && row === 1) {
