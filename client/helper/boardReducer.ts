@@ -1,9 +1,12 @@
 /* File which handles all stateful functionality on the board layout. */
-import { getDefaultWhiteBoard, getDefaultBlackBoard, getDefaultBlackPieces, getDefaultWhitePieces, defaultColorLayout } from './defaultBoard';
+import { 
+  getDefaultWhiteBoard, getDefaultBlackBoard, getDefaultBlackPiecesUser, getDefaultWhitePiecesUser,
+  getDefaultBlackPiecesBot, getDefaultWhitePiecesBot, defaultColorLayout
+ } from './defaultBoard';
 import { LayoutType, ColorLayoutType, SideType, AvailablePiecesType } from './types';
 import { ColorPalette, HighlightedColor } from '../constants/colorPalette';
 import { highlight, unhighlightBoard } from './highlightHelpers';
-import { movePiece, captured } from './moveHelpers';
+import { movePiece, captured, adjustPieces } from './moveHelpers';
 import { botMoves, removeBotPieces } from './botHelpers';
 
 // Defines structure of state object
@@ -68,8 +71,8 @@ export const boardReducer = (state: StateType, action: ActionType) => {
         boardLayout: getDefaultWhiteBoard(),
         movingPiece: null,
         currentSide: SideType.White,
-        userPieces: getDefaultWhitePieces(),
-        botPieces: getDefaultBlackPieces()
+        userPieces: getDefaultWhitePiecesUser(),
+        botPieces: getDefaultBlackPiecesBot()
       }
       return defaultWhiteState;
     case 'RESET_BOARD_BLACK':
@@ -78,8 +81,8 @@ export const boardReducer = (state: StateType, action: ActionType) => {
         boardLayout: getDefaultBlackBoard(),
         movingPiece: null,
         currentSide: SideType.White,
-        userPieces: getDefaultBlackPieces(),
-        botPieces: getDefaultWhitePieces()
+        userPieces: getDefaultBlackPiecesUser(),
+        botPieces: getDefaultWhitePiecesBot()
       }
       return defaultBlackState;
     // Cases to highlight and unhighlight legal moves
@@ -135,14 +138,16 @@ export const boardReducer = (state: StateType, action: ActionType) => {
           movingPiece: null,
           boardLayout: getDefaultWhiteBoard(),
           currentSide: SideType.White,
-          userPieces: getDefaultWhitePieces(),
-          botPieces: getDefaultBlackPieces()
+          userPieces: getDefaultWhitePiecesUser(),
+          botPieces: getDefaultBlackPiecesBot()
         }
       };
       // If the current move will capture an enemy piece, return it else null
       const capturedPiece: string | null = captured(action.payload.piece, [rowTo, colTo], state.boardLayout);
       // Place piece in new position for new layout
       const newLayout = movePiece(action.payload.piece, [rowFrom, colFrom], [rowTo, colTo], state.boardLayout);
+      // Once piece is moved, adjust user pieces to reflect this change
+      const newUserPieces: AvailablePiecesType = adjustPieces(state.userPieces, action.payload.piece, [rowTo, colTo]);
       // If a piece was captured, remove it from the bot's pieces
       let newBotPieces: AvailablePiecesType = state.botPieces;
       if (capturedPiece) newBotPieces = removeBotPieces(capturedPiece, state.botPieces);
@@ -197,7 +202,7 @@ export const boardReducer = (state: StateType, action: ActionType) => {
         paletteIndex: 0,
         movingPiece: null,
         currentSide: SideType.White,
-        botPieces: getDefaultBlackPieces()
+        botPieces: getDefaultBlackPiecesBot()
       }
   }
 }

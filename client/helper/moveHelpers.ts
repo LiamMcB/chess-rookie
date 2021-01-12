@@ -1,6 +1,6 @@
 /* File with helper functions to move pieces, promote pieces, determine if game was lost etc. */
 import { deepCopyArray } from './deepCopy';
-import { LayoutType } from './types';
+import { AvailablePiecesType, LayoutType } from './types';
 // Function to move the user's pieces
 export const movePiece = function (
   piece: string,
@@ -227,4 +227,16 @@ export const captured = function(piece: string, positionTo: number[], boardLayou
     pieceCaptured = boardLayout[rowTo][colTo];
   }
   return pieceCaptured;
+}
+
+// Function to adjust list of available pieces after a move, changing index to newly updated index
+export const adjustPieces: AvailablePiecesType = function(currentPieces: AvailablePiecesType, piece: string, newPosition: number[]) {
+  // Iterate through pieces and find index of piece moved
+  for (let i = 0; i < currentPieces.length; i += 1) {
+    // Once the piece is found, update the index
+    if (currentPieces[i].piece === piece) {
+      currentPieces[i].index = [...newPosition];
+    }
+  }
+  return currentPieces;
 }

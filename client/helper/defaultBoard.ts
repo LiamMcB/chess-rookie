@@ -71,15 +71,83 @@ export const defaultColorLayout: ColorLayoutType = [
 ];
 
 // Default piece choices for each side
-export const getDefaultWhitePieces = function(): AvailablePiecesType {
+export const getDefaultWhitePiecesUser = function(): AvailablePiecesType {
   return [
-    'WK', 'WQ', 'WR', 'WR', 'WB', 'WB', 'WN', 'WN', 
-    'WP', 'WP', 'WP', 'WP', 'WP', 'WP', 'WP', 'WP'
+    {piece: 'WK', index: [7, 4]}, 
+    {piece: 'WQ', index: [7, 3]},
+    {piece: 'WR', index: [7, 0]},
+    {piece: 'WR', index: [7, 7]}, 
+    {piece: 'WB', index: [7, 2]},
+    {piece: 'WB', index: [7, 5]}, 
+    {piece: 'WN', index: [7, 1]},
+    {piece: 'WN', index: [7, 6]},
+    {piece: 'WP', index: [6, 0]},
+    {piece: 'WP', index: [6, 1]},
+    {piece: 'WP', index: [6, 2]}, 
+    {piece: 'WP', index: [6, 3]}, 
+    {piece: 'WP', index: [6, 4]}, 
+    {piece: 'WP', index: [6, 5]}, 
+    {piece: 'WP', index: [6, 6]}, 
+    {piece: 'WP', index: [6, 7]}
   ];
 } 
-export const getDefaultBlackPieces = function(): AvailablePiecesType {
+export const getDefaultBlackPiecesUser = function(): AvailablePiecesType {
   return [
-    'BK', 'BQ', 'BR', 'BR', 'BB', 'BB', 'BN', 'BN', 
-    'BP', 'BP', 'BP', 'BP', 'BP', 'BP', 'BP', 'BP'
+    {piece: 'BK', index: [7, 3]}, 
+    {piece: 'WQ', index: [7, 4]},
+    {piece: 'BR', index: [7, 0]},
+    {piece: 'BR', index: [7, 7]}, 
+    {piece: 'BB', index: [7, 2]},
+    {piece: 'BB', index: [7, 5]}, 
+    {piece: 'BN', index: [7, 1]},
+    {piece: 'BN', index: [7, 6]},
+    {piece: 'BP', index: [6, 0]},
+    {piece: 'BP', index: [6, 1]},
+    {piece: 'BP', index: [6, 2]}, 
+    {piece: 'BP', index: [6, 3]}, 
+    {piece: 'BP', index: [6, 4]}, 
+    {piece: 'BP', index: [6, 5]}, 
+    {piece: 'BP', index: [6, 6]}, 
+    {piece: 'BP', index: [6, 7]}
+  ];
+}
+export const getDefaultWhitePiecesBot = function(): AvailablePiecesType {
+  return [
+    {piece: 'WK', index: [0, 3]}, 
+    {piece: 'WQ', index: [0, 4]},
+    {piece: 'WR', index: [0, 0]},
+    {piece: 'WR', index: [0, 7]}, 
+    {piece: 'WB', index: [0, 2]},
+    {piece: 'WB', index: [0, 5]}, 
+    {piece: 'WN', index: [0, 1]},
+    {piece: 'WN', index: [0, 6]},
+    {piece: 'WP', index: [1, 0]},
+    {piece: 'WP', index: [1, 1]},
+    {piece: 'WP', index: [1, 2]}, 
+    {piece: 'WP', index: [1, 3]}, 
+    {piece: 'WP', index: [1, 4]}, 
+    {piece: 'WP', index: [1, 5]}, 
+    {piece: 'WP', index: [1, 6]}, 
+    {piece: 'WP', index: [1, 7]}
+  ];
+} 
+export const getDefaultBlackPiecesBot = function(): AvailablePiecesType {
+  return [
+    {piece: 'BK', index: [0, 4]}, 
+    {piece: 'WQ', index: [0, 3]},
+    {piece: 'BR', index: [0, 0]},
+    {piece: 'BR', index: [0, 7]}, 
+    {piece: 'BB', index: [0, 2]},
+    {piece: 'BB', index: [0, 5]}, 
+    {piece: 'BN', index: [0, 1]},
+    {piece: 'BN', index: [0, 6]},
+    {piece: 'BP', index: [1, 0]},
+    {piece: 'BP', index: [1, 1]},
+    {piece: 'BP', index: [1, 2]}, 
+    {piece: 'BP', index: [1, 3]}, 
+    {piece: 'BP', index: [1, 4]}, 
+    {piece: 'BP', index: [1, 5]}, 
+    {piece: 'BP', index: [1, 6]}, 
+    {piece: 'BP', index: [1, 7]}
   ];
 }

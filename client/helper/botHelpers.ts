@@ -50,9 +50,9 @@ const findBestMove = function (
   // Iterate over all available pieces
   const boardCopy: LayoutType = deepCopyArray(boardLayout); // Need copy since ill null out pieces once i get their moves
   for (let i = 0; i < availablePieces.length; i += 1) {
-    const currentPiece: string = availablePieces[i];
+    const currentPiece: string = availablePieces[i].piece;
     // Find position of current piece
-    const currentPosition: number[] = findIndex(currentPiece, boardCopy);
+    const currentPosition: number[] = availablePieces[i].index;
     // Find all possible moves, returns an array of [row, col]
     const possibleMoves = getPossibleMoves(
       currentPiece,
@@ -127,9 +127,9 @@ const evaluateMove = function (
   const layoutCopy = deepCopyArray(boardLayout);
   for (let userPiece of userPieces) {
     // Find index of the user's piece
-    const userIndex: number[] = findIndex(userPiece, layoutCopy); 
+    const userIndex: number[] = userPiece.index; 
     // See if the possible moves for that piece coincide with position moving to
-    const userMoves: number[][] = highlight(userPiece, userIndex, boardLayout);
+    const userMoves: number[][] = highlight(userPiece.piece, userIndex, boardLayout);
     userMoves.forEach(move => {
       if (move[0] === rowTo && move[1] === colTo) {
         console.log('Risk of capture by:', currentPiece);
@@ -150,29 +150,9 @@ export const removeBotPieces = function (
   let capturedIndex: number;
   // Find index of captured piece
   botPieces.forEach((piece, index) => {
-    if (piece === capturedPiece) capturedIndex = index;
+    if (piece.piece === capturedPiece) capturedIndex = index;
   });
   // Splice captured index out of botPieces and return it
   botPiecesCopy.splice(capturedIndex, 1);
   return botPiecesCopy;
-};
-
-// Function to find position of current piece
-const findIndex = function (
-  currentPiece: string,
-  boardCopy: LayoutType
-): number[] {
-  const index: number[] = [];
-  for (let i = 0; i < boardCopy.length; i += 1) {
-    for (let j = 0; j < boardCopy[i].length; j += 1) {
-      if (boardCopy[i][j] === currentPiece) {
-        index.push(i);
-        index.push(j);
-        // Set the piece at this index to null, since its just a copy of the layout
-        boardCopy[i][j] = null;
-        return index;
-      }
-    }
-  }
-  return index;
 };
