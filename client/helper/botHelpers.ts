@@ -1,6 +1,6 @@
 /* Functions to power the logic behind the chess bot */
 import { LayoutType, SideType, AvailablePiecesType } from './types';
-import { movePiece, movePieceBot } from './moveHelpers';
+import { movePieceBot } from './moveHelpers';
 import { getPossibleMoves } from './possibleMoves';
 import { MovePayload } from './boardReducer';
 import { deepCopyArray } from './deepCopy';
@@ -47,6 +47,8 @@ const findBestMove = function (
     from: [],
     value: -Infinity,
   };
+  // Array of best moves, the bot will randomly choose from the array of best moves
+  let bestMoveChoices = [];
   // Iterate over all available pieces
   const boardCopy: LayoutType = deepCopyArray(boardLayout); // Need copy since ill null out pieces once i get their moves
   for (let i = 0; i < availablePieces.length; i += 1) {
@@ -71,12 +73,32 @@ const findBestMove = function (
           from: currentPosition,
           value: moveValue
         }
+        bestMoveChoices = [bestMove];
+      // If it performs equally well, add it to the best moves choices array
+      } else if (moveValue === bestMove.value) {
+        bestMoveChoices.push({
+          piece: currentPiece,
+          to: move,
+          from: currentPosition,
+          value: moveValue
+        });
       }
     });
   }
-  const piece = bestMove.piece;
-  const to = bestMove.to;
-  const from = bestMove.from;
+  // If there are multiple best moves with the same value, choose one at random
+  let piece: string;
+  let to: number[];
+  let from: number[];
+  if (bestMoveChoices.length > 1) {
+    const randomIndex = Math.floor(Math.random() * bestMoveChoices.length);
+    piece = bestMoveChoices[randomIndex].piece;
+    to = bestMoveChoices[randomIndex].to;
+    from = bestMoveChoices[randomIndex].from;
+  } else {
+    piece = bestMove.piece;
+    to = bestMove.to;
+    from = bestMove.from;
+  }
   // console.log('Best Piece to Move:', piece, 'Value:', bestMove.value);
   // Return move payload back to botMoves function
   return {
@@ -126,13 +148,15 @@ const evaluateMove = function (
   // If there is a risk of getting captured in the position moving to, subtract its value
   const layoutCopy = deepCopyArray(boardLayout);
   for (let userPiece of userPieces) {
+    // Change layout copy to include moved piece, so that only allowed squares will be highlighted (ie pawns cant move forward if piece present/move was made)
+    layoutCopy[rowTo][colTo] = currentPiece;
     // Find index of the user's piece
     const userIndex: number[] = userPiece.index; 
-    // See if the possible moves for that piece coincide with position moving to
-    const userMoves: number[][] = highlight(userPiece.piece, userIndex, boardLayout);
+    // See if the possible moves for that piece coincide with position bot is moving to
+    const userMoves: number[][] = highlight(userPiece.piece, userIndex, layoutCopy);
     userMoves.forEach(move => {
       if (move[0] === rowTo && move[1] === colTo) {
-        console.log('Risk of capture by:', currentPiece);
+        console.log(`${currentPiece} is at risk of capture by: ${userPiece.piece}`);
         value -= pieceEvaluation.get(currentPiece);
         return;
       }
