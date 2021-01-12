@@ -59,7 +59,7 @@ const findBestMove = function (
     const possibleMoves = getPossibleMoves(
       currentPiece,
       currentPosition,
-      boardLayout
+      boardCopy
     );
     // console.log(`Possible Moves for ${currentPiece}:\n`, possibleMoves);
     // Iterate over possible moves (if there are any) and reset bestMove for larger values
@@ -90,6 +90,7 @@ const findBestMove = function (
   let to: number[];
   let from: number[];
   if (bestMoveChoices.length > 1) {
+    // console.log('Best moves:', bestMoveChoices)
     const randomIndex = Math.floor(Math.random() * bestMoveChoices.length);
     piece = bestMoveChoices[randomIndex].piece;
     to = bestMoveChoices[randomIndex].to;
@@ -99,7 +100,7 @@ const findBestMove = function (
     to = bestMove.to;
     from = bestMove.from;
   }
-  // console.log('Best Piece to Move:', piece, 'Value:', bestMove.value);
+  console.log('Best Piece to Move:', piece, 'Value:', bestMove.value);
   // Return move payload back to botMoves function
   return {
     piece,
@@ -143,7 +144,7 @@ const evaluateMove = function (
     boardLayout[rowTo][colTo] &&
     boardLayout[rowTo][colTo][0] === oppositeSide
   ) {
-    value += pieceEvaluation.get(boardLayout[rowTo][colTo].slice(-1));
+    value += pieceEvaluation.get(boardLayout[rowTo][colTo].slice(0, -1));
   }
   // If there is a risk of getting captured in the position moving to, subtract its value
   const layoutCopy = deepCopyArray(boardLayout);
@@ -156,8 +157,8 @@ const evaluateMove = function (
     const userMoves: number[][] = highlight(userPiece.piece, userIndex, layoutCopy);
     userMoves.forEach(move => {
       if (move[0] === rowTo && move[1] === colTo) {
-        console.log(`${currentPiece} is at risk of capture by: ${userPiece.piece}`);
-        value -= pieceEvaluation.get(currentPiece);
+        // console.log(`${currentPiece} is at risk of capture by: ${userPiece.piece}. Loss of ${pieceEvaluation.get(currentPiece.slice(0, -1))}`);
+        value += pieceEvaluation.get(currentPiece.slice(0, -1));
         return;
       }
     });

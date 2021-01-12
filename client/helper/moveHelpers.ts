@@ -183,7 +183,7 @@ export const movePieceBot = function (
   }
   // If the piece is a pawn and makes it to the other end of the board, promote it to a queen (will change to users choice later)
   if (chessPiece === 'PAWN' && rowTo === 7) {
-    layout[rowTo][colTo] = side + 'Q';
+    layout[rowTo][colTo] = side + 'Q1'; // Change to incrementing value, if we have multiple queens
   }
   // Return modified layout
   return layout;
