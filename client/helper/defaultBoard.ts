@@ -12,28 +12,28 @@ import { LayoutType, ColorLayoutType, AvailablePiecesType } from './types';
 // Function to return defaultBlackBoard
 export function getDefaultBlackBoard(): LayoutType {
   return [
-    ['WR1', 'WN1', 'WB1', 'WK', 'WQ', 'WB2', 'WN2', 'WR2'],
+    ['WR1', 'WN1', 'WB1', 'WK0', 'WQ0', 'WB2', 'WN2', 'WR2'],
     ['WP1', 'WP2', 'WP3', 'WP4', 'WP5', 'WP6', 'WP7', 'WP8'],
     Array(8).fill(null),
     Array(8).fill(null),
     Array(8).fill(null),
     Array(8).fill(null),
     ['BP1', 'BP2', 'BP3', 'BP4', 'BP5', 'BP6', 'BP7', 'BP8'],
-    ['BR1', 'BN1', 'BB1', 'BK', 'BQ', 'BB2', 'BN2', 'BR2']
+    ['BR1', 'BN1', 'BB1', 'BK0', 'BQ0', 'BB2', 'BN2', 'BR2']
   ];
 }
 
 // Function to return defaultWhiteBoard
 export function getDefaultWhiteBoard(): LayoutType {
   return [
-    ['BR1', 'BN1', 'BB1', 'BQ', 'BK', 'BB2', 'BN2', 'BR2'],
+    ['BR1', 'BN1', 'BB1', 'BQ0', 'BK0', 'BB2', 'BN2', 'BR2'],
     ['BP1', 'BP2', 'BP3', 'BP4', 'BP5', 'BP6', 'BP7', 'BP8'],
     Array(8).fill(null),
     Array(8).fill(null),
     Array(8).fill(null),
     Array(8).fill(null),
     ['WP1', 'WP2', 'WP3', 'WP4', 'WP5', 'WP6', 'WP7', 'WP8'],
-    ['WR1', 'WN1', 'WB1', 'WQ', 'WK', 'WB2', 'WN2', 'WR2']
+    ['WR1', 'WN1', 'WB1', 'WQ0', 'WK0', 'WB2', 'WN2', 'WR2']
   ];
 }
 
@@ -53,8 +53,8 @@ export const defaultColorLayout: ColorLayoutType = [
 // Default piece choices for each side
 export const getDefaultWhitePiecesUser = function(): AvailablePiecesType {
   return [
-    {piece: 'WK', index: [7, 4]}, 
-    {piece: 'WQ', index: [7, 3]},
+    {piece: 'WK0', index: [7, 4]}, 
+    {piece: 'WQ0', index: [7, 3]},
     {piece: 'WR1', index: [7, 0]},
     {piece: 'WR2', index: [7, 7]}, 
     {piece: 'WB1', index: [7, 2]},
@@ -73,8 +73,8 @@ export const getDefaultWhitePiecesUser = function(): AvailablePiecesType {
 } 
 export const getDefaultBlackPiecesUser = function(): AvailablePiecesType {
   return [
-    {piece: 'BK', index: [7, 3]}, 
-    {piece: 'WQ', index: [7, 4]},
+    {piece: 'BK0', index: [7, 3]}, 
+    {piece: 'WQ0', index: [7, 4]},
     {piece: 'BR1', index: [7, 0]},
     {piece: 'BR2', index: [7, 7]}, 
     {piece: 'BB1', index: [7, 2]},
@@ -93,8 +93,8 @@ export const getDefaultBlackPiecesUser = function(): AvailablePiecesType {
 }
 export const getDefaultWhitePiecesBot = function(): AvailablePiecesType {
   return [
-    {piece: 'WK', index: [0, 3]}, 
-    {piece: 'WQ', index: [0, 4]},
+    {piece: 'WK0', index: [0, 3]}, 
+    {piece: 'WQ0', index: [0, 4]},
     {piece: 'WR1', index: [0, 0]},
     {piece: 'WR2', index: [0, 7]}, 
     {piece: 'WB1', index: [0, 2]},
@@ -113,8 +113,8 @@ export const getDefaultWhitePiecesBot = function(): AvailablePiecesType {
 } 
 export const getDefaultBlackPiecesBot = function(): AvailablePiecesType {
   return [
-    {piece: 'BK', index: [0, 4]}, 
-    {piece: 'WQ', index: [0, 3]},
+    {piece: 'BK0', index: [0, 4]}, 
+    {piece: 'BQ0', index: [0, 3]},
     {piece: 'BR1', index: [0, 0]},
     {piece: 'BR2', index: [0, 7]}, 
     {piece: 'BB1', index: [0, 2]},

@@ -4,8 +4,8 @@ import { BlackPieces, WhitePieces } from '../constants/chessPieces';
 // Mapping of pieces to their url
 export const PieceMapping = {
   // White Pieces
-  'WK': WhitePieces.WhiteKing,
-  'WQ': WhitePieces.WhiteQueen,
+  'WK0': WhitePieces.WhiteKing,
+  'WQ0': WhitePieces.WhiteQueen,
   'WR1': WhitePieces.WhiteRook,
   'WR2': WhitePieces.WhiteRook,
   'WB1': WhitePieces.WhiteBishop,
@@ -21,8 +21,8 @@ export const PieceMapping = {
   'WP7': WhitePieces.WhitePawn,
   'WP8': WhitePieces.WhitePawn,
   // Black Pieces
-  'BK': BlackPieces.BlackKing,
-  'BQ': BlackPieces.BlackQueen,
+  'BK0': BlackPieces.BlackKing,
+  'BQ0': BlackPieces.BlackQueen,
   'BR1': BlackPieces.BlackRook,
   'BR2': BlackPieces.BlackRook,
   'BB1': BlackPieces.BlackBishop,
