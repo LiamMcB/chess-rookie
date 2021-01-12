@@ -7,7 +7,7 @@ import { LayoutType, ColorLayoutType, SideType, AvailablePiecesType } from './ty
 import { ColorPalette, HighlightedColor } from '../constants/colorPalette';
 import { highlight, unhighlightBoard } from './highlightHelpers';
 import { movePiece, captured, adjustPieces } from './moveHelpers';
-import { botMoves, removeBotPieces } from './botHelpers';
+import { botMoves, removeBotPieces, findBestMove } from './botHelpers';
 
 // Defines structure of state object
 export interface StateType {
@@ -153,25 +153,56 @@ export const boardReducer = (state: StateType, action: ActionType) => {
       if (capturedPiece) newBotPieces = removeBotPieces(capturedPiece, state.botPieces);
       // Change color layout so square is not still highlighted
       const unhighlightedState = unhighlightBoard(state.paletteIndex);
-      // Change current side to opposite of current side
-      const oppositeSide: SideType = state.currentSide === SideType.White ? SideType.Black : SideType.White;
       // Return new state object with new layout as value
       return {
         ...state,
         colorLayout: unhighlightedState,
         movingPiece: null,
         boardLayout: newLayout,
-        currentSide: oppositeSide,
         userPieces: newUserPieces,
         botPieces: newBotPieces
       };
     // Case for moving opponent's (the bot) piece, gets invoked 1 second after user moves
     case 'MOVE_OPPONENT':
-      const changedBoard = botMoves(state.boardLayout, state.currentSide, state.userPieces, state.botPieces);
-      // TODO: ADD CAPTURED CONDITION WHERE IF BOT CAPTURES USERS PIECE, REMOVE IT FROM USERS PIECES
+      // Get best move for bot to make, function in botHelper.ts
+      const { piece, to, from } = findBestMove(
+        state.boardLayout,
+        state.currentSide,
+        state.userPieces,
+        state.botPieces
+      );
+      // console.log(`Bot moving ${piece} from ${from} to ${to}`);
+      // If the position moving to has the king of the opposite side, the bot WINS
+      if (state.boardLayout[to[0]][to[1]] && state.boardLayout[to[0]][to[1]][1] === 'K') {
+        alert('Sorry, you lose!');
+        // Change color layout so square is not still highlighted
+        const unhighlightedState = unhighlightBoard(state.paletteIndex);
+        // Return the default board
+        return {
+          ...state,
+          colorLayout: unhighlightedState,
+          movingPiece: null,
+          boardLayout: getDefaultWhiteBoard(),
+          currentSide: SideType.White,
+          userPieces: getDefaultWhitePiecesUser(),
+          botPieces: getDefaultBlackPiecesBot()
+        }
+      };
+      // If the current move will capture an enemy piece, return it else null
+      const botCapturedPiece: string | null = captured(piece, to, state.boardLayout);
+      // Move the bot piece, triggers a function that logs the move and invokes the move
+      const changedBoard = botMoves(state.boardLayout, state.currentSide, piece, from, to);
+      // Once piece is moved, adjust bot pieces to reflect this change
+      const adjustedBotPieces: AvailablePiecesType = adjustPieces(state.userPieces, piece, to);
+      // If a piece was captured, remove it from the user's pieces
+      let userNewPieces: AvailablePiecesType = state.botPieces;
+      if (botCapturedPiece) userNewPieces = removeBotPieces(botCapturedPiece, state.userPieces);
+      // Return new state object 
       return {
         ...state,
-        boardLayout: changedBoard
+        boardLayout: changedBoard,
+        userPieces: userNewPieces,
+        botPieces: adjustedBotPieces
       }
     // Case for changing moving side
     case 'CHANGE_SIDE':

@@ -10,31 +10,24 @@ import { highlight } from './highlightHelpers';
 export const botMoves = function (
   boardLayout: LayoutType,
   currentSide: SideType,
-  userPieces: AvailablePiecesType,
-  availablePieces: AvailablePiecesType
+  piece: string,
+  from: number[],
+  to: number[]
 ): LayoutType {
-  let newLayout: LayoutType = [...boardLayout];
   // Mapping of side for console logging
   const sideMapping = {
     B: 'Black',
     W: 'White',
   };
-  // Function that will calculate which move to make
-  const { piece, to, from } = findBestMove(
-    boardLayout,
-    currentSide,
-    userPieces,
-    availablePieces
-  );
-  // const { piece, to, from } = { piece: 'BP', to: [2, 4], from: [1, 4]}
+  // const { piece, to, from } = { piece: 'BP2', to: [2, 4], from: [1, 4]}
   console.log(`${sideMapping[currentSide]} is moving from ${from} to ${to}!`);
   // Move bot to new position
-  newLayout = movePieceBot(piece, from, to, boardLayout);
+  let newLayout = movePieceBot(piece, from, to, boardLayout);
   return newLayout;
 };
 
 // Function that calculates the best possible move for the bot
-const findBestMove = function (
+export const findBestMove = function (
   boardLayout: LayoutType,
   currentSide: SideType,
   userPieces: AvailablePiecesType,
@@ -166,7 +159,7 @@ const evaluateMove = function (
   return value;
 };
 
-// Function to remove a captured piece from bot's pieces
+// Function to remove a captured piece from bot's or user's pieces
 export const removeBotPieces = function (
   capturedPiece: string,
   botPieces: AvailablePiecesType
