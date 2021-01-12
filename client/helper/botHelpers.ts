@@ -28,7 +28,7 @@ export const botMoves = function (
   );
   // const { piece, to, from } = { piece: 'BP', to: [2, 4], from: [1, 4]}
   console.log(`${sideMapping[currentSide]} is moving from ${from} to ${to}!`);
-  // Move pawn to test this out
+  // Move bot to new position
   newLayout = movePieceBot(piece, from, to, boardLayout);
   return newLayout;
 };
@@ -121,7 +121,7 @@ const evaluateMove = function (
     boardLayout[rowTo][colTo] &&
     boardLayout[rowTo][colTo][0] === oppositeSide
   ) {
-    value += pieceEvaluation.get(boardLayout[rowTo][colTo]);
+    value += pieceEvaluation.get(boardLayout[rowTo][colTo].slice(-1));
   }
   // If there is a risk of getting captured in the position moving to, subtract its value
   const layoutCopy = deepCopyArray(boardLayout);

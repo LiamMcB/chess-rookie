@@ -234,6 +234,7 @@ export const adjustPieces = function(currentPieces: AvailablePiecesType, piece: 
   const newPieces: AvailablePiecesType = [];
   // Iterate through pieces and find index of piece moved
   for (let i = 0; i < currentPieces.length; i += 1) {
+    newPieces.push({piece: '', index: []});
     // Populate new pieces with deep copy for each piece
     newPieces[i].piece = currentPieces[i].piece;
     newPieces[i].index = currentPieces[i].index;

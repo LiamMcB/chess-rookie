@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Nav } from './components/Nav';
 import { Main } from './components/Main';
 import { BoardContext } from './BoardContext';
-import { defaultWhiteBoard, defaultColorLayout, getDefaultBlackPiecesBot, getDefaultWhitePiecesUser, getDefaultWhiteBoard} from './helper/defaultBoard';
+import { defaultColorLayout, getDefaultBlackPiecesBot, getDefaultWhitePiecesUser, getDefaultWhiteBoard} from './helper/defaultBoard';
 import { ColorLayoutType, SideType } from './helper/types';
 import { boardReducer } from './helper/boardReducer';
 import { StateType } from './helper/boardReducer';
