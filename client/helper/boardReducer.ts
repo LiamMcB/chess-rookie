@@ -162,6 +162,7 @@ export const boardReducer = (state: StateType, action: ActionType) => {
         movingPiece: null,
         boardLayout: newLayout,
         currentSide: oppositeSide,
+        userPieces: newUserPieces,
         botPieces: newBotPieces
       };
     // Case for moving opponent's (the bot) piece, gets invoked 1 second after user moves

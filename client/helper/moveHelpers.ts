@@ -230,13 +230,17 @@ export const captured = function(piece: string, positionTo: number[], boardLayou
 }
 
 // Function to adjust list of available pieces after a move, changing index to newly updated index
-export const adjustPieces: AvailablePiecesType = function(currentPieces: AvailablePiecesType, piece: string, newPosition: number[]) {
+export const adjustPieces = function(currentPieces: AvailablePiecesType, piece: string, newPosition: number[]): AvailablePiecesType {
+  const newPieces: AvailablePiecesType = [];
   // Iterate through pieces and find index of piece moved
   for (let i = 0; i < currentPieces.length; i += 1) {
+    // Populate new pieces with deep copy for each piece
+    newPieces[i].piece = currentPieces[i].piece;
+    newPieces[i].index = currentPieces[i].index;
     // Once the piece is found, update the index
     if (currentPieces[i].piece === piece) {
-      currentPieces[i].index = [...newPosition];
+      newPieces[i].index = [...newPosition];
     }
   }
-  return currentPieces;
+  return newPieces;
 }
