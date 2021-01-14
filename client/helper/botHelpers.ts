@@ -9,6 +9,7 @@ import { highlight } from './highlightHelpers';
 // Overall function to encapsulate the bot
 export const botMoves = function (
   boardLayout: LayoutType,
+  botPieces: AvailablePiecesType,
   currentSide: SideType,
   piece: string,
   from: number[],
@@ -22,7 +23,7 @@ export const botMoves = function (
   // const { piece, to, from } = { piece: 'BP2', to: [2, 4], from: [1, 4]}
   console.log(`${sideMapping[currentSide]} is moving ${piece} from ${from} to ${to}!`);
   // Move bot to new position
-  let newLayout = movePieceBot(piece, from, to, boardLayout);
+  let newLayout = movePieceBot(piece, from, to, boardLayout, botPieces);
   return newLayout;
 };
 

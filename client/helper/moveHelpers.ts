@@ -6,7 +6,8 @@ export const movePiece = function (
   piece: string,
   positionFrom: number[], // same as before, in format [row, col]
   positionTo: number[], // [row, col]
-  boardLayout: LayoutType
+  boardLayout: LayoutType,
+  userPieces: AvailablePiecesType
 ): LayoutType {
   // Get copy of board layout to return
   const layout = deepCopyArray(boardLayout);
@@ -75,7 +76,9 @@ export const movePiece = function (
   }
   // If the piece is a pawn and makes it to the other end of the board, promote it to a queen (will change to users choice later)
   if (chessPiece === 'PAWN' && rowTo === 0) {
-    layout[rowTo][colTo] = side + 'Q';
+    // Count number of queens the user has, set the promoted queen to side + Q + that number
+    const numQueens = countQueens(userPieces);
+    layout[rowTo][colTo] = side + 'Q' + numQueens;
   }
   // Return modified layout
   return layout;
@@ -112,7 +115,8 @@ export const movePieceBot = function (
   piece: string,
   positionFrom: number[], // same as before, in format [row, col]
   positionTo: number[], // [row, col]
-  boardLayout: LayoutType
+  boardLayout: LayoutType,
+  botPieces: AvailablePiecesType
 ): LayoutType {
   // Get copy of board layout to return
   const layout = deepCopyArray(boardLayout);
@@ -183,7 +187,9 @@ export const movePieceBot = function (
   }
   // If the piece is a pawn and makes it to the other end of the board, promote it to a queen (will change to users choice later)
   if (chessPiece === 'PAWN' && rowTo === 7) {
-    layout[rowTo][colTo] = side + 'Q1'; // Change to incrementing value, if we have multiple queens
+    // Count number of queens the bot has, set the promoted queen to side + Q + that number
+    const numQueens = countQueens(botPieces);
+    layout[rowTo][colTo] = side + 'Q' + numQueens; // Change to incrementing value, if we have multiple queens
   }
   // Return modified layout
   return layout;
@@ -244,4 +250,15 @@ export const adjustPieces = function(currentPieces: AvailablePiecesType, piece: 
     }
   }
   return newPieces;
+}
+
+// Function to count queens for pawn promotion
+const countQueens = function(availablePieces: AvailablePiecesType): number {
+  let numQueens: number = 0;
+  for (let i = 0; i < availablePieces.length; i += 1) {
+    if (availablePieces[i].piece[1] === 'Q') {
+      numQueens += 1;
+    }
+  }
+  return numQueens;
 }

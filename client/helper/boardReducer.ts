@@ -145,7 +145,7 @@ export const boardReducer = (state: StateType, action: ActionType) => {
       // If the current move will capture an enemy piece, return it else null
       const capturedPiece: string | null = captured(action.payload.piece, [rowTo, colTo], state.boardLayout);
       // Place piece in new position for new layout
-      const newLayout = movePiece(action.payload.piece, [rowFrom, colFrom], [rowTo, colTo], state.boardLayout);
+      const newLayout = movePiece(action.payload.piece, [rowFrom, colFrom], [rowTo, colTo], state.boardLayout, state.userPieces);
       // Once piece is moved, adjust user pieces to reflect this change
       const newUserPieces: AvailablePiecesType = adjustPieces(state.userPieces, action.payload.piece, [rowTo, colTo]);
       // If a piece was captured, remove it from the bot's pieces
@@ -194,7 +194,7 @@ export const boardReducer = (state: StateType, action: ActionType) => {
       // If the current move will capture an enemy piece, return it else null
       const botCapturedPiece: string | null = captured(piece, to, state.boardLayout);
       // Move the bot piece, triggers a function that logs the move and invokes the move
-      const changedBoard = botMoves(state.boardLayout, state.currentSide, piece, from, to);
+      const changedBoard = botMoves(state.boardLayout, state.botPieces, state.currentSide, piece, from, to);
       // Once piece is moved, adjust bot pieces to reflect this change
       const adjustedBotPieces: AvailablePiecesType = adjustPieces(state.botPieces, piece, to);
       // If a piece was captured, remove it from the user's pieces
