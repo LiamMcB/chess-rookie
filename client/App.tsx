@@ -21,6 +21,7 @@ export const App: React.FC = () => {
   } 
   // Reducer hook which bundles state-changing functionality
   const [ state, dispatch ] = React.useReducer(boardReducer, defaultState);
+  React.useEffect(() => console.log('Current side:', state.currentSide), [state.currentSide]);
   return (
     <BoardContext.Provider value={{state, dispatch}}>
       <Nav />

@@ -20,7 +20,7 @@ export const botMoves = function (
     W: 'White',
   };
   // const { piece, to, from } = { piece: 'BP2', to: [2, 4], from: [1, 4]}
-  console.log(`${sideMapping[currentSide]} is moving from ${from} to ${to}!`);
+  console.log(`${sideMapping[currentSide]} is moving ${piece} from ${from} to ${to}!`);
   // Move bot to new position
   let newLayout = movePieceBot(piece, from, to, boardLayout);
   return newLayout;
@@ -33,6 +33,7 @@ export const findBestMove = function (
   userPieces: AvailablePiecesType,
   availablePieces: AvailablePiecesType
 ): MovePayload {
+  console.log('Bot\'s available pieces:\n', availablePieces);
   // Variable to keep track of move with highest positive value
   let bestMove = {
     piece: '',
@@ -93,7 +94,7 @@ export const findBestMove = function (
     to = bestMove.to;
     from = bestMove.from;
   }
-  console.log('Best Piece to Move:', piece, 'Value:', bestMove.value);
+  // console.log('Best Piece to Move:', piece, 'Value:', bestMove.value);
   // Return move payload back to botMoves function
   return {
     piece,

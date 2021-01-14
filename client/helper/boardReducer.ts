@@ -193,7 +193,7 @@ export const boardReducer = (state: StateType, action: ActionType) => {
       // Move the bot piece, triggers a function that logs the move and invokes the move
       const changedBoard = botMoves(state.boardLayout, state.currentSide, piece, from, to);
       // Once piece is moved, adjust bot pieces to reflect this change
-      const adjustedBotPieces: AvailablePiecesType = adjustPieces(state.userPieces, piece, to);
+      const adjustedBotPieces: AvailablePiecesType = adjustPieces(state.botPieces, piece, to);
       // If a piece was captured, remove it from the user's pieces
       let userNewPieces: AvailablePiecesType = state.botPieces;
       if (botCapturedPiece) userNewPieces = removeBotPieces(botCapturedPiece, state.userPieces);
