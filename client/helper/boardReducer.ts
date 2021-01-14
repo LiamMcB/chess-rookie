@@ -127,7 +127,7 @@ export const boardReducer = (state: StateType, action: ActionType) => {
       const rowTo = action.payload.to[0];
       const colTo = action.payload.to[1];
       // If the position moving to has the king of the opposite side, user checkmates/WINS
-      if (state.boardLayout[rowTo][colTo] && state.boardLayout[rowTo][colTo][1] === 'K') {
+      if (state.boardLayout[rowTo][colTo] && state.boardLayout[rowTo][colTo][0] !== state.currentSide && state.boardLayout[rowTo][colTo][1] === 'K') {
         alert('Checkmate. You win!');
         // Change color layout so square is not still highlighted
         const unhighlightedState = unhighlightBoard(state.paletteIndex);
@@ -153,6 +153,9 @@ export const boardReducer = (state: StateType, action: ActionType) => {
       if (capturedPiece) newBotPieces = removeBotPieces(capturedPiece, state.botPieces);
       // Change color layout so square is not still highlighted
       const unhighlightedState = unhighlightBoard(state.paletteIndex);
+
+      console.log('Board Layout:\n', newLayout);
+
       // Return new state object with new layout as value
       return {
         ...state,
@@ -173,7 +176,7 @@ export const boardReducer = (state: StateType, action: ActionType) => {
       );
       // console.log(`Bot moving ${piece} from ${from} to ${to}`);
       // If the position moving to has the king of the opposite side, the bot WINS
-      if (state.boardLayout[to[0]][to[1]] && state.boardLayout[to[0]][to[1]][1] === 'K') {
+      if (state.boardLayout[to[0]][to[1]] && state.boardLayout[to[0]][to[1]][0] !== state.currentSide && state.boardLayout[to[0]][to[1]][1] === 'K') {
         alert('Sorry, you lose!');
         // Change color layout so square is not still highlighted
         const unhighlightedState = unhighlightBoard(state.paletteIndex);

@@ -36,13 +36,13 @@ export const movePiece = function (
         castled = true;
         // Castling from left rook
         if (colFrom === 0) {
-          layout[7][3] = 'WR';
-          layout[7][2] = 'WK';
+          layout[7][3] = piece;
+          layout[7][2] = 'WK0';
         }
         // Castling from right rook
         else if (colFrom === 7) {
-          layout[7][5] = 'WR';
-          layout[7][6] = 'WK';
+          layout[7][5] = piece;
+          layout[7][6] = 'WK0';
         }
         // Reset old positions
         layout[rowFrom][colFrom] = null;
@@ -54,13 +54,13 @@ export const movePiece = function (
         castled = true;
         // Castling from left rook
         if (colFrom === 0) {
-          layout[7][2] = 'BR';
-          layout[7][1] = 'BK';
+          layout[7][2] = piece;
+          layout[7][1] = 'BK0';
         }
         // Castling from right rook
         else if (colFrom === 7) {
-          layout[7][4] = 'BR';
-          layout[7][5] = 'BK';
+          layout[7][4] = piece;
+          layout[7][5] = 'BK0';
         }
         // Reset old positions
         layout[rowFrom][colFrom] = null;
@@ -68,7 +68,7 @@ export const movePiece = function (
       }
     }
   }
-  // Take the piece in the rowTo, colTo and replace old position with null if we haven't castled
+  // MOVES PIECE WHEN NOT CASTLING Take the piece in the rowTo, colTo and replace old position with null if we haven't castled
   if (!castled) {
     layout[rowTo][colTo] = piece;
     layout[rowFrom][colFrom] = null;
@@ -90,7 +90,7 @@ export const canCastle = function (
   // If the rook isnt in original position, return false, only need columns since checked rows to invoke this function
   if (positionFrom[1] !== 0 && positionFrom[1] !== 7) return false;
   // If the king isnt in original position, return false (position differs by side)
-  if ((boardLayout[7][4] !== 'WK' && side === 'W') || (boardLayout[7][3] !== 'BK' && side === 'B')) return false;
+  if ((boardLayout[7][4] !== 'WK0' && side === 'W') || (boardLayout[7][3] !== 'BK0' && side === 'B')) return false;
   // If rook is in leftmost position
   if (positionFrom[1] === 0) {
     // Check that there are no pieces between rook and king
@@ -144,13 +144,13 @@ export const movePieceBot = function (
         castled = true;
         // Castling from left rook
         if (colFrom === 0) {
-          layout[0][3] = 'WR';
-          layout[0][2] = 'WK';
+          layout[0][3] = piece;
+          layout[0][2] = 'WK0';
         }
         // Castling from right rook
         else if (colFrom === 7) {
-          layout[0][5] = 'WR';
-          layout[0][6] = 'WK';
+          layout[0][5] = piece;
+          layout[0][6] = 'WK0';
         }
         // Reset old positions
         layout[rowFrom][colFrom] = null;
@@ -162,13 +162,13 @@ export const movePieceBot = function (
         castled = true;
         // Castling from left rook
         if (colFrom === 0) {
-          layout[0][2] = 'BR';
-          layout[0][1] = 'BK';
+          layout[0][2] = piece;
+          layout[0][1] = 'BK0';
         }
         // Castling from right rook
         else if (colFrom === 7) {
-          layout[0][4] = 'BR';
-          layout[0][5] = 'BK';
+          layout[0][4] = piece;
+          layout[0][5] = 'BK0';
         }
         // Reset old positions
         layout[rowFrom][colFrom] = null;
