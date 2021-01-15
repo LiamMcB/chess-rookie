@@ -1,6 +1,6 @@
 /* File with helper functions to move pieces, promote pieces, determine if game was lost etc. */
-import { deepCopyArray } from './deepCopy';
-import { AvailablePiecesType, LayoutType } from './types';
+import { deepCopyArray, deepCopyPieces } from './deepCopy';
+import { AvailablePiecesType, LayoutType, SideType } from './types';
 // Function to move the user's pieces
 export const movePiece = function (
   piece: string,
@@ -236,17 +236,46 @@ export const captured = function(piece: string, positionTo: number[], boardLayou
 }
 
 // Function to adjust list of available pieces after a move, changing index to newly updated index
-export const adjustPieces = function(currentPieces: AvailablePiecesType, piece: string, newPosition: number[]): AvailablePiecesType {
-  const newPieces: AvailablePiecesType = [];
+export const adjustPieces = function(currentPieces: AvailablePiecesType, piece: string, newPosition: number[], boardLayout: LayoutType): AvailablePiecesType {
+  const newPieces: AvailablePiecesType = deepCopyPieces(currentPieces);
   // Iterate through pieces and find index of piece moved
   for (let i = 0; i < currentPieces.length; i += 1) {
-    newPieces.push({piece: '', index: []});
-    // Populate new pieces with deep copy for each piece
-    newPieces[i].piece = currentPieces[i].piece;
-    newPieces[i].index = currentPieces[i].index;
     // Once the piece is found, update the index
     if (currentPieces[i].piece === piece) {
       newPieces[i].index = [...newPosition];
+      // PROMOTION: If the piece is a pawn being promoted, change piece to the correct queen
+      if (piece[1] === 'P' && newPosition[0] === 0 || newPosition[0] === 7) {
+        newPieces[i].piece = piece[0] + 'Q' + countQueens(currentPieces);
+      // CASTLING: If the piece is a rook castling with its king,change both their indices
+      } else if (piece[1] === 'R' && boardLayout[newPosition[0]][newPosition[1]] === piece[0] + 'K0') {
+        // Since castling comes from the same row, find which row that is
+        const rowCastledFrom: number = newPosition[0];
+        // Assign piece to the current rook
+        newPieces[i].piece = piece;
+        // White side
+        if (piece[0] === 'W') {
+          // Left rook
+          if (piece[2] === '1') {
+            newPieces[i].index = [rowCastledFrom, 3]; // Rook
+            newPieces[0].index = [rowCastledFrom, 2]; // King
+          // Right rook
+          } else if (piece[2] === '2') {
+            newPieces[i].index = [rowCastledFrom, 5]; // Rook
+            newPieces[0].index = [rowCastledFrom, 6]; // King
+          }
+        // Black side
+        } else if (piece[0] === 'B') {
+          // Left rook
+          if (piece[2] === '1') {
+            newPieces[i].index = [rowCastledFrom, 2]; // Rook
+            newPieces[0].index = [rowCastledFrom, 1]; // King
+          // Right rook
+          } else if (piece[2] === '2') {
+            newPieces[i].index = [rowCastledFrom, 4]; // Rook
+            newPieces[0].index = [rowCastledFrom, 5]; // King
+          }
+        }
+      }
     }
   }
   return newPieces;

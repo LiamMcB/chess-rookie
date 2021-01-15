@@ -8,6 +8,7 @@ import { ColorPalette, HighlightedColor } from '../constants/colorPalette';
 import { highlight, unhighlightBoard } from './highlightHelpers';
 import { movePiece, captured, adjustPieces } from './moveHelpers';
 import { botMoves, removeBotPieces, findBestMove } from './botHelpers';
+import { deepCopyPieces } from './deepCopy';
 
 // Defines structure of state object
 export interface StateType {
@@ -147,15 +148,14 @@ export const boardReducer = (state: StateType, action: ActionType) => {
       // Place piece in new position for new layout
       const newLayout = movePiece(action.payload.piece, [rowFrom, colFrom], [rowTo, colTo], state.boardLayout, state.userPieces);
       // Once piece is moved, adjust user pieces to reflect this change
-      const newUserPieces: AvailablePiecesType = adjustPieces(state.userPieces, action.payload.piece, [rowTo, colTo]);
+      const newUserPieces: AvailablePiecesType = adjustPieces(state.userPieces, action.payload.piece, [rowTo, colTo], state.boardLayout);
+      // console.log('Adjusted User Pieces:\n', newUserPieces);
+      // console.log('User\'s Pieces Before:\n', state.userPieces);
       // If a piece was captured, remove it from the bot's pieces
-      let newBotPieces: AvailablePiecesType = state.botPieces;
+      let newBotPieces: AvailablePiecesType = deepCopyPieces(state.botPieces);
       if (capturedPiece) newBotPieces = removeBotPieces(capturedPiece, state.botPieces);
       // Change color layout so square is not still highlighted
       const unhighlightedState = unhighlightBoard(state.paletteIndex);
-
-      console.log('Board Layout:\n', newLayout);
-
       // Return new state object with new layout as value
       return {
         ...state,
@@ -196,13 +196,14 @@ export const boardReducer = (state: StateType, action: ActionType) => {
       // Move the bot piece, triggers a function that logs the move and invokes the move
       const changedBoard = botMoves(state.boardLayout, state.botPieces, state.currentSide, piece, from, to);
       // Once piece is moved, adjust bot pieces to reflect this change
-      const adjustedBotPieces: AvailablePiecesType = adjustPieces(state.botPieces, piece, to);
+      const adjustedBotPieces: AvailablePiecesType = adjustPieces(state.botPieces, piece, to, state.boardLayout);
       // If a piece was captured, remove it from the user's pieces
-      let userNewPieces: AvailablePiecesType = state.botPieces;
+      let userNewPieces: AvailablePiecesType = deepCopyPieces(state.userPieces);
       if (botCapturedPiece) userNewPieces = removeBotPieces(botCapturedPiece, state.userPieces);
       // Return new state object 
       return {
         ...state,
+        movingPiece: null,
         boardLayout: changedBoard,
         userPieces: userNewPieces,
         botPieces: adjustedBotPieces
@@ -237,6 +238,7 @@ export const boardReducer = (state: StateType, action: ActionType) => {
         paletteIndex: 0,
         movingPiece: null,
         currentSide: SideType.White,
+        userPieces: getDefaultWhitePiecesUser(),
         botPieces: getDefaultBlackPiecesBot()
       }
   }

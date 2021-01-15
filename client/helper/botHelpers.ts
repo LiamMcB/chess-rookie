@@ -3,7 +3,7 @@ import { LayoutType, SideType, AvailablePiecesType } from './types';
 import { movePieceBot } from './moveHelpers';
 import { getPossibleMoves } from './possibleMoves';
 import { MovePayload } from './boardReducer';
-import { deepCopyArray } from './deepCopy';
+import { deepCopyArray, deepCopyPieces } from './deepCopy';
 import { highlight } from './highlightHelpers';
 
 // Overall function to encapsulate the bot
@@ -34,7 +34,6 @@ export const findBestMove = function (
   userPieces: AvailablePiecesType,
   availablePieces: AvailablePiecesType
 ): MovePayload {
-  console.log('Bot\'s available pieces:\n', availablePieces);
   // Variable to keep track of move with highest positive value
   let bestMove = {
     piece: '',
@@ -49,7 +48,7 @@ export const findBestMove = function (
   for (let i = 0; i < availablePieces.length; i += 1) {
     const currentPiece: string = availablePieces[i].piece;
     // Find position of current piece
-    const currentPosition: number[] = availablePieces[i].index;
+    const currentPosition: number[] = [...availablePieces[i].index];
     // Find all possible moves, returns an array of [row, col]
     const possibleMoves = getPossibleMoves(
       currentPiece,
@@ -147,7 +146,7 @@ const evaluateMove = function (
     // Change layout copy to include moved piece, so that only allowed squares will be highlighted (ie pawns cant move forward if piece present/move was made)
     layoutCopy[rowTo][colTo] = currentPiece;
     // Find index of the user's piece
-    const userIndex: number[] = userPiece.index; 
+    const userIndex: number[] = [...userPiece.index]; 
     // See if the possible moves for that piece coincide with position bot is moving to
     const userMoves: number[][] = highlight(userPiece.piece, userIndex, layoutCopy);
     userMoves.forEach(move => {
@@ -166,7 +165,7 @@ export const removeBotPieces = function (
   capturedPiece: string,
   botPieces: AvailablePiecesType
 ): AvailablePiecesType {
-  const botPiecesCopy: AvailablePiecesType = [...botPieces];
+  const botPiecesCopy: AvailablePiecesType = deepCopyPieces(botPieces);
   let capturedIndex: number;
   // Find index of captured piece
   botPieces.forEach((piece, index) => {
