@@ -39,6 +39,16 @@ export const Main: React.FC = () => {
     dispatch({type: 'UN_HIGHLIGHT_MOVES'});
     // Depending on what side the user is on, change the default board layout
     !isWhite ? dispatch({type: 'RESET_BOARD_WHITE'}) : dispatch({type: 'RESET_BOARD_BLACK'});
+    // If the board gets changed to black, make white move (the bot)
+    if (isWhite) {
+      // Wait 1 second, then move the bot's piece
+      setTimeout(() => {
+        // Dispatch action for bot to move
+        dispatch({ type: 'MOVE_OPPONENT' });
+        // Set the current side back to the users side
+        dispatch({ type: 'CHANGE_SIDE' });
+      }, 1000);
+    }
   }
   // Styling color for buttons
   const buttonStyle = {backgroundColor: ColorPalette[paletteIndex].dark, color: ColorPalette[paletteIndex].light};
