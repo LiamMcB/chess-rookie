@@ -28,7 +28,7 @@ export const ChessPiece: React.FC<Props> = ({ piece, position }) => {
 
   return (
     <img
-      src={PieceMapping[piece]}
+      src={PieceMapping[piece.substring(0, 2)]}
       alt={`${piece}`}
       className='chess-piece'
       draggable='true'
