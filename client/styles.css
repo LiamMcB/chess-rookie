@@ -103,3 +103,22 @@ button:hover {
   overflow-x: hidden;
   overflow-y: scroll;
 }
+
+.history-title {
+  padding-left: 1vw;
+  padding-right: 1vw;
+  margin-top: 2vh;
+  text-decoration: underline;
+}
+
+.history-entry {
+  padding-left: 1vw;
+  padding-right: 1vw;
+  margin-top: 1vh;
+}
+
+/* Gets rid of scrollbar */
+::-webkit-scrollbar {
+  width: 0px;  /* Remove scrollbar space */
+  background: transparent;  /* Optional: just make scrollbar invisible */
+}

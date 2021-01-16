@@ -7,10 +7,11 @@ export const History: React.FC = () => {
   // Iterate over all history entries and create new component for each
   const entries = [];
   state.history.forEach((entry, index) => {
-    entries.push(<Entry moveHistory={entry} key={`entry-${index}`}/>)
+    entries.push(<Entry moveHistory={entry} entryIndex={index} key={`entry-${index}`}/>)
   })
   return (
     <div className='history-container'>
+      <h3 className='history-title'>History</h3>
       {entries}
     </div>
   )

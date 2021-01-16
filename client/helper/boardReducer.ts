@@ -197,7 +197,8 @@ export const boardReducer = (state: StateType, action: ActionType) => {
           boardLayout: getDefaultWhiteBoard(),
           currentSide: SideType.White,
           userPieces: getDefaultWhitePiecesUser(),
-          botPieces: getDefaultBlackPiecesBot()
+          botPieces: getDefaultBlackPiecesBot(),
+          history: []
         }
       };
       // If the current move will capture an enemy piece, return it else null
