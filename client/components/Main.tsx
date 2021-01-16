@@ -3,6 +3,7 @@ import { ChessBoard } from './ChessBoard';
 import { ColorPalette } from '../constants/colorPalette';
 import { BoardContext } from '../BoardContext';
 import { SideType } from '../helper/types';
+import { History } from '../components/History';
 
 
 export const Main: React.FC = () => {
@@ -60,7 +61,11 @@ export const Main: React.FC = () => {
         <button onClick={resetBoard} style={buttonStyle}>New Game</button>
         <button onClick={changeSide} style={buttonStyle}>Choose Side</button>
       </div>
-      <ChessBoard paletteIndex={paletteIndex} />
+      <div className='lower-container'>
+        <div className='empty-column'></div>
+        <ChessBoard paletteIndex={paletteIndex} />
+        <History />
+      </div>
     </div>
   )
 }

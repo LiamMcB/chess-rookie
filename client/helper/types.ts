@@ -9,3 +9,9 @@ interface PiecePositionType {
   piece: string; // ie 'BP' for black pawn
   index: number[]; // [row, col]
 }
+
+export interface MoveHistoryType {
+  side: SideType;
+  move: string; // ie e4 for pawn moving to e4 or Nf6 for knight moving to f6
+}
+export type HistoryType = MoveHistoryType[];

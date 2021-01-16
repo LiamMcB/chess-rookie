@@ -54,6 +54,11 @@ button:hover {
   font-size: small;
 }
 
+.lower-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr 2fr;
+}
+
 .chess-board {
   /* border: 1px solid black;
   height: 70vh;
@@ -89,4 +94,12 @@ button:hover {
 .chess-piece:hover {
   height: 75%;
   width: 75%;
+}
+
+.history-container {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  margin: 3vh 5vw 0 5vw;
+  height: 70vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }

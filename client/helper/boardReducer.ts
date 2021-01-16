@@ -3,12 +3,13 @@ import {
   getDefaultWhiteBoard, getDefaultBlackBoard, getDefaultBlackPiecesUser, getDefaultWhitePiecesUser,
   getDefaultBlackPiecesBot, getDefaultWhitePiecesBot, defaultColorLayout
  } from './defaultBoard';
-import { LayoutType, ColorLayoutType, SideType, AvailablePiecesType } from './types';
+import { LayoutType, ColorLayoutType, SideType, AvailablePiecesType, HistoryType } from './types';
 import { ColorPalette, HighlightedColor } from '../constants/colorPalette';
 import { highlight, unhighlightBoard } from './highlightHelpers';
 import { movePiece, captured, adjustPieces } from './moveHelpers';
 import { botMoves, removeBotPieces, findBestMove } from './botHelpers';
 import { deepCopyPieces } from './deepCopy';
+import { generateHistory } from './historyHelper';
 
 // Defines structure of state object
 export interface StateType {
@@ -19,6 +20,7 @@ export interface StateType {
   currentSide: SideType; // Represents the current side moving, which isn't necessarily the same as the user's side
   userPieces: AvailablePiecesType; // Represents the choices for the bot to move, array of strings ('WP' or 'BK')
   botPieces: AvailablePiecesType; // Represents the choices for the bot to move, array of strings ('WP' or 'BK')
+  history: HistoryType; // Represents a sequence of objects with side and move (ie 'Nf6')
 }
 // Structure of actions
 export interface ActionType {
@@ -73,7 +75,8 @@ export const boardReducer = (state: StateType, action: ActionType) => {
         movingPiece: null,
         currentSide: SideType.White,
         userPieces: getDefaultWhitePiecesUser(),
-        botPieces: getDefaultBlackPiecesBot()
+        botPieces: getDefaultBlackPiecesBot(),
+        history: []
       }
       return defaultWhiteState;
     case 'RESET_BOARD_BLACK':
@@ -83,7 +86,8 @@ export const boardReducer = (state: StateType, action: ActionType) => {
         movingPiece: null,
         currentSide: SideType.White,
         userPieces: getDefaultBlackPiecesUser(),
-        botPieces: getDefaultWhitePiecesBot()
+        botPieces: getDefaultWhitePiecesBot(),
+        history: []
       }
       return defaultBlackState;
     // Cases to highlight and unhighlight legal moves
@@ -140,7 +144,8 @@ export const boardReducer = (state: StateType, action: ActionType) => {
           boardLayout: getDefaultWhiteBoard(),
           currentSide: SideType.White,
           userPieces: getDefaultWhitePiecesUser(),
-          botPieces: getDefaultBlackPiecesBot()
+          botPieces: getDefaultBlackPiecesBot(),
+          history: []
         }
       };
       // If the current move will capture an enemy piece, return it else null
@@ -156,6 +161,9 @@ export const boardReducer = (state: StateType, action: ActionType) => {
       if (capturedPiece) newBotPieces = removeBotPieces(capturedPiece, state.botPieces);
       // Change color layout so square is not still highlighted
       const unhighlightedState = unhighlightBoard(state.paletteIndex);
+      // Push new move to the history array
+      const userCaptured: boolean = capturedPiece !== null;
+      const historyAfterUserMove = generateHistory(state.history, state.currentSide, action.payload.piece, action.payload.to, userCaptured);
       // Return new state object with new layout as value
       return {
         ...state,
@@ -163,7 +171,8 @@ export const boardReducer = (state: StateType, action: ActionType) => {
         movingPiece: null,
         boardLayout: newLayout,
         userPieces: newUserPieces,
-        botPieces: newBotPieces
+        botPieces: newBotPieces,
+        history: historyAfterUserMove
       };
     // Case for moving opponent's (the bot) piece, gets invoked 1 second after user moves
     case 'MOVE_OPPONENT':
@@ -200,13 +209,17 @@ export const boardReducer = (state: StateType, action: ActionType) => {
       // If a piece was captured, remove it from the user's pieces
       let userNewPieces: AvailablePiecesType = deepCopyPieces(state.userPieces);
       if (botCapturedPiece) userNewPieces = removeBotPieces(botCapturedPiece, state.userPieces);
+      // Push new move to the history array
+      const botCaptured: boolean = botCapturedPiece !== null;
+      const historyAfterBotMove = generateHistory(state.history, state.currentSide, piece, to, botCaptured);
       // Return new state object 
       return {
         ...state,
         movingPiece: null,
         boardLayout: changedBoard,
         userPieces: userNewPieces,
-        botPieces: adjustedBotPieces
+        botPieces: adjustedBotPieces,
+        history: historyAfterBotMove
       }
     // Case for changing moving side
     case 'CHANGE_SIDE':

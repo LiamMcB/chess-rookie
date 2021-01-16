@@ -17,7 +17,8 @@ export const App: React.FC = () => {
     movingPiece: null,
     currentSide: SideType.White,
     userPieces: getDefaultWhitePiecesUser(),
-    botPieces: getDefaultBlackPiecesBot()
+    botPieces: getDefaultBlackPiecesBot(),
+    history: []
   } 
   // Reducer hook which bundles state-changing functionality
   const [ state, dispatch ] = React.useReducer(boardReducer, defaultState);
