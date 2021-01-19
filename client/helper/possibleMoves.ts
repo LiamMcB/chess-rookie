@@ -148,8 +148,8 @@ const getPossibleMovesPawn = function(row: number, col: number, boardLayout: Lay
   if (canMove([row + 1, col - 1], boardLayout, side) && pawnMoveDiagonal(boardLayout, [row + 1, col - 1], side)) {
     possibleMoves.push([row + 1, col - 1]);
   }
-  // If pawn's first move, highlight one additional square
-  if (canMove([row + 2, col], boardLayout, side) && row === 1 && !boardLayout[row + 2][col]) {
+  // If pawn's first move, highlight one additional square as long as there is no piece inbetween
+  if (canMove([row + 2, col], boardLayout, side) && row === 1 && !boardLayout[row + 2][col] && !boardLayout[row + 1][col]) {
     possibleMoves.push([row + 2, col]);
   }
 }

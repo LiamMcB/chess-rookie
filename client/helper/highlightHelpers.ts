@@ -142,7 +142,7 @@ export const highlight = (
       highlightIndices.push([row - 1, col - 1]);
     }
     // If pawn's first move, highlight one additional square
-    if (canMove([row - 2, col], boardLayout, side) && row === 6 && !boardLayout[row - 2][col]) {
+    if (canMove([row - 2, col], boardLayout, side) && row === 6 && !boardLayout[row - 2][col] && !boardLayout[row - 1][col]) {
       highlightIndices.push([row - 2, col]);
     }
   }
