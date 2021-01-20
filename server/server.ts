@@ -1,7 +1,7 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import { ErrorType } from './types';
-const router =  require('./routes');
+const router =  require('./routes/routes');
 
 const PORT: number = 3000;
 
