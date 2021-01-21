@@ -1,7 +1,7 @@
-import * as express from 'express';
-import * as bodyParser from 'body-parser';
+import express from 'express';
+import bodyParser from 'body-parser';
 import { ErrorType } from './types';
-const router =  require('./routes/routes');
+const router = require('./routes/routes');
 
 const PORT: number = 3000;
 
@@ -23,8 +23,8 @@ app.use((err, req, res, next) => {
   const defaultErr: ErrorType = {
     log: 'Express error handler caught unknown middleware error',
     status: 500,
-    message: { err: 'An error occurred.' }
-  }
+    message: { err: 'An error occurred.' },
+  };
   const errorObj: ErrorType = Object.assign({}, defaultErr, err);
   console.log(errorObj.log);
   return res.status(errorObj.status).json(errorObj.message);
@@ -32,5 +32,5 @@ app.use((err, req, res, next) => {
 
 // Server listening on port 3000
 app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`)
+  console.log(`Server listening on port ${PORT}`);
 });

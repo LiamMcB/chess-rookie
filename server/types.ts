@@ -13,6 +13,6 @@ interface ErrorMessageType {
 
 // Type for authentication controller
 export interface AuthControllerType {
-  loginUser: any;
-  signupUser: any;
+  loginUser?:  any;
+  signupUser?: any;
 }

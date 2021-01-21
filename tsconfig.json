@@ -1,7 +1,10 @@
 {
   "compilerOptions": {
-    // No module system, concatenated file
-    "module": "none",
+    // Module system for node
+    "module": "commonjs",
+
+    // Allows for compilation of ES6 modules to commonjs
+    "esModuleInterop": true,
 
     // Set React as the JSX factory
     "jsx": "react",
