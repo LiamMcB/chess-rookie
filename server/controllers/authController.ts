@@ -1,6 +1,6 @@
 // Controllers for login and signup
 import { NextFunction } from 'express';
-import { AuthControllerType } from '../types';
+import { AuthControllerType } from '../types/types';
 let authController: AuthControllerType = {};
 
 // Login user based on credentials in request

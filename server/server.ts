@@ -1,14 +1,27 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { ErrorType } from './types';
+import { ErrorType } from './types/types';
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 const router = require('./routes/routes');
 
 const PORT: number = 3000;
+dotenv.config();
 
 const app = express();
 
 // Parse request body
 app.use(bodyParser.json());
+
+// Connect to mongodb
+const mongoURI: string = process.env.MONGO_URI;
+mongoose.connect(mongoURI, {useNewUrlParser: true, useUnifiedTopology: true});
+// const db = mongoose.connection;
+// db.on('error', console.error.bind(console, 'connection error:'));
+// db.once('open', function() {
+//   // we're connected!
+//   console.log('Connected to MongoDB!')
+// });
 
 // Route handler
 app.use('/api', router);
