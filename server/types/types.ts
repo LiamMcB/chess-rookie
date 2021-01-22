@@ -16,6 +16,7 @@ interface ErrorMessageType {
 export interface AuthControllerType {
   loginUser?:  any;
   signupUser?: any;
+  createToken?: any;
 }
 
 // Types for request body of signing up user
@@ -39,3 +40,12 @@ export interface IUser extends Document {
   firstname: string;
   lastname: string;
 };
+
+// Types for JWT tokens
+export interface TokenData {
+  token: string;
+  expiresIn: number;
+}
+export interface DataStoredInToken {
+  _id: string;
+}

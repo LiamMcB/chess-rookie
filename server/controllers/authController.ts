@@ -1,8 +1,9 @@
 // Controllers for login and signup
 import { NextFunction, Response } from 'express';
-import { AuthControllerType, SignupUserRequest, LoginUserRequest, ErrorType } from '../types/types';
+import { AuthControllerType, SignupUserRequest, LoginUserRequest, ErrorType, IUser, TokenData, DataStoredInToken } from '../types/types';
 import User from '../models/userModels';
 import bcrypt from 'bcrypt';
+import * as jwt from 'jsonwebtoken';
 let authController: AuthControllerType = {};
 
 // Login user based on credentials in request
@@ -62,6 +63,23 @@ authController.signupUser = async (req: SignupUserRequest, res: Response, next: 
     res.locals.user = user;
     return next();
   });
+}
+
+// Function to create jwt for user
+authController.createToken = function(user: IUser): TokenData {
+  // Expires in 1 hour
+  const expiresIn = 3600;
+  // Get secret from env
+  const secret: string = process.env.JWT_SECRET;
+  // Initialize data stored in token
+  const dataStoredInToken: DataStoredInToken = {
+    _id: user._id
+  }
+  // Return the newly created token 
+  return {
+    expiresIn,
+    token: jwt.sign(dataStoredInToken, secret, { expiresIn })
+  }
 }
 
 export default authController; 
