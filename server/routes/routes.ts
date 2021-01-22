@@ -11,7 +11,7 @@ router.post('/login', authController.loginUser, (req, res, next) => {
 
 // Signup router
 router.post('/signup', authController.signupUser, (req, res, next) => {
-  res.status(200).json();
+  res.status(200).json(res.locals.user);
 });
 
 module.exports = router;

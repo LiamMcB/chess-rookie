@@ -26,6 +26,12 @@ export interface SignupUserRequest extends Request {
   lastname: string;
 }
 
+// Types for request body of logging in a user
+export interface LoginUserRequest extends Request {
+  username: string;
+  password: string;
+}
+
 // Type for user in user model
 export interface IUser extends Document {
   username: string;
