@@ -40,12 +40,14 @@ authController.loginUser = (req: LoginUserRequest, res: Response, next: NextFunc
 };
 
 // Signup controller to signup new user
-authController.signupUser = (req: SignupUserRequest, res: Response, next: NextFunction): any => {
+authController.signupUser = async (req: SignupUserRequest, res: Response, next: NextFunction): Promise<any> => {
   // Get username, password, first, and lastname from user
   const username: string = req.body.username; 
   const password: string = req.body.password;
   const firstname: string = req.body.firstname;
   const lastname: string = req.body.lastname;
+  // See if username exists in db, if it does, inform user that the username is taken
+  if (await User.findOne({username})) return res.status(400).json({message: 'That username is taken'});
   // Create a new user with a document in users
   User.create({username, password, firstname, lastname}, (error, user) => {
     // If there's an error, send back an error message
