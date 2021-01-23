@@ -17,6 +17,8 @@ export interface AuthControllerType {
   loginUser?:  any;
   signupUser?: any;
   createToken?: any;
+  verifyUser?: any;
+  logoutUser?: any;
 }
 
 // Types for request body of signing up user
@@ -31,6 +33,11 @@ export interface SignupUserRequest extends Request {
 export interface LoginUserRequest extends Request {
   username: string;
   password: string;
+}
+
+// Type for request when verifying user's cookies => has user so it can be seen in requests, but changed to put it on res.locals
+export interface RequestWithUser extends Request {
+  user: IUser;
 }
 
 // Type for user in user model

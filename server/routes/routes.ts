@@ -14,4 +14,9 @@ router.post('/signup', authController.signupUser, (req, res, next) => {
   res.status(200).json(res.locals.user);
 });
 
+// Logout router
+router.post('/logout', authController.logoutUser, (req, res, next) => {
+  res.status(200).json({message: 'User successfully logged out.'})
+});
+
 module.exports = router;
