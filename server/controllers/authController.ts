@@ -31,6 +31,10 @@ authController.loginUser = (req: LoginUserRequest, res: Response, next: NextFunc
       // If the result is true, store user info in res.locals and move to next middleware
       if (result) {
         res.locals.user = user;
+        // Create token for newly logged in user
+        const tokenData: TokenData = authController.createToken(user);
+        // Set cookie for user
+        res.cookie('Authorization', tokenData.token, {httpOnly: true, maxAge: tokenData.expiresIn});
         return next();
       } else {
         // Password is incorrect
@@ -61,6 +65,10 @@ authController.signupUser = async (req: SignupUserRequest, res: Response, next: 
     }
     // Store user info in res.locals and move to next middleware
     res.locals.user = user;
+    // Create token for newly signed up user
+    const tokenData: TokenData = authController.createToken(user);
+    // Set cookie for user
+    res.cookie('Authorization', tokenData.token, {httpOnly: true, maxAge: tokenData.expiresIn});
     return next();
   });
 }
@@ -77,8 +85,8 @@ authController.createToken = function(user: IUser): TokenData {
   }
   // Return the newly created token 
   return {
-    expiresIn,
-    token: jwt.sign(dataStoredInToken, secret, { expiresIn })
+    token: jwt.sign(dataStoredInToken, secret, { expiresIn }),
+    expiresIn
   }
 }
 

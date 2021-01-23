@@ -1,5 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 import { ErrorType } from './types/types';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
@@ -12,6 +13,8 @@ const app = express();
 
 // Parse request body
 app.use(bodyParser.json());
+// Parse cookies to make them part of req.cookies
+app.use(cookieParser());
 
 // Connect to mongodb
 const mongoURI: string = process.env.MONGO_URI;
