@@ -15,3 +15,8 @@ export interface MoveHistoryType {
   move: string; // ie e4 for pawn moving to e4 or Nf6 for knight moving to f6
 }
 export type HistoryType = MoveHistoryType[];
+export interface User {
+  username: string;
+  firstname: string;
+  lastname: string;
+}

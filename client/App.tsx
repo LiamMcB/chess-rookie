@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Nav } from './components/Nav';
 import { Main } from './components/Main';
 import { BoardContext } from './BoardContext';
-import { defaultColorLayout, getDefaultBlackPiecesBot, getDefaultWhitePiecesUser, getDefaultWhiteBoard} from './helper/defaultBoard';
+import { defaultColorLayout, getDefaultBlackPiecesBot, getDefaultWhitePiecesUser, getDefaultWhiteBoard, getGuestUser} from './helper/defaultBoard';
 import { ColorLayoutType, SideType } from './helper/types';
 import { boardReducer } from './helper/boardReducer';
 import { StateType } from './helper/boardReducer';
@@ -18,7 +18,8 @@ export const App: React.FC = () => {
     currentSide: SideType.White,
     userPieces: getDefaultWhitePiecesUser(),
     botPieces: getDefaultBlackPiecesBot(),
-    history: []
+    history: [],
+    user: getGuestUser()
   } 
   // Reducer hook which bundles state-changing functionality
   const [ state, dispatch ] = React.useReducer(boardReducer, defaultState);

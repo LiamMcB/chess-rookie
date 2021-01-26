@@ -7,7 +7,7 @@ etc...
 From a bird's eye perspective as either white or black player
 */
 import { ColorPalette } from '../constants/colorPalette.js'
-import { LayoutType, ColorLayoutType, AvailablePiecesType } from './types';
+import { LayoutType, ColorLayoutType, AvailablePiecesType, User } from './types';
 
 // Function to return defaultBlackBoard
 export function getDefaultBlackBoard(): LayoutType {
@@ -130,4 +130,12 @@ export const getDefaultBlackPiecesBot = function(): AvailablePiecesType {
     {piece: 'BP7', index: [1, 6]}, 
     {piece: 'BP8', index: [1, 7]}
   ];
+}
+// Default user state
+export const getGuestUser = function(): User {
+  return {
+    username: 'guest',
+    firstname: 'guest',
+    lastname: 'guest'
+  }
 }

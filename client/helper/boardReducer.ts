@@ -3,7 +3,7 @@ import {
   getDefaultWhiteBoard, getDefaultBlackBoard, getDefaultBlackPiecesUser, getDefaultWhitePiecesUser,
   getDefaultBlackPiecesBot, getDefaultWhitePiecesBot, defaultColorLayout
  } from './defaultBoard';
-import { LayoutType, ColorLayoutType, SideType, AvailablePiecesType, HistoryType } from './types';
+import { LayoutType, ColorLayoutType, SideType, AvailablePiecesType, HistoryType, User } from './types';
 import { ColorPalette, HighlightedColor } from '../constants/colorPalette';
 import { highlight, unhighlightBoard } from './highlightHelpers';
 import { movePiece, captured, adjustPieces } from './moveHelpers';
@@ -21,6 +21,7 @@ export interface StateType {
   userPieces: AvailablePiecesType; // Represents the choices for the bot to move, array of strings ('WP' or 'BK')
   botPieces: AvailablePiecesType; // Represents the choices for the bot to move, array of strings ('WP' or 'BK')
   history: HistoryType; // Represents a sequence of objects with side and move (ie 'Nf6')
+  user: User; // Current user's username firstname and lastname, defaults to guest
 }
 // Structure of actions
 export interface ActionType {
