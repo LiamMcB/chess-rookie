@@ -6,6 +6,8 @@ import { defaultColorLayout, getDefaultBlackPiecesBot, getDefaultWhitePiecesUser
 import { ColorLayoutType, SideType } from './helper/types';
 import { boardReducer } from './helper/boardReducer';
 import { StateType } from './helper/boardReducer';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Authentication } from './components/Authentication';
 
 
 export const App: React.FC = () => {
@@ -26,8 +28,18 @@ export const App: React.FC = () => {
   // React.useEffect(() => console.log('User\'s Pieces: \n', state.userPieces[0]), [state.userPieces])
   return (
     <BoardContext.Provider value={{state, dispatch}}>
-      <Nav />
-      <Main />
+      <Router>
+        <Switch>
+          <Route exact path='/'>
+            <Nav />
+            <Main />
+          </Route>
+          <Route path='/auth'>
+            <Nav />
+            <Authentication />
+          </Route>
+        </Switch>
+      </Router>
     </BoardContext.Provider>
   );
 };
