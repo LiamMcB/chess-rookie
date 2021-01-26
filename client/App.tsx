@@ -7,7 +7,8 @@ import { ColorLayoutType, SideType } from './helper/types';
 import { boardReducer } from './helper/boardReducer';
 import { StateType } from './helper/boardReducer';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Authentication } from './components/Authentication';
+import { Login } from './components/Login';
+import { Signup } from './components/Signup';
 
 
 export const App: React.FC = () => {
@@ -34,9 +35,13 @@ export const App: React.FC = () => {
             <Nav />
             <Main />
           </Route>
-          <Route path='/auth'>
+          <Route path='/login'>
             <Nav />
-            <Authentication />
+            <Login />
+          </Route>
+          <Route path='/signup'>
+            <Nav />
+            <Signup />
           </Route>
         </Switch>
       </Router>
