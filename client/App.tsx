@@ -22,7 +22,8 @@ export const App: React.FC = () => {
     userPieces: getDefaultWhitePiecesUser(),
     botPieces: getDefaultBlackPiecesBot(),
     history: [],
-    user: getGuestUser()
+    user: getGuestUser(),
+    authenticated: false
   } 
   // Reducer hook which bundles state-changing functionality
   const [ state, dispatch ] = React.useReducer(boardReducer, defaultState);

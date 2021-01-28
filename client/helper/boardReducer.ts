@@ -21,12 +21,13 @@ export interface StateType {
   userPieces: AvailablePiecesType; // Represents the choices for the bot to move, array of strings ('WP' or 'BK')
   botPieces: AvailablePiecesType; // Represents the choices for the bot to move, array of strings ('WP' or 'BK')
   history: HistoryType; // Represents a sequence of objects with side and move (ie 'Nf6')
-  user: User; // Current user's username firstname and lastname, defaults to guest
+  user: User; // Current user's username, firstname, and lastname, defaults to guest
+  authenticated: boolean; // Defaults to false but changes to true when user logs in/registers
 }
 // Structure of actions
 export interface ActionType {
   type: ActionTypeOptions;
-  payload: MovePayload;
+  payload: IPayload;
 }
 // Types of actions allowed
 export enum ActionTypeOptions {
@@ -38,6 +39,10 @@ export enum ActionTypeOptions {
   MOVE_PIECE='MOVE_PIECE',
   MOVE_OPPONENT='MOVE_OPPONENT',
   CHANGE_SIDE='CHANGE_SIDE',
+  LOGIN_AS_GUEST='LOGIN_AS_GUEST',
+  LOGIN_USER='LOGIN_USER',
+  SIGNUP_USER='SIGNUP_USER',
+  LOGOUT_USER='LOGOUT_USER'
 }
 // Interface to define payload of a piece move
 export interface MovePayload {
@@ -45,6 +50,14 @@ export interface MovePayload {
   to?: number[]; // array with 2 ints to represent position piece is moving to
   from?: number[]; // array ie [2, 3] representing piece moving from row 2, column 3 on the board
   paletteIndex?: number; // number to represent which palette index were on
+}
+// Interface to give options for action payload
+export interface IPayload {
+  piece?: string;
+  to?: number[]; // array with 2 ints to represent position piece is moving to
+  from?: number[]; // array ie [2, 3] representing piece moving from row 2, column 3 on the board
+  paletteIndex?: number; // number to represent which palette index were on
+  user?: User;
 }
 
 export const boardReducer = (state: StateType, action: ActionType) => {
@@ -234,6 +247,27 @@ export const boardReducer = (state: StateType, action: ActionType) => {
       return {
         ...state,
         currentSide: newSide
+      }
+    // Case to login a user as a guest
+    case 'LOGIN_AS_GUEST':
+      return {
+        ...state,
+        authenticated: true
+      }
+    // Case to login a user with their account info
+    case 'LOGIN_USER':
+      const loginUsername = action.payload.user.username;
+      const loginFirst = action.payload.user.firstname;
+      const loginLast = action.payload.user.lastname;
+      // Return state with new user and authenticated to true
+      return {
+        ...state,
+        user: {
+          username: loginUsername,
+          firstname: loginFirst,
+          lastname: loginLast
+        },
+        authenticated: true
       }
     // Default
     default:

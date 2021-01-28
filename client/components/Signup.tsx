@@ -9,7 +9,7 @@ export const Signup: React.FC = () => {
       <input className='form-inputs' placeholder='Last Name'></input>
       <input className='form-inputs' placeholder='username'></input>
       <input className='form-inputs' placeholder='password' type='password'></input>
-      <button className='login-button'>Register</button>
+      <button className='auth-button'>Register</button>
       <p>
         Have an account? Login <Link to='/login'>here.</Link>
       </p>
