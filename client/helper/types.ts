@@ -17,6 +17,7 @@ export interface MoveHistoryType {
 export type HistoryType = MoveHistoryType[];
 export interface User {
   username: string;
+  password?: string; // not required, only present in payload when user registers
   firstname: string;
   lastname: string;
 }

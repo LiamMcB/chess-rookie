@@ -1,7 +1,7 @@
 /* File which handles all stateful functionality on the board layout. */
 import { 
   getDefaultWhiteBoard, getDefaultBlackBoard, getDefaultBlackPiecesUser, getDefaultWhitePiecesUser,
-  getDefaultBlackPiecesBot, getDefaultWhitePiecesBot, defaultColorLayout
+  getDefaultBlackPiecesBot, getDefaultWhitePiecesBot, defaultColorLayout, getGuestUser
  } from './defaultBoard';
 import { LayoutType, ColorLayoutType, SideType, AvailablePiecesType, HistoryType, User } from './types';
 import { ColorPalette, HighlightedColor } from '../constants/colorPalette';
@@ -268,6 +268,26 @@ export const boardReducer = (state: StateType, action: ActionType) => {
           lastname: loginLast
         },
         authenticated: true
+      }
+    // Case to signup/register a user
+    case 'SIGNUP_USER':
+      const signupUsername = action.payload.user.username;
+      const signupPassword = action.payload.user.password;
+      const signupFirst = action.payload.user.firstname;
+      const signupLast = action.payload.user.lastname;
+      return {
+        ...state,
+        user: {
+          username: signupUsername,
+          firstname: signupFirst,
+          lastname: signupLast
+        }
+      }
+    // Case to logout a user
+    case 'LOGOUT_USER':
+      return {
+        user: getGuestUser(),
+        authenticated: false
       }
     // Default
     default:
