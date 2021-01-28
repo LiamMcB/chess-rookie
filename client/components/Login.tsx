@@ -7,8 +7,9 @@ export const Login: React.FC = () => {
       <h1>Login</h1>
       <input className='form-inputs' placeholder='username'></input>
       <input className='form-inputs' placeholder='password'></input>
+      <button className='login-button'>Login</button>
       <p>
-        No account? Signup <Link to='/signup'>here</Link>
+        No account? Signup <Link to='/signup'>here.</Link>
       </p>
     </div>
   )
