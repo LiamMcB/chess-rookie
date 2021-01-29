@@ -6,7 +6,7 @@ import { defaultColorLayout, getDefaultBlackPiecesBot, getDefaultWhitePiecesUser
 import { ColorLayoutType, SideType } from './helper/types';
 import { boardReducer } from './helper/boardReducer';
 import { StateType } from './helper/boardReducer';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { Login } from './components/Login';
 import { Signup } from './components/Signup';
 
@@ -31,17 +31,15 @@ export const App: React.FC = () => {
   return (
     <BoardContext.Provider value={{state, dispatch}}>
       <Router>
+        <Nav />
         <Switch>
           <Route exact path='/'>
-            <Nav />
             <Main />
           </Route>
           <Route path='/login'>
-            <Nav />
             <Login />
           </Route>
           <Route path='/signup'>
-            <Nav />
             <Signup />
           </Route>
         </Switch>

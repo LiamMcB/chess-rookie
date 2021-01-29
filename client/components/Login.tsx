@@ -9,7 +9,7 @@ export const Login: React.FC = () => {
   let history = useHistory();
   // Function to login as guest
   const loginAsGuest = function() {
-    dispatch({ action: 'LOGIN_AS_GUEST' });
+    dispatch({ type: 'LOGIN_AS_GUEST' });
     // Push the slash route to history, once user is logged in, redirecting to board
     history.push('/');
   }
