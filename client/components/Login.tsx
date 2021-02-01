@@ -9,6 +9,10 @@ interface Props {
 export const Login: React.FC<Props> = ({ setIsLoading }) => {
   // Context to dispatch login actions
   const { state, dispatch } = React.useContext(BoardContext);
+  // State to hold username 
+  const [ username, setUsername ] = React.useState('');
+  // State to hold password
+  const [ password, setPassword ] = React.useState('');
   // Use history hook keeps track of the route history
   let history = useHistory();
   // Function to login as guest
@@ -24,13 +28,20 @@ export const Login: React.FC<Props> = ({ setIsLoading }) => {
   }
   // Function to login the user
   const loginUser = function() {
-
+    console.log('User:', username, '\n', 'Password:', password);
+    // Fetch login data to authenticate user
+    clearFields();
+  }
+  // Function to clear username and password fields
+  const clearFields = function() {
+    setUsername('');
+    setPassword('');
   }
   return (
     <div className='login-container'>
       <h1>Login</h1>
-      <input className='form-inputs' placeholder='username'></input>
-      <input className='form-inputs' placeholder='password'></input>
+      <input className='form-inputs' placeholder='username' value={username} onChange={(e) => setUsername(e.target.value)} type='text'></input>
+      <input className='form-inputs' placeholder='password' value={password} onChange={(e) => setPassword(e.target.value)} type='password'></input>
       <div>
         <button className='auth-button' onClick={loginUser}>Login</button>
         <button className='auth-button' onClick={loginAsGuest}>Continue as Guest</button>
