@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-d
 import { Login } from './components/Login';
 import { Signup } from './components/Signup';
 import { Loading } from './components/Loading';
+import { Forbidden } from './components/Forbidden';
 
 
 export const App: React.FC = () => {
@@ -38,6 +39,7 @@ export const App: React.FC = () => {
         <Switch>
           <Route exact path='/'>
             { state.authenticated && <Main /> }
+            { !state.authenticated && <Forbidden /> }
           </Route>
           <Route path='/login'>
             { !isLoading && <Login setIsLoading={setIsLoading} /> }
