@@ -2,7 +2,11 @@ import * as React from 'react';
 import { Link, Redirect, useHistory } from 'react-router-dom';
 import { BoardContext } from '../BoardContext';
 
-export const Login: React.FC = () => {
+interface Props {
+  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const Login: React.FC<Props> = ({ setIsLoading }) => {
   // Context to dispatch login actions
   const { state, dispatch } = React.useContext(BoardContext);
   // Use history hook keeps track of the route history
@@ -10,8 +14,13 @@ export const Login: React.FC = () => {
   // Function to login as guest
   const loginAsGuest = function() {
     dispatch({ type: 'LOGIN_AS_GUEST' });
-    // Push the slash route to history, once user is logged in, redirecting to board
-    history.push('/');
+    // Set is loading to true
+    setIsLoading(true);
+    // Push the slash route to history, once user is logged in (1 sec for now), redirecting to board
+    setTimeout(() => {
+      setIsLoading(false);
+      history.push('/');
+    }, 1000);
   }
   // Function to login the user
   const loginUser = function() {

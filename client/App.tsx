@@ -9,6 +9,7 @@ import { StateType } from './helper/boardReducer';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { Login } from './components/Login';
 import { Signup } from './components/Signup';
+import { Loading } from './components/Loading';
 
 
 export const App: React.FC = () => {
@@ -27,6 +28,8 @@ export const App: React.FC = () => {
   } 
   // Reducer hook which bundles state-changing functionality
   const [ state, dispatch ] = React.useReducer(boardReducer, defaultState);
+  // State which determines whether the loading page appears or not
+  const [ isLoading, setIsLoading ] = React.useState(false);
   // React.useEffect(() => console.log('User\'s Pieces: \n', state.userPieces[0]), [state.userPieces])
   return (
     <BoardContext.Provider value={{state, dispatch}}>
@@ -34,10 +37,11 @@ export const App: React.FC = () => {
         <Nav />
         <Switch>
           <Route exact path='/'>
-            <Main />
+            { state.authenticated && <Main /> }
           </Route>
           <Route path='/login'>
-            <Login />
+            { !isLoading && <Login setIsLoading={setIsLoading} /> }
+            { isLoading && <Loading /> }
           </Route>
           <Route path='/signup'>
             <Signup />

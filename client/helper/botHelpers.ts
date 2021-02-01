@@ -59,6 +59,7 @@ export const findBestMove = function (
     // Iterate over possible moves (if there are any) and reset bestMove for larger values
     possibleMoves.forEach((move, index) => {
       const moveValue: number = evaluateMove(currentPiece, currentSide, move, userPieces, boardLayout);
+      // console.log('Move Value:\n', moveValue);
       // If the current move has a greater value, ie performs better, reset best move
       if (moveValue > bestMove.value) {
         bestMove = {
