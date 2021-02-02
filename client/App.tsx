@@ -45,7 +45,7 @@ export const App: React.FC = () => {
             { isLoading && <Loading /> }
           </Route>
           <Route path='/signup'>
-            <Signup />
+            <Signup setIsLoading={setIsLoading} />
           </Route>
         </Switch>
       </Router>

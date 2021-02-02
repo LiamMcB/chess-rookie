@@ -58,6 +58,7 @@ authController.signupUser = async (req: SignupUserRequest, res: Response, next: 
   if (await User.findOne({username})) return res.status(400).json({message: 'That username is taken'});
   // Create a new user with a document in users
   User.create({username, password, firstname, lastname}, (error: NativeError, user: IUser) => {
+    console.log(user);
     // If there's an error, send back an error message
     if (error) {
       const errorObj: ErrorType = {
