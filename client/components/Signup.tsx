@@ -1,11 +1,15 @@
 import * as React from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import { BoardContext } from '../BoardContext';
+import { SIGNUP_ENDPOINT } from '../constants/endpoints';
 
 interface Props {
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const Signup: React.FC<Props> = ({ setIsLoading }) => {
+  // Context to dispatch login actions
+  const { state, dispatch } = React.useContext(BoardContext);
   // State to hold username 
   const [ username, setUsername ] = React.useState('');
   // State to hold password
@@ -18,7 +22,38 @@ export const Signup: React.FC<Props> = ({ setIsLoading }) => {
   let history = useHistory();
   // Function to register a new user
   const signupUser = function() {
-    // PUT SIGNUP FETCH HERE
+    // If no username or password or name, alert user
+    if (!username || !password || !firstname || !lastname) {
+      clearFields();
+      return alert('You must enter a username, password, and your full name.')
+    }
+    // Fetch from signup endpoint
+    fetch(SIGNUP_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({username, password, firstname, lastname})
+    })
+    .then(res => res.json())
+    .then(user => {
+      // If username is taken, inform user
+      if (user.message) {
+        clearFields();
+        return alert(user.message);
+      }
+      // Get info about newly registered user
+      const registeredUser = {
+        username: user.username,
+        firstname: user.firstname,
+        lastname: user.lastname
+      }
+      // Dispatch action to sign in user
+      dispatch({ type: 'SIGNUP_USER', payload: {user: registeredUser} });
+      // Redirect to main
+      redirectToMain();
+    })
+    .catch(err => console.error('Error in fetch to signup endpoint:', err));
   }
   // Function to clear username and password fields
   const clearFields = function() {

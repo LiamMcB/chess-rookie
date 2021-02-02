@@ -24,6 +24,11 @@ export const Login: React.FC<Props> = ({ setIsLoading }) => {
   }
   // Function to login the user
   const loginUser = function() {
+    // If no username or password, alert user
+    if (!username || !password) {
+      clearFields();
+      return alert('You must enter a username and password.')
+    }
     // Fetch login data to authenticate user
     fetch(LOGIN_ENDPOINT, {
       method: 'POST',

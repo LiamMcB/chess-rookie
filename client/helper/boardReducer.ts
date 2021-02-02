@@ -281,7 +281,8 @@ export const boardReducer = (state: StateType, action: ActionType) => {
           username: signupUsername,
           firstname: signupFirst,
           lastname: signupLast
-        }
+        },
+        authenticated: true
       }
     // Case to logout a user
     case 'LOGOUT_USER':
