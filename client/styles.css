@@ -19,6 +19,12 @@ body {
   margin: 0;
   margin-left: 1rem;
   padding: 0;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-btn {
+  margin: auto 1rem auto 0;
 }
 
 .page-title {

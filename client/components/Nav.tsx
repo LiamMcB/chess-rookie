@@ -7,6 +7,9 @@ export const Nav: React.FC = () => {
         <li>
           <h2 className='page-title'>Chess Rookie</h2>
         </li>
+        <li>
+          <button className='nav-btn'>Logout</button>
+        </li>
       </ul>
     </nav>
   )
