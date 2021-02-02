@@ -8,6 +8,7 @@ let authController: AuthControllerType = {};
 
 // Login user based on credentials in request
 authController.loginUser = (req: LoginUserRequest, res: Response, next: NextFunction): any => {
+  console.log('Client request\n', req);
   // Get username and password from request body
   const username: string = req.body.username;
   const password: string = req.body.password;

@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser';
 import { ErrorType } from './types/types';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import cors from 'cors';
 const router = require('./routes/routes');
 
 const PORT: number = 3000;
@@ -11,6 +12,10 @@ dotenv.config();
 
 const app = express();
 
+// CORS to allow requests from frontend
+app.use(cors({
+  origin: /http:\/\/localhost:8080/
+}));
 // Parse request body
 app.use(bodyParser.json());
 // Parse cookies to make them part of req.cookies
