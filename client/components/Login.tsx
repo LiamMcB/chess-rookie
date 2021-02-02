@@ -35,9 +35,8 @@ export const Login: React.FC<Props> = ({ setIsLoading }) => {
     .then(res => res.json())
     .then(user => {
       // If the response returns an error message or there is no user, alert the user with that message
-      if (user.message || !user) {
+      if (user.message) {
         clearFields();
-        const errorMessage = user ? user.message : 'No user exists with that user/password combo.';
         return alert(user.message)
       }
       // Get user information

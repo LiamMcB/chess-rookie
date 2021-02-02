@@ -4,16 +4,16 @@ import { AuthControllerType, SignupUserRequest, LoginUserRequest, ErrorType, IUs
 import User from '../models/userModels';
 import bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
+import { NativeError } from 'mongoose';
 let authController: AuthControllerType = {};
 
 // Login user based on credentials in request
 authController.loginUser = (req: LoginUserRequest, res: Response, next: NextFunction): any => {
-  console.log('Client request\n', req);
   // Get username and password from request body
   const username: string = req.body.username;
   const password: string = req.body.password;
   // Find user in the db
-  User.findOne({username}, (error, user) => {
+  User.findOne({username}, (error: NativeError, user: IUser) => {
     // If there's an error, send back an error message
     if (error) {
       const errorObj: ErrorType = {
@@ -22,6 +22,8 @@ authController.loginUser = (req: LoginUserRequest, res: Response, next: NextFunc
       };
       return next(errorObj);
     }
+    // If there's no user/incorrect password/username, send a response
+    if (!user) return res.status(400).json({message: 'No user exists with that user/password combo.'})
     // Compare the password with encrypted one
     bcrypt.compare(password, user.password, (err, result) => {
       // If error log it
@@ -55,7 +57,7 @@ authController.signupUser = async (req: SignupUserRequest, res: Response, next: 
   // See if username exists in db, if it does, inform user that the username is taken
   if (await User.findOne({username})) return res.status(400).json({message: 'That username is taken'});
   // Create a new user with a document in users
-  User.create({username, password, firstname, lastname}, (error, user) => {
+  User.create({username, password, firstname, lastname}, (error: NativeError, user: IUser) => {
     // If there's an error, send back an error message
     if (error) {
       const errorObj: ErrorType = {
