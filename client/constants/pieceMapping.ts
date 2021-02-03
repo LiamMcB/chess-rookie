@@ -1,5 +1,5 @@
 // MAPPING of symbols to their svg url
-import { BlackPieces, WhitePieces } from '../constants/chessPieces';
+import { BlackPieces, WhitePieces } from './chessPieces';
 
 // Mapping of pieces to their url
 export const PieceMapping = {

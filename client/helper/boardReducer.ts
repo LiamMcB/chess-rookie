@@ -177,7 +177,7 @@ export const boardReducer = (state: StateType, action: ActionType) => {
       const unhighlightedState = unhighlightBoard(state.paletteIndex);
       // Push new move to the history array
       const userCaptured: boolean = capturedPiece !== null;
-      const historyAfterUserMove = generateHistory(state.history, state.currentSide, action.payload.piece, action.payload.to, action.payload.from, userCaptured);
+      const historyAfterUserMove = generateHistory(state.boardLayout, state.history, state.currentSide, action.payload.piece, action.payload.to, action.payload.from, userCaptured);
       // Return new state object with new layout as value
       return {
         ...state,
@@ -226,7 +226,7 @@ export const boardReducer = (state: StateType, action: ActionType) => {
       if (botCapturedPiece) userNewPieces = removeBotPieces(botCapturedPiece, state.userPieces);
       // Push new move to the history array
       const botCaptured: boolean = botCapturedPiece !== null;
-      const historyAfterBotMove = generateHistory(state.history, state.currentSide, piece, to, from, botCaptured);
+      const historyAfterBotMove = generateHistory(state.boardLayout, state.history, state.currentSide, piece, to, from, botCaptured);
       // Return new state object 
       return {
         ...state,

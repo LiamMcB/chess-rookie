@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { PieceMapping } from '../helper/pieceMapping';
+import { PieceMapping } from '../constants/pieceMapping';
 import { BoardContext } from '../BoardContext';
 import e = require('express');
 
