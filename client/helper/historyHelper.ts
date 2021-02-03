@@ -12,7 +12,7 @@ letterMap.set(5, 'f');
 letterMap.set(6, 'g');
 letterMap.set(7, 'h');
 
-export const generateHistory = function(history: HistoryType, side: SideType, piece: string, to: number[], captured: boolean): HistoryType {
+export const generateHistory = function(history: HistoryType, side: SideType, piece: string, to: number[], from: number[], captured: boolean): HistoryType {
   // Make copy of history
   const historyCopy = deepCopyHistory(history);
   // Initialize object to hold move string and side
@@ -23,9 +23,47 @@ export const generateHistory = function(history: HistoryType, side: SideType, pi
   if (captured) moveString += 'x';
   // Add string for position moving to
   moveString += letterMap.get(to[1]) + to[0];
+  // If the move involved castling, change move string to reflect that
+  if (pieceCastled(side, piece, to, from)) moveString = pieceCastled(side, piece, to, from);  
   // Set piece of move history to the move string
   moveHistory.move = moveString;
   // Push to history copy
   historyCopy.push(moveHistory);
   return historyCopy;
+}
+
+// Helper to determine whether a move involved castling or not, returns empty string if no castling
+const pieceCastled = function(side: SideType, piece: string, to: number[], from: number[]): string {
+  // Initialize whether piece castled to false
+  let castled: string = '';
+  // Get row and column to and from
+  const rowTo: number = to[0];
+  const colTo: number = to[1];
+  const colFrom: number = from[1];
+  console.log('Move to in castling:\n', to);
+  // Castling white side
+  if (side === SideType.White && piece[1] === 'R' && rowTo === 7 && colTo === 4) {
+    // Castling from left rook/queenside
+    if (colFrom === 0) {
+      castled = 'O-O-O'
+    }
+    // Castling from right rook/kingside
+    else if (colFrom === 7) {
+      castled = 'O-O'
+    }
+  }
+  // Castling black side
+  else if (side === SideType.Black && piece[1] === 'R' && rowTo === 7 && colTo === 3) {
+    // Castling from left rook/kingside
+    if (colFrom === 0) {
+      castled = 'O-O'
+    }
+    // Castling from right rook/queenside
+    else if (colFrom === 7) {
+      castled = 'O-O-O'
+    }
+  }
+
+  // Return whether the piece castled
+  return castled;
 }
