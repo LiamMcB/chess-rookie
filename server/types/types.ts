@@ -56,3 +56,12 @@ export interface TokenData {
 export interface DataStoredInToken {
   _id: string;
 }
+
+// Type for history entry in history model
+export interface IHistory extends Document {
+  game_id: number;
+  white_id: string; // _id from user on each side, BOT if user playing against bot
+  black_id: string;
+  move: string; // ie Nf6, meaning night moving to f6
+  move_number: number; // for order of moves
+}

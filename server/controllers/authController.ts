@@ -1,7 +1,7 @@
 // Controllers for login and signup
 import { NextFunction, Response } from 'express';
 import { AuthControllerType, SignupUserRequest, LoginUserRequest, ErrorType, IUser, TokenData, DataStoredInToken, RequestWithUser } from '../types/types';
-import User from '../models/userModels';
+import User from '../models/userModel';
 import bcrypt from 'bcrypt';
 import * as jwt from 'jsonwebtoken';
 import { NativeError } from 'mongoose';
