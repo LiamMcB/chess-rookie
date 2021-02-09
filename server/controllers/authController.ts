@@ -1,4 +1,4 @@
-// Controllers for login and signup
+// Controllers for login, signup, verifying user based on jwt's, and logging out
 import { NextFunction, Response } from 'express';
 import { AuthControllerType, SignupUserRequest, LoginUserRequest, ErrorType, IUser, TokenData, DataStoredInToken, RequestWithUser } from '../types/types';
 import User from '../models/userModel';

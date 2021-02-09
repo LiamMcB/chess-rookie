@@ -65,3 +65,9 @@ export interface IHistory extends Document {
   move: string; // ie Nf6, meaning night moving to f6
   move_number: number; // for order of moves
 }
+
+// Type for history controller
+export interface HistoryControllerType {
+  startGame?: any;
+  addMove?: any;
+}
